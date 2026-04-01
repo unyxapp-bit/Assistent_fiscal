@@ -1,0 +1,12 @@
+﻿{
+    "timestamp":  "2026-03-31T00:48:59.9855664Z",
+    "source":  "C:\\Users\\unyxa\\Desktop\\Novo projeto\\Codigos antigos",
+    "target":  "C:\\Users\\unyxa\\Desktop\\Novo projeto\\Novo app",
+    "convertedDart":  163,
+    "convertedSql":  14,
+    "notes":  [
+                  "Arquivos Flutter de plataforma nativa foram excluidos da migracao.",
+                  "Telas e widgets viraram componentes TSX compilaveis.",
+                  "Entidades, providers e servicos viraram modulos TS com enums/classes basicas."
+              ]
+}
