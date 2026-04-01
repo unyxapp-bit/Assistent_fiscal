@@ -57,7 +57,7 @@
 
   input::placeholder,
   textarea::placeholder {
-    color: var(--color-field-placeholder);
+    color: rgba(154, 164, 181, 0.35);
   }
 
   input:hover:not(:focus):not(:focus-visible),

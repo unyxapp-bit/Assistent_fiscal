@@ -93,7 +93,7 @@ export default function CupomConfigPage() {
                           typeof value === 'number' ? Number(e.target.value) : e.target.value
                         )
                       }
-                      className="mt-2 w-full rounded-xl border border-cloud px-4 py-2"
+                      className="mt-2 w-full rounded-xl border border-cloud px-4 py-2 text-white placeholder:text-white/40"
                     />
                   </label>
                 );

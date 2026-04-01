@@ -94,19 +94,19 @@ export default function PizzasCadastroPage() {
           filtered.map((pizza) => (
             <Card
               key={pizza.id}
-              className="flex h-full flex-col justify-between gap-3 rounded-xl p-4"
+              className="flex h-full flex-col justify-between gap-3 !bg-[#11172b] border border-border p-4 text-ink"
             >
               <div>
-                <p className="font-semibold text-ink text-base">
+                <p className="font-semibold text-white text-base">
                   {pizza.nome?.trim() || 'Pizza sem nome'}
                 </p>
-                <p className="text-xs text-muted">{pizza.tamanho}</p>
+                <p className="text-xs text-white/70">{pizza.tamanho}</p>
                 {pizza.ingredientes ? (
-                  <p className="text-xs text-muted">{pizza.ingredientes}</p>
+                  <p className="text-xs text-white/70">{pizza.ingredientes}</p>
                 ) : null}
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted">
+                <span className="text-xs text-white/70">
                   {pizza.ativa ? 'Ativa' : 'Inativa'}
                 </span>
                 <Button
