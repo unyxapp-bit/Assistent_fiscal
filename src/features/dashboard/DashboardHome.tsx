@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+﻿import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
 import { useDashboardData } from './useDashboardData';
@@ -56,29 +56,6 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
-      <section className="flex flex-wrap gap-2">
-        {[
-          { label: 'Início', to: '/' },
-          { label: 'Principal', to: '/principal' },
-          { label: 'Pizzaria', to: '/pizzaria' },
-          { label: 'Operações', to: '/operacoes' },
-          { label: 'Loja', to: '/loja' },
-        ].map((tab) => (
-          <NavLink
-            key={tab.to}
-            to={tab.to}
-            end={tab.to === '/'}
-            className={({ isActive }) =>
-              `rounded-full px-4 py-2 text-sm ${
-                isActive ? 'bg-primary text-white' : 'border border-cloud text-ink'
-              }`
-            }
-          >
-            {tab.label}
-          </NavLink>
-        ))}
-      </section>
-
       <section className="surface p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
@@ -129,9 +106,7 @@ export default function DashboardHome() {
           <h2 className="text-2xl font-semibold">
             {data.isLoading ? '...' : `${data.pausasAtivas} / ${data.entregasEmRota}`}
           </h2>
-          <p className="text-xs text-muted mt-2">
-            `pausas_cafe` e `entregas`.
-          </p>
+          <p className="text-xs text-muted mt-2">`pausas_cafe` e `entregas`.</p>
         </Card>
       </section>
 
