@@ -65,31 +65,34 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen">
       <header className="border-b border-cloud bg-white/90 backdrop-blur">
-        <div className="px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <div className="px-4 py-3 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted">Fiscal Assistant</p>
-            <h1 className="font-display text-2xl text-ink">Painel Web</h1>
-            <p className="text-xs text-muted mt-1">{email}</p>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted">
+              Fiscal Assistant
+            </p>
+            <h1 className="font-display text-xl text-ink">Painel Web</h1>
+            <p className="text-xs text-muted mt-0.5">{email}</p>
           </div>
           <Button variant="outline" size="sm" onClick={() => signOut()}>
             Sair
           </Button>
         </div>
-        <nav className="px-6 pb-4">
-          <div className="flex flex-wrap gap-6">
+
+        <nav className="px-4 pb-3">
+          <div className="hidden md:flex items-center gap-6 overflow-x-auto no-scrollbar">
             {navSections.map((section) => (
-              <div key={section.title} className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-muted">
+              <div key={section.title} className="flex items-center gap-2">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-muted">
                   {section.title}
-                </p>
-                <div className="flex flex-wrap gap-2">
+                </span>
+                <div className="flex items-center gap-2">
                   {section.links.map((link) => (
                     <NavLink
                       key={link.to}
                       to={link.to}
                       className={({ isActive }) =>
                         cn(
-                          'rounded-full px-4 py-2 text-xs font-semibold transition',
+                          'rounded-full px-4 py-2 text-xs font-semibold transition whitespace-nowrap',
                           isActive
                             ? 'bg-primary text-white'
                             : 'border border-cloud text-ink hover:border-primary hover:text-primary'
@@ -102,6 +105,35 @@ export default function AppLayout() {
                   ))}
                 </div>
               </div>
+            ))}
+          </div>
+
+          <div className="md:hidden space-y-2">
+            {navSections.map((section) => (
+              <details key={section.title} className="rounded-xl border border-cloud bg-white">
+                <summary className="cursor-pointer px-3 py-2 text-xs uppercase tracking-[0.2em] text-muted">
+                  {section.title}
+                </summary>
+                <div className="flex flex-wrap gap-2 px-3 pb-3">
+                  {section.links.map((link) => (
+                    <NavLink
+                      key={link.to}
+                      to={link.to}
+                      className={({ isActive }) =>
+                        cn(
+                          'rounded-full px-3 py-2 text-xs font-semibold transition',
+                          isActive
+                            ? 'bg-primary text-white'
+                            : 'border border-cloud text-ink hover:border-primary hover:text-primary'
+                        )
+                      }
+                      end={link.to === '/'}
+                    >
+                      {link.label}
+                    </NavLink>
+                  ))}
+                </div>
+              </details>
             ))}
           </div>
         </nav>
