@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { Button } from '../../shared/ui/Button';
@@ -61,6 +61,11 @@ const navSections = [
 export default function AppLayout() {
   const { user, signOut } = useAuth();
   const email = user?.email ?? 'Fiscal';
+  const [activeSection, setActiveSection] = useState(navSections[0]?.title ?? '');
+
+  const activeLinks = useMemo(() => {
+    return navSections.find((section) => section.title === activeSection)?.links ?? [];
+  }, [activeSection]);
 
   return (
     <div className="min-h-screen">
@@ -79,33 +84,42 @@ export default function AppLayout() {
         </div>
 
         <nav className="px-4 pb-3">
-          <div className="hidden md:flex items-center gap-6 overflow-x-auto no-scrollbar">
-            {navSections.map((section) => (
-              <div key={section.title} className="flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-muted">
+          <div className="hidden md:block">
+            <div className="flex items-center gap-4 overflow-x-auto no-scrollbar border-b border-cloud pb-2">
+              {navSections.map((section) => (
+                <button
+                  key={section.title}
+                  onClick={() => setActiveSection(section.title)}
+                  className={cn(
+                    'px-3 py-2 text-xs font-semibold uppercase tracking-[0.25em] transition',
+                    activeSection === section.title
+                      ? 'text-primary border-b-2 border-primary'
+                      : 'text-muted hover:text-ink'
+                  )}
+                >
                   {section.title}
-                </span>
-                <div className="flex items-center gap-2">
-                  {section.links.map((link) => (
-                    <NavLink
-                      key={link.to}
-                      to={link.to}
-                      className={({ isActive }) =>
-                        cn(
-                          'rounded-full px-4 py-2 text-xs font-semibold transition whitespace-nowrap',
-                          isActive
-                            ? 'bg-primary text-white'
-                            : 'border border-cloud text-ink hover:border-primary hover:text-primary'
-                        )
-                      }
-                      end={link.to === '/'}
-                    >
-                      {link.label}
-                    </NavLink>
-                  ))}
-                </div>
-              </div>
-            ))}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-2 pt-3">
+              {activeLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'rounded-full px-4 py-2 text-xs font-semibold transition whitespace-nowrap',
+                      isActive
+                        ? 'bg-primary text-white'
+                        : 'border border-cloud text-ink hover:border-primary hover:text-primary'
+                    )
+                  }
+                  end={link.to === '/'}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
           </div>
 
           <div className="md:hidden space-y-2">
