@@ -120,7 +120,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Colaboradores ativos</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.colaboradoresAtivos}
             </p>
             <p className="mt-1 text-xs text-muted">Tabela `colaboradores`.</p>
@@ -133,7 +133,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas disponíveis</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.caixasAtivos}
             </p>
             <p className="mt-1 text-xs text-muted">Tabela `caixas`.</p>
@@ -146,7 +146,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Alocados agora</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.alocados}
             </p>
             <p className="mt-1 text-xs text-muted">Tabela `alocações`.</p>
@@ -159,7 +159,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Em pausa / em rota</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : `${data.pausasAtivas} / ${data.entregasEmRota}`}
             </p>
             <p className="mt-1 text-xs text-muted">`pausas_cafe` e `entregas`.</p>
@@ -226,7 +226,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Checklists pendentes</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.checklistsPendentes}
             </p>
             <p className="mt-1 text-xs text-muted">Monitorar abertura/fechamento.</p>
@@ -239,7 +239,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Ocorrências abertas</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.ocorrenciasAbertas}
             </p>
             <p className="mt-1 text-xs text-muted">Exige follow-up rápido.</p>
@@ -252,7 +252,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Entregas pendentes</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.entregasSeparadas}
             </p>
             <p className="mt-1 text-xs text-muted">Aguardando saída.</p>
@@ -319,7 +319,7 @@ export default function DashboardHome() {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
         {orderedIds.map((id) => {
           const card = cardsById[id];
           if (!card) return null;
@@ -335,13 +335,13 @@ export default function DashboardHome() {
             >
               <Card
                 className={cn(
-                  'relative p-4 bg-white border border-cloud/80 shadow-[0_16px_36px_-22px_rgba(12,13,16,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_44px_-22px_rgba(12,13,16,0.45)]',
+                  'relative p-3 md:p-4 bg-white border border-ink/10 shadow-[0_18px_36px_-24px_rgba(12,13,16,0.45)] transition hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[0_22px_48px_-26px_rgba(12,13,16,0.55)]',
                   draggingId === id && 'ring-2 ring-primary/30'
                 )}
               >
                 <button
                   type="button"
-                  className="absolute right-3 top-3 rounded-md border border-cloud/70 bg-white px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-ink cursor-grab active:cursor-grabbing"
+                  className="absolute right-3 top-3 rounded-md border border-ink/10 bg-white px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-ink cursor-grab active:cursor-grabbing"
                   draggable
                   onDragStart={(event) => {
                     setDraggingId(id);
@@ -350,6 +350,7 @@ export default function DashboardHome() {
                   }}
                   onDragEnd={() => setDraggingId(null)}
                   aria-label="Arrastar card"
+                  title="Arrastar card"
                 >
                   ||
                 </button>

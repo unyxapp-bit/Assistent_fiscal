@@ -78,7 +78,6 @@ export default function AppLayout() {
   const [menuLeft, setMenuLeft] = useState<number | null>(null);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const keepMenuOpenRef = useRef(false);
   const profileRef = useRef<HTMLDivElement | null>(null);
   const navRowRef = useRef<HTMLDivElement | null>(null);
 
@@ -121,13 +120,7 @@ export default function AppLayout() {
     if (matched && matched.title !== activeSection) {
       setActiveSection(matched.title);
     }
-
-    if (keepMenuOpenRef.current) {
-      keepMenuOpenRef.current = false;
-    } else {
-      setMenuOpen(null);
-    }
-  }, [location.pathname, activeSection]);
+  }, [location.pathname]);
 
   const handleTabClick =
     (section: (typeof navSections)[number]) =>
@@ -137,14 +130,18 @@ export default function AppLayout() {
       setMenuOpen(nextOpen);
 
       if (nextOpen) {
-        keepMenuOpenRef.current = true;
         const firstLink = section.links[0]?.to;
         if (firstLink) navigate(firstLink);
 
         const buttonRect = event.currentTarget.getBoundingClientRect();
         const containerRect = navRowRef.current?.getBoundingClientRect();
         if (containerRect) {
-          setMenuLeft(buttonRect.left - containerRect.left + buttonRect.width / 2);
+          const menuWidth = 256;
+          const rawLeft = buttonRect.left - containerRect.left + buttonRect.width / 2;
+          const minLeft = menuWidth / 2;
+          const maxLeft = containerRect.width - menuWidth / 2;
+          const nextLeft = Math.min(Math.max(rawLeft, minLeft), maxLeft);
+          setMenuLeft(nextLeft);
         }
       }
     };
