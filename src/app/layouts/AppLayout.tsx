@@ -70,6 +70,7 @@ export default function AppLayout() {
   const { user, signOut } = useAuth();
   const { fiscal } = useFiscal();
   const [activeSection, setActiveSection] = useState(navSections[0]?.title ?? '');
+  const [collapsed, setCollapsed] = useState(false);
 
   const activeLinks = useMemo(() => {
     return navSections.find((section) => section.title === activeSection)?.links ?? [];
@@ -80,17 +81,34 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-chalk">
       <div className="flex min-h-screen">
-        <aside className="hidden lg:flex w-64 flex-col gap-6 border-r border-cloud bg-gradient-to-b from-ink to-[#0B1A2B] text-white">
-          <div className="px-6 pt-6">
-            <p className="text-xs uppercase tracking-[0.35em] text-white/60">Fiscal Hub</p>
-            <h2 className="font-display text-2xl mt-2">Painel</h2>
+        <aside
+          className={cn(
+            'hidden lg:flex flex-col gap-6 border-r border-cloud bg-gradient-to-b from-ink to-[#0B1A2B] text-white transition-all duration-300',
+            collapsed ? 'w-20' : 'w-64'
+          )}
+        >
+          <div className={cn('pt-6', collapsed ? 'px-4' : 'px-6')}>
+            <p className={cn('text-xs uppercase tracking-[0.35em] text-white/60', collapsed && 'text-[9px]')}>
+              Fiscal Hub
+            </p>
+            {!collapsed ? <h2 className="font-display text-2xl mt-2">Painel</h2> : null}
           </div>
-          <nav className="flex-1 px-4 pb-6 space-y-5 overflow-y-auto">
+          <div className={cn('flex items-center', collapsed ? 'px-3' : 'px-6')}>
+            <button
+              onClick={() => setCollapsed((prev) => !prev)}
+              className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 hover:text-white"
+            >
+              {collapsed ? '→' : '←'}
+            </button>
+          </div>
+          <nav className={cn('flex-1 pb-6 space-y-5 overflow-y-auto', collapsed ? 'px-2' : 'px-4')}>
             {navSections.map((section) => (
               <div key={section.title} className="space-y-2">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 px-2">
-                  {section.title}
-                </p>
+                {!collapsed ? (
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 px-2">
+                    {section.title}
+                  </p>
+                ) : null}
                 <div className="flex flex-col gap-1">
                   {section.links.map((link) => (
                     <NavLink
@@ -101,21 +119,22 @@ export default function AppLayout() {
                           'rounded-xl px-3 py-2 text-sm transition',
                           isActive
                             ? 'bg-white/15 text-white'
-                            : 'text-white/70 hover:bg-white/10 hover:text-white'
+                            : 'text-white/70 hover:bg-white/10 hover:text-white',
+                          collapsed && 'px-2 text-xs text-center'
                         )
                       }
                       end={link.to === '/'}
                     >
-                      {link.label}
+                      {collapsed ? link.label.slice(0, 1) : link.label}
                     </NavLink>
                   ))}
                 </div>
               </div>
             ))}
           </nav>
-          <div className="px-6 pb-6">
+          <div className={cn('pb-6', collapsed ? 'px-3' : 'px-6')}>
             <Button variant="outline" size="sm" onClick={() => signOut()}>
-              Sair
+              {collapsed ? 'Sair' : 'Sair'}
             </Button>
           </div>
         </aside>
