@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import AlocacaoPage from '../alocacoes/AlocacaoPage';
 import MapaCaixasPage from '../mapa/MapaCaixasPage';
 import CafePage from '../cafe/CafePage';
@@ -43,7 +43,7 @@ function VisaoGargaloPanel() {
             >
               <span>{hora}</span>
               <span>
-                {risco ? 'Risco de gargalo' : 'Cobertura estável'} • Disponíveis {disponiveis}
+                {risco ? 'Risco de gargalo' : 'Cobertura estável'} · Disponíveis {disponiveis}
               </span>
             </div>
           );
@@ -57,8 +57,10 @@ export default function GestaoPage() {
   const [active, setActive] = useState<TabId>('alocacao');
   const data = useDashboardData();
 
-  const badges = useMemo(
+  const badges = useMemo<Record<TabId, number>>(
     () => ({
+      alocacao: 0,
+      mapa: 0,
       cafe: data.pausasEmAtraso,
       visao: data.pausasEmAtraso > 0 ? 1 : 0,
     }),

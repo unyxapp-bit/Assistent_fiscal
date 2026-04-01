@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
 import { useAuth } from '../auth/AuthProvider';
@@ -21,13 +21,16 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card>
           <h2 className="font-display text-lg mb-2">Conta</h2>
-          <p className="text-sm text-muted">ID: {user?.id ?? '—'}</p>
-          <p className="text-sm text-muted">Email: {user?.email ?? '—'}</p>
+          <p className="text-sm text-muted">ID: {user?.id ?? '-'}</p>
+          <p className="text-sm text-muted">Email: {user?.email ?? '-'}</p>
           {user?.email ? (
             <Button
               className="mt-4"
               variant="outline"
-              onClick={() => resetPassword(user.email)}
+              onClick={() => {
+                if (!user?.email) return;
+                resetPassword(user.email);
+              }}
             >
               Enviar redefinição de senha
             </Button>
@@ -40,8 +43,8 @@ export default function ProfilePage() {
           ) : fiscal ? (
             <div className="text-sm text-muted space-y-1">
               <p>Nome: {fiscal.nome}</p>
-              <p>Telefone: {fiscal.telefone ?? '—'}</p>
-              <p>Loja: {fiscal.loja ?? '—'}</p>
+              <p>Telefone: {fiscal.telefone ?? '-'}</p>
+              <p>Loja: {fiscal.loja ?? '-'}</p>
             </div>
           ) : (
             <p className="text-sm text-muted">Nenhum registro fiscal encontrado.</p>
