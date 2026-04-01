@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/copy-404.cjs",
     "preview": "vite preview",
     "migrate:legacy": "powershell -ExecutionPolicy Bypass -File ./scripts/migrate-from-dart.ps1"
   },

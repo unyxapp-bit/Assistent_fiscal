@@ -57,7 +57,7 @@ import PizzasCadastroPage from '../features/pizzaria/PizzasCadastroPage';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <SplashGate>
         <Routes>
           <Route element={<AuthLayout />}>
