@@ -1,43 +1,33 @@
-﻿import React from 'react';
+import React from 'react';
+import { Button as HeroButton } from '@heroui/react';
 import { cn } from '../lib/cn';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
-const base =
-  'inline-flex items-center justify-center gap-2 rounded-full font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-chalk disabled:opacity-50 disabled:pointer-events-none';
+type HeroButtonProps = React.ComponentProps<typeof HeroButton>;
 
-const variants: Record<ButtonVariant, string> = {
-  primary:
-    'bg-primary text-white hover:bg-primaryDark focus-visible:ring-primary',
-  outline:
-    'border border-cloud text-ink hover:border-primary hover:text-primary focus-visible:ring-primary',
-  ghost:
-    'text-ink hover:bg-cloud/60 focus-visible:ring-primary',
-  danger:
-    'bg-danger text-white hover:bg-[#8E1B13] focus-visible:ring-danger',
-};
-
-const sizes: Record<ButtonSize, string> = {
-  sm: 'h-9 px-4 text-sm',
-  md: 'h-11 px-5 text-sm',
-  lg: 'h-12 px-6 text-base',
-};
-
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = Omit<HeroButtonProps, 'variant' | 'size' | 'isDisabled'> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  disabled?: boolean;
+  isDisabled?: boolean;
 };
 
 export function Button({
   className,
   variant = 'primary',
   size = 'md',
+  disabled,
+  isDisabled,
   ...props
 }: ButtonProps) {
   return (
-    <button
-      className={cn(base, variants[variant], sizes[size], className)}
+    <HeroButton
+      className={cn(className)}
+      variant={variant}
+      size={size}
+      isDisabled={disabled ?? isDisabled}
       {...props}
     />
   );

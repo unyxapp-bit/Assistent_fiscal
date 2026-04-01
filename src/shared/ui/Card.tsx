@@ -1,26 +1,29 @@
-﻿import React from 'react';
+import React from 'react';
+import { Card as HeroCard } from '@heroui/react';
 import { cn } from '../lib/cn';
 
-export type CardProps = React.HTMLAttributes<HTMLDivElement>;
+export type CardProps = React.ComponentProps<typeof HeroCard>;
 
 export function Card({ className, ...props }: CardProps) {
-  return <div className={cn('card p-5', className)} {...props} />;
+  return <HeroCard className={cn('p-5', className)} {...props} />;
 }
 
-export function CardHeader({ className, ...props }: CardProps) {
+export type CardHeaderProps = React.ComponentProps<typeof HeroCard.Header>;
+
+export function CardHeader({ className, ...props }: CardHeaderProps) {
   return (
-    <div className={cn('flex items-start justify-between gap-4', className)} {...props} />
+    <HeroCard.Header className={cn('flex items-start justify-between gap-4', className)} {...props} />
   );
 }
 
-export function CardTitle({ className, ...props }: CardProps) {
-  return (
-    <h3 className={cn('font-display text-lg text-ink', className)} {...props} />
-  );
+export type CardTitleProps = React.ComponentProps<typeof HeroCard.Title>;
+
+export function CardTitle({ className, ...props }: CardTitleProps) {
+  return <HeroCard.Title className={cn('font-display text-lg text-ink', className)} {...props} />;
 }
 
-export function CardDescription({ className, ...props }: CardProps) {
-  return (
-    <p className={cn('text-sm text-muted', className)} {...props} />
-  );
+export type CardDescriptionProps = React.ComponentProps<typeof HeroCard.Description>;
+
+export function CardDescription({ className, ...props }: CardDescriptionProps) {
+  return <HeroCard.Description className={cn('text-sm text-muted', className)} {...props} />;
 }

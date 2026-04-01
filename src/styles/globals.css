@@ -1,9 +1,62 @@
-﻿@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@heroui/styles";
 
 :root {
   color-scheme: light;
+}
+
+@layer base {
+  input.border-cloud,
+  select.border-cloud,
+  textarea.border-cloud {
+    border-radius: var(--radius-field);
+    border-width: var(--border-width-field);
+    border-color: var(--color-field-border);
+    background-color: var(--color-field);
+    color: var(--color-field-foreground);
+    box-shadow: var(--shadow-field);
+    outline: none;
+    transition:
+      background-color 150ms var(--ease-smooth),
+      border-color 150ms var(--ease-smooth),
+      box-shadow 150ms var(--ease-out);
+  }
+
+  input.border-cloud::placeholder,
+  textarea.border-cloud::placeholder {
+    color: var(--color-field-placeholder);
+  }
+
+  input.border-cloud:hover:not(:focus):not(:focus-visible),
+  select.border-cloud:hover:not(:focus):not(:focus-visible),
+  textarea.border-cloud:hover:not(:focus):not(:focus-visible) {
+    background-color: var(--color-field-hover);
+    border-color: var(--color-field-border-hover);
+  }
+
+  input.border-cloud:focus,
+  select.border-cloud:focus,
+  textarea.border-cloud:focus {
+    border-color: var(--color-field-border-focus);
+    background-color: var(--color-field-focus);
+    @apply status-focused-field;
+  }
+
+  input.border-cloud[aria-invalid='true'],
+  input.border-cloud:invalid,
+  select.border-cloud[aria-invalid='true'],
+  select.border-cloud:invalid,
+  textarea.border-cloud[aria-invalid='true'],
+  textarea.border-cloud:invalid {
+    background-color: var(--color-field-focus);
+    @apply status-invalid-field;
+  }
+
+  input.border-cloud:disabled,
+  select.border-cloud:disabled,
+  textarea.border-cloud:disabled {
+    @apply status-disabled;
+  }
 }
 
 body {
@@ -27,3 +80,4 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+

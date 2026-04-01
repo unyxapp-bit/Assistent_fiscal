@@ -1,7 +1,11 @@
 ﻿import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: [
+    './index.html',
+    './src/**/*.{ts,tsx}',
+    './node_modules/@heroui/react/dist/**/*.{js,mjs}',
+  ],
   theme: {
     extend: {
       fontFamily: {

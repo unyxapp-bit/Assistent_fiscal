@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
@@ -13,6 +13,12 @@ const quickLinks = [
 
 export default function DashboardHome() {
   const data = useDashboardData();
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   const hasAlerts =
     data.pausasEmAtraso +
       data.lembretesVencidos +
@@ -59,14 +65,21 @@ export default function DashboardHome() {
       <section className="surface p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted">Início do turno</p>
             <h1 className="font-display text-3xl text-ink">Painel do Fiscal</h1>
-            <p className="text-sm text-muted mt-2 max-w-2xl">
-              Dados sincronizados com Supabase em tempo real. Atualize o turno e
-              monitore as operações do dia.
-            </p>
           </div>
-          <Button className="self-start">Começar turno</Button>
+          <div className="flex items-center gap-4">
+            <div className="rounded-2xl border border-cloud bg-white px-5 py-3 text-sm shadow-sm">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Horário</p>
+              <p className="mt-1 text-2xl font-semibold text-ink">
+                {now.toLocaleTimeString('pt-BR', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                })}
+              </p>
+            </div>
+            <Button className="self-start">Começar turno</Button>
+          </div>
         </div>
         <div
           className={`mt-6 rounded-2xl border px-4 py-3 text-sm ${
@@ -175,3 +188,5 @@ export default function DashboardHome() {
     </div>
   );
 }
+
+
