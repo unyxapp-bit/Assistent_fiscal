@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button as HeroButton } from '@heroui/react';
-import type { ButtonRenderProps } from 'react-aria-components';
 import { cn } from '../lib/cn';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'danger';
@@ -23,11 +22,8 @@ export function Button({
   isDisabled,
   ...props
 }: ButtonProps) {
-  const resolvedClassName =
-    typeof className === 'function'
-      ? (values: ButtonRenderProps & { defaultClassName?: string }) =>
-          cn(className(values))
-      : cn(className);
+  const resolvedClassName: HeroButtonProps['className'] =
+    typeof className === 'function' ? (values) => cn(className(values)) : cn(className);
 
   return (
     <HeroButton
