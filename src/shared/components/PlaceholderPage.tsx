@@ -15,7 +15,7 @@ export function PlaceholderPage({ title, subtitle, children }: PlaceholderPagePr
         <h1 className="font-display text-3xl text-ink">{title}</h1>
         {subtitle ? <p className="text-muted mt-2 max-w-2xl">{subtitle}</p> : null}
       </div>
-      <Card className="bg-white/80">
+      <Card className="bg-surfaceStrong">
         <p className="text-sm text-muted">
           Esta área será reescrita com a lógica original do Flutter. O layout final terá
           KPIs, filtros e integrações Supabase do módulo.

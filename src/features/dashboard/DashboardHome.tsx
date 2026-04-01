@@ -182,7 +182,7 @@ export default function DashboardHome() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="rounded-full border border-cloud/70 bg-white px-3 py-1.5 text-[11px] font-semibold text-ink hover:border-primary hover:text-primary"
+                  className="rounded-full border border-border bg-[#11172b] px-3 py-1.5 text-[11px] font-semibold text-ink hover:border-primary hover:text-white"
                 >
                   {link.label}
                 </Link>
@@ -210,7 +210,7 @@ export default function DashboardHome() {
                   <Link
                     key={alert.label}
                     to={alert.to}
-                    className="inline-flex rounded-full border border-cloud/70 bg-white px-3 py-1.5 text-[11px] font-semibold text-ink hover:border-primary hover:text-primary"
+                    className="inline-flex rounded-full border border-border bg-[#11172b] px-3 py-1.5 text-[11px] font-semibold text-ink hover:border-primary hover:text-white"
                   >
                     {alert.label}
                   </Link>
@@ -289,13 +289,13 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
-      <section className="surface p-6">
+      <section className="surface p-6 border border-border/80 bg-gradient-to-br from-[#202a4b] to-[#141a2f]">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
             <h1 className="font-display text-3xl text-ink">Painel do Fiscal</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl border border-cloud bg-white px-5 py-3 text-sm shadow-sm">
+            <div className="rounded-2xl border border-border bg-[#11172b] px-5 py-3 text-sm shadow-[0_14px_28px_-22px_rgba(4,6,14,0.7)]">
               <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Horário</p>
               <p className="mt-1 text-2xl font-semibold text-ink">
                 {now.toLocaleTimeString('pt-BR', {
@@ -305,12 +305,14 @@ export default function DashboardHome() {
                 })}
               </p>
             </div>
-            <Button className="self-start">Começar turno</Button>
+            <Button className="self-start bg-action text-white hover:bg-action-hover">
+              Começar turno
+            </Button>
           </div>
         </div>
         <div
           className={`mt-6 rounded-2xl border px-4 py-3 text-sm ${
-            hasAlerts ? 'border-danger/40 bg-danger/5 text-danger' : 'border-cloud bg-white'
+            hasAlerts ? 'border-danger/50 bg-danger/20 text-danger' : 'border-border bg-[#11172b] text-muted'
           }`}
         >
           {hasAlerts
@@ -335,13 +337,13 @@ export default function DashboardHome() {
             >
               <Card
                 className={cn(
-                  'relative p-3 md:p-4 bg-white border border-ink/10 shadow-[0_18px_36px_-24px_rgba(12,13,16,0.45)] transition hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-[0_22px_48px_-26px_rgba(12,13,16,0.55)]',
+                  'relative p-3 md:p-4 bg-surfaceStrong border border-border shadow-[0_18px_36px_-24px_rgba(4,6,14,0.75)] transition hover:-translate-y-0.5 hover:border-borderDark hover:shadow-[0_22px_48px_-26px_rgba(4,6,14,0.85)]',
                   draggingId === id && 'ring-2 ring-primary/30'
                 )}
               >
                 <button
                   type="button"
-                  className="absolute right-3 top-3 rounded-md border border-ink/10 bg-white px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-ink cursor-grab active:cursor-grabbing"
+                  className="absolute right-3 top-3 rounded-md border border-border bg-[#11172b] px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-white cursor-grab active:cursor-grabbing"
                   draggable
                   onDragStart={(event) => {
                     setDraggingId(id);

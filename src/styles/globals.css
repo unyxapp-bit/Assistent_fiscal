@@ -2,21 +2,22 @@
 @import "@heroui/styles";
 
 :root {
-  color-scheme: light;
-  --color-surface: #ffffff;
-  --color-bg: #f4f4f4;
-  --color-border: #e0e0e0;
-  --color-border-dark: #c8c8c8;
-  --color-text-primary: #2c2c2a;
-  --color-text-secondary: #888780;
-  --color-action: #444441;
-  --color-action-hover: #2c2c2a;
-  --color-success: #639922;
-  --color-success-bg: #eaf3de;
-  --color-danger: #e24b4a;
-  --color-danger-bg: #fcebeb;
-  --color-warning: #ba7517;
-  --color-warning-bg: #faeeda;
+  color-scheme: dark;
+  --color-surface: #1c2440;
+  --color-surface-strong: #232c4a;
+  --color-bg: #0f1324;
+  --color-border: #2f3a5a;
+  --color-border-dark: #3a4771;
+  --color-text-primary: #f1f4fa;
+  --color-text-secondary: #9aa4b5;
+  --color-action: #3b82f6;
+  --color-action-hover: #2563eb;
+  --color-success: #6aa84f;
+  --color-success-bg: #23351d;
+  --color-danger: #e45b5b;
+  --color-danger-bg: #5b2c35;
+  --color-warning: #f1a23b;
+  --color-warning-bg: #3a2b13;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius-sm: 6px;
@@ -80,7 +81,10 @@
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-bg);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.12), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(69, 72, 105, 0.3), transparent 45%),
+    var(--color-bg);
   color: var(--color-text-primary);
 }
 
@@ -91,10 +95,10 @@ body {
 }
 
 .surface {
-  background: var(--color-surface);
+  background: linear-gradient(135deg, rgba(35, 44, 74, 0.95), rgba(19, 25, 45, 0.95));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 18px 40px -28px rgba(12, 13, 16, 0.25);
+  box-shadow: 0 20px 45px -30px rgba(4, 6, 14, 0.8);
 }
 
 .no-scrollbar {

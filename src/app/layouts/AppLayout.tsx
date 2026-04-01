@@ -149,7 +149,7 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-chalk">
       <div className="min-h-screen">
-        <header className="sticky top-0 z-20 border-b border-cloud bg-white/95 backdrop-blur shadow-[0_12px_30px_-24px_rgba(12,13,16,0.35)]">
+        <header className="sticky top-0 z-20 border-b border-border bg-[#1a2032]/95 backdrop-blur shadow-[0_14px_32px_-24px_rgba(6,8,18,0.7)]">
           <div className="px-6 py-4">
             <div
               className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4"
@@ -162,7 +162,7 @@ export default function AppLayout() {
               </div>
 
               <div className="justify-self-center">
-                <div className="inline-flex items-center rounded-full bg-[#efe7da] p-1 border border-cloud/70 shadow-[0_8px_20px_-18px_rgba(12,13,16,0.45)]">
+                <div className="inline-flex items-center rounded-full bg-[#11172b] p-1 border border-border shadow-[0_8px_20px_-18px_rgba(4,6,14,0.8)]">
                   {visibleSections.map((section) => (
                     <button
                       key={section.title}
@@ -171,8 +171,8 @@ export default function AppLayout() {
                       className={cn(
                         'relative px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition rounded-full',
                         activeSection === section.title
-                          ? 'bg-white text-ink shadow-sm border border-cloud'
-                          : 'text-muted hover:text-ink'
+                          ? 'bg-[#2a3550] text-white shadow-sm border border-borderDark'
+                          : 'text-muted hover:text-white'
                       )}
                     >
                       {section.title}
@@ -182,7 +182,7 @@ export default function AppLayout() {
               </div>
 
               <div className="flex items-center justify-end gap-3">
-                <div className="hidden md:flex items-center gap-2 rounded-full border border-cloud bg-white px-4 py-2 text-sm text-muted">
+                <div className="hidden md:flex items-center gap-2 rounded-full border border-border bg-[#11172b] px-4 py-2 text-sm text-muted">
                   <span>Buscar</span>
                   <input
                     className="bg-transparent outline-none text-ink placeholder:text-muted w-44"
@@ -193,7 +193,7 @@ export default function AppLayout() {
                   <button
                     type="button"
                     onClick={() => setProfileOpen((prev) => !prev)}
-                    className="flex items-center gap-2 rounded-full border border-cloud bg-white px-3 py-2 text-sm hover:border-primary/60"
+                    className="flex items-center gap-2 rounded-full border border-border bg-[#11172b] px-3 py-2 text-sm hover:border-primary/60"
                   >
                     <div className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center">
                       {nomeFiscal.slice(0, 1).toUpperCase()}
@@ -201,12 +201,12 @@ export default function AppLayout() {
                     <span className="text-sm">{nomeFiscal}</span>
                   </button>
                   {profileOpen ? (
-                    <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-cloud bg-white p-2 shadow-[0_18px_40px_-28px_rgba(12,13,16,0.45)]">
+                    <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-border bg-surface p-2 shadow-[0_18px_40px_-28px_rgba(4,6,14,0.75)]">
                       {accountLinks.map((link) => (
                         <NavLink
                           key={link.to}
                           to={link.to}
-                          className="block rounded-xl px-3 py-2 text-sm text-ink hover:bg-cloud/60"
+                          className="block rounded-xl px-3 py-2 text-sm text-ink hover:bg-white/10"
                           onClick={() => setProfileOpen(false)}
                         >
                           {link.label}
@@ -215,14 +215,19 @@ export default function AppLayout() {
                     </div>
                   ) : null}
                 </div>
-                <Button variant="outline" size="sm" onClick={() => signOut()}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-border text-ink hover:border-primary hover:text-white"
+                  onClick={() => signOut()}
+                >
                   Sair
                 </Button>
               </div>
 
               {menuOpen ? (
                 <div
-                  className="absolute top-full z-30 mt-3 w-64 rounded-2xl border border-cloud bg-white p-2 shadow-[0_18px_40px_-28px_rgba(12,13,16,0.45)]"
+                  className="absolute top-full z-30 mt-3 w-64 rounded-2xl border border-border bg-surface p-2 shadow-[0_18px_40px_-28px_rgba(4,6,14,0.75)]"
                   style={{
                     left: menuLeft ?? 0,
                     transform: 'translateX(-50%)',
@@ -239,7 +244,7 @@ export default function AppLayout() {
                         className={({ isActive }) =>
                           cn(
                             'block rounded-xl px-3 py-2 text-sm transition',
-                            isActive ? 'bg-primary text-white' : 'text-ink hover:bg-cloud/60'
+                            isActive ? 'bg-primary text-white' : 'text-ink hover:bg-white/10'
                           )
                         }
                         end={link.to === '/'}

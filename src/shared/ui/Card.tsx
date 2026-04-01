@@ -5,7 +5,15 @@ import { cn } from '../lib/cn';
 export type CardProps = React.ComponentProps<typeof HeroCard>;
 
 export function Card({ className, ...props }: CardProps) {
-  return <HeroCard className={cn('p-5', className)} {...props} />;
+  return (
+    <HeroCard
+      className={cn(
+        'rounded-[14px] border border-border bg-surface p-5 text-ink shadow-[0_18px_40px_-28px_rgba(4,6,14,0.7)]',
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
 export type CardHeaderProps = React.ComponentProps<typeof HeroCard.Header>;
