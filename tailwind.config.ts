@@ -9,20 +9,39 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-        display: ['"Fraunces"', 'serif'],
+        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        display: ['"Inter"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
-        ink: '#0C0D10',
-        chalk: '#F6F4F0',
-        cloud: '#E7E4DE',
-        primary: '#1B5D42',
-        primaryDark: '#11402D',
-        accent: '#C8A24E',
-        accentSoft: '#F1E1B8',
-        danger: '#B42318',
-        success: '#0F766E',
-        info: '#1F4F99',
+        surface: '#FFFFFF',
+        bg: '#F4F4F4',
+        border: '#E0E0E0',
+        borderDark: '#C8C8C8',
+        ink: '#2C2C2A',
+        muted: '#888780',
+        action: {
+          DEFAULT: '#444441',
+          hover: '#2C2C2A',
+        },
+        success: {
+          DEFAULT: '#639922',
+          light: '#EAF3DE',
+        },
+        danger: {
+          DEFAULT: '#E24B4A',
+          light: '#FCEBEB',
+        },
+        warning: {
+          DEFAULT: '#BA7517',
+          light: '#FAEEDA',
+        },
+        chalk: '#F4F4F4',
+        cloud: '#E0E0E0',
+        primary: '#444441',
+        primaryDark: '#2C2C2A',
+        accent: '#BA7517',
+        accentSoft: '#FAEEDA',
       },
       boxShadow: {
         soft: '0 18px 40px -28px rgba(12, 13, 16, 0.45)',
