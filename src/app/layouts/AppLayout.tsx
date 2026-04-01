@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { useFiscal } from '../../features/conta/useFiscal';
 import { Button } from '../../shared/ui/Button';
@@ -70,20 +70,19 @@ function getGreeting() {
 export default function AppLayout() {
   const { user, signOut } = useAuth();
   const { fiscal } = useFiscal();
-  const [activeSection, setActiveSection] = useState(navSections[0]?.title ?? '');
-  const [menuOpen, setMenuOpen] = useState<string | null>(null);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const profileRef = useRef<HTMLDivElement | null>(null);
-  const navRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const activeLinks = useMemo(() => {
-    return navSections.find((section) => section.title === activeSection)?.links ?? [];
-  }, [activeSection]);
+  const [activeSection, setActiveSection] = useState(navSections[0]?.title ?? '');
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [menuLeft, setMenuLeft] = useState<number | null>(null);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-  const visibleSections = useMemo(() => {
-    return navSections.filter((section) => !section.hidden);
-  }, []);
+  const keepMenuOpenRef = useRef(false);
+  const profileRef = useRef<HTMLDivElement | null>(null);
+  const navRowRef = useRef<HTMLDivElement | null>(null);
+
+  const visibleSections = useMemo(() => navSections.filter((section) => !section.hidden), []);
 
   const accountLinks = useMemo(() => {
     return navSections.find((section) => section.title === 'Conta')?.links ?? [];
@@ -101,7 +100,7 @@ export default function AppLayout() {
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setProfileOpen(false);
       }
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+      if (navRowRef.current && !navRowRef.current.contains(event.target as Node)) {
         setMenuOpen(null);
       }
     };
@@ -122,113 +121,141 @@ export default function AppLayout() {
     if (matched && matched.title !== activeSection) {
       setActiveSection(matched.title);
     }
-    setMenuOpen(null);
+
+    if (keepMenuOpenRef.current) {
+      keepMenuOpenRef.current = false;
+    } else {
+      setMenuOpen(null);
+    }
   }, [location.pathname, activeSection]);
+
+  const handleTabClick =
+    (section: (typeof navSections)[number]) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      const nextOpen = menuOpen === section.title ? null : section.title;
+      setActiveSection(section.title);
+      setMenuOpen(nextOpen);
+
+      if (nextOpen) {
+        keepMenuOpenRef.current = true;
+        const firstLink = section.links[0]?.to;
+        if (firstLink) navigate(firstLink);
+
+        const buttonRect = event.currentTarget.getBoundingClientRect();
+        const containerRect = navRowRef.current?.getBoundingClientRect();
+        if (containerRect) {
+          setMenuLeft(buttonRect.left - containerRect.left + buttonRect.width / 2);
+        }
+      }
+    };
 
   return (
     <div className="min-h-screen bg-chalk">
       <div className="min-h-screen">
         <header className="sticky top-0 z-20 border-b border-cloud bg-white/95 backdrop-blur shadow-[0_12px_30px_-24px_rgba(12,13,16,0.35)]">
-          <div className="px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="font-display text-xl text-ink">
-                {getGreeting()}, {nomeFiscal}
-              </h1>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2 rounded-full border border-cloud bg-white px-4 py-2 text-sm text-muted">
-                <span>Buscar</span>
-                <input
-                  className="bg-transparent outline-none text-ink placeholder:text-muted w-44"
-                  placeholder="buscar no painel"
-                />
+          <div className="px-6 py-4">
+            <div
+              className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4"
+              ref={navRowRef}
+            >
+              <div>
+                <h1 className="font-display text-xl text-ink">
+                  {getGreeting()}, {nomeFiscal}
+                </h1>
               </div>
-              <div className="relative" ref={profileRef}>
-                <button
-                  type="button"
-                  onClick={() => setProfileOpen((prev) => !prev)}
-                  className="flex items-center gap-2 rounded-full border border-cloud bg-white px-3 py-2 text-sm hover:border-primary/60"
+
+              <div className="justify-self-center">
+                <div className="inline-flex items-center rounded-full bg-[#efe7da] p-1 border border-cloud/70 shadow-[0_8px_20px_-18px_rgba(12,13,16,0.45)]">
+                  {visibleSections.map((section) => (
+                    <button
+                      key={section.title}
+                      type="button"
+                      onClick={handleTabClick(section)}
+                      className={cn(
+                        'relative px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition rounded-full',
+                        activeSection === section.title
+                          ? 'bg-white text-ink shadow-sm border border-cloud'
+                          : 'text-muted hover:text-ink'
+                      )}
+                    >
+                      {section.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3">
+                <div className="hidden md:flex items-center gap-2 rounded-full border border-cloud bg-white px-4 py-2 text-sm text-muted">
+                  <span>Buscar</span>
+                  <input
+                    className="bg-transparent outline-none text-ink placeholder:text-muted w-44"
+                    placeholder="buscar no painel"
+                  />
+                </div>
+                <div className="relative" ref={profileRef}>
+                  <button
+                    type="button"
+                    onClick={() => setProfileOpen((prev) => !prev)}
+                    className="flex items-center gap-2 rounded-full border border-cloud bg-white px-3 py-2 text-sm hover:border-primary/60"
+                  >
+                    <div className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+                      {nomeFiscal.slice(0, 1).toUpperCase()}
+                    </div>
+                    <span className="text-sm">{nomeFiscal}</span>
+                  </button>
+                  {profileOpen ? (
+                    <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-cloud bg-white p-2 shadow-[0_18px_40px_-28px_rgba(12,13,16,0.45)]">
+                      {accountLinks.map((link) => (
+                        <NavLink
+                          key={link.to}
+                          to={link.to}
+                          className="block rounded-xl px-3 py-2 text-sm text-ink hover:bg-cloud/60"
+                          onClick={() => setProfileOpen(false)}
+                        >
+                          {link.label}
+                        </NavLink>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                <Button variant="outline" size="sm" onClick={() => signOut()}>
+                  Sair
+                </Button>
+              </div>
+
+              {menuOpen ? (
+                <div
+                  className="absolute top-full z-30 mt-3 w-64 rounded-2xl border border-cloud bg-white p-2 shadow-[0_18px_40px_-28px_rgba(12,13,16,0.45)]"
+                  style={{
+                    left: menuLeft ?? 0,
+                    transform: 'translateX(-50%)',
+                  }}
                 >
-                  <div className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center">
-                    {nomeFiscal.slice(0, 1).toUpperCase()}
-                  </div>
-                  <span className="text-sm">{nomeFiscal}</span>
-                </button>
-                {profileOpen ? (
-                  <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-cloud bg-white p-2 shadow-[0_18px_40px_-28px_rgba(12,13,16,0.45)]">
-                    {accountLinks.map((link) => (
+                  <p className="px-3 py-2 text-[10px] uppercase tracking-[0.35em] text-muted">
+                    {menuOpen}
+                  </p>
+                  <div className="space-y-1">
+                    {menuLinks.map((link) => (
                       <NavLink
                         key={link.to}
                         to={link.to}
-                        className="block rounded-xl px-3 py-2 text-sm text-ink hover:bg-cloud/60"
-                        onClick={() => setProfileOpen(false)}
+                        className={({ isActive }) =>
+                          cn(
+                            'block rounded-xl px-3 py-2 text-sm transition',
+                            isActive ? 'bg-primary text-white' : 'text-ink hover:bg-cloud/60'
+                          )
+                        }
+                        end={link.to === '/'}
+                        onClick={() => setMenuOpen(null)}
                       >
                         {link.label}
                       </NavLink>
                     ))}
                   </div>
-                ) : null}
-              </div>
-              <Button variant="outline" size="sm" onClick={() => signOut()}>
-                Sair
-              </Button>
+                </div>
+              ) : null}
             </div>
           </div>
-
-          <nav
-            className="px-6 pb-4 pt-3 bg-[#f7f2e8] border-t border-cloud/60 relative"
-            ref={navRef}
-          >
-            <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-3">
-              <div className="inline-flex items-center rounded-full bg-[#efe7da] p-1 border border-cloud/70 shadow-[0_8px_20px_-18px_rgba(12,13,16,0.45)]">
-                {visibleSections.map((section) => (
-                  <button
-                    key={section.title}
-                    type="button"
-                    onClick={() => {
-                      setActiveSection(section.title);
-                      setMenuOpen((prev) => (prev === section.title ? null : section.title));
-                    }}
-                    className={cn(
-                      'relative px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition rounded-full',
-                      activeSection === section.title
-                        ? 'bg-white text-ink shadow-sm border border-cloud'
-                        : 'text-muted hover:text-ink'
-                    )}
-                  >
-                    {section.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-            {menuOpen ? (
-              <div className="absolute left-6 top-full z-30 mt-2 w-64 rounded-2xl border border-cloud bg-white p-2 shadow-[0_18px_40px_-28px_rgba(12,13,16,0.45)]">
-                <p className="px-3 py-2 text-[10px] uppercase tracking-[0.35em] text-muted">
-                  {menuOpen}
-                </p>
-                <div className="space-y-1">
-                  {menuLinks.map((link) => (
-                    <NavLink
-                      key={link.to}
-                      to={link.to}
-                      className={({ isActive }) =>
-                        cn(
-                          'block rounded-xl px-3 py-2 text-sm transition',
-                          isActive
-                            ? 'bg-primary text-white'
-                            : 'text-ink hover:bg-cloud/60'
-                        )
-                      }
-                      end={link.to === '/'}
-                      onClick={() => setMenuOpen(null)}
-                    >
-                      {link.label}
-                    </NavLink>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </nav>
         </header>
 
         <main className="px-6 py-8">

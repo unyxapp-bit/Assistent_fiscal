@@ -120,7 +120,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Colaboradores ativos</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : data.colaboradoresAtivos}
             </p>
             <p className="mt-1 text-xs text-muted">Tabela `colaboradores`.</p>
@@ -133,7 +133,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas disponíveis</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : data.caixasAtivos}
             </p>
             <p className="mt-1 text-xs text-muted">Tabela `caixas`.</p>
@@ -146,7 +146,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Alocados agora</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : data.alocados}
             </p>
             <p className="mt-1 text-xs text-muted">Tabela `alocações`.</p>
@@ -159,7 +159,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Em pausa / em rota</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : `${data.pausasAtivas} / ${data.entregasEmRota}`}
             </p>
             <p className="mt-1 text-xs text-muted">`pausas_cafe` e `entregas`.</p>
@@ -226,7 +226,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Checklists pendentes</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : data.checklistsPendentes}
             </p>
             <p className="mt-1 text-xs text-muted">Monitorar abertura/fechamento.</p>
@@ -239,7 +239,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Ocorrências abertas</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : data.ocorrenciasAbertas}
             </p>
             <p className="mt-1 text-xs text-muted">Exige follow-up rápido.</p>
@@ -252,7 +252,7 @@ export default function DashboardHome() {
         content: (
           <>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Entregas pendentes</p>
-            <p className="mt-3 text-2xl font-semibold text-ink">
+            <p className="mt-2 text-2xl font-semibold text-ink">
               {data.isLoading ? '...' : data.entregasSeparadas}
             </p>
             <p className="mt-1 text-xs text-muted">Aguardando saída.</p>
@@ -327,25 +327,32 @@ export default function DashboardHome() {
             <div
               key={id}
               className={cn('transition-transform', card.span)}
-              draggable
-              onDragStart={(event) => {
-                setDraggingId(id);
-                event.dataTransfer.effectAllowed = 'move';
-                event.dataTransfer.setData('text/plain', id);
-              }}
               onDragOver={(event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = 'move';
               }}
               onDrop={handleDrop(id)}
-              onDragEnd={() => setDraggingId(null)}
             >
               <Card
                 className={cn(
-                  'p-4 bg-white border border-cloud/80 shadow-[0_12px_30px_-22px_rgba(12,13,16,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-22px_rgba(12,13,16,0.35)] cursor-grab active:cursor-grabbing',
+                  'relative p-4 bg-white border border-cloud/80 shadow-[0_16px_36px_-22px_rgba(12,13,16,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_44px_-22px_rgba(12,13,16,0.45)]',
                   draggingId === id && 'ring-2 ring-primary/30'
                 )}
               >
+                <button
+                  type="button"
+                  className="absolute right-3 top-3 rounded-md border border-cloud/70 bg-white px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-ink cursor-grab active:cursor-grabbing"
+                  draggable
+                  onDragStart={(event) => {
+                    setDraggingId(id);
+                    event.dataTransfer.effectAllowed = 'move';
+                    event.dataTransfer.setData('text/plain', id);
+                  }}
+                  onDragEnd={() => setDraggingId(null)}
+                  aria-label="Arrastar card"
+                >
+                  ||
+                </button>
                 {card.content}
               </Card>
             </div>
