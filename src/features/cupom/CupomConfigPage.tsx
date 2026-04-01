@@ -72,7 +72,7 @@ export default function CupomConfigPage() {
                 if (typeof value === 'boolean') {
                   return (
                     <label key={key} className="flex items-center justify-between text-sm">
-                      <span>{key.replace(/_/g, ' ')}</span>
+                      <span className="text-ink">{key.replace(/_/g, ' ')}</span>
                       <input
                         type="checkbox"
                         checked={value}
@@ -82,7 +82,7 @@ export default function CupomConfigPage() {
                   );
                 }
                 return (
-                  <label key={key} className="block text-sm">
+                  <label key={key} className="block text-sm text-ink">
                     {key.replace(/_/g, ' ')}
                     <input
                       type={typeof value === 'number' ? 'number' : 'text'}

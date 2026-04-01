@@ -85,28 +85,38 @@ export default function PizzasCadastroPage() {
         <div className="text-xs text-muted flex items-center">Total: {pizzas.length}</div>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {isLoading ? (
           <Card>Carregando pizzas...</Card>
         ) : filtered.length === 0 ? (
           <Card>Nenhuma pizza cadastrada.</Card>
         ) : (
           filtered.map((pizza) => (
-            <Card key={pizza.id} className="flex items-center justify-between">
+            <Card
+              key={pizza.id}
+              className="flex h-full flex-col justify-between gap-3 rounded-xl p-4"
+            >
               <div>
-                <p className="font-semibold">{pizza.nome}</p>
+                <p className="font-semibold text-ink text-base">
+                  {pizza.nome?.trim() || 'Pizza sem nome'}
+                </p>
                 <p className="text-xs text-muted">{pizza.tamanho}</p>
                 {pizza.ingredientes ? (
                   <p className="text-xs text-muted">{pizza.ingredientes}</p>
                 ) : null}
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => atualizarPizza({ id: pizza.id, patch: { ativa: !pizza.ativa } })}
-              >
-                {pizza.ativa ? 'Desativar' : 'Ativar'}
-              </Button>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted">
+                  {pizza.ativa ? 'Ativa' : 'Inativa'}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => atualizarPizza({ id: pizza.id, patch: { ativa: !pizza.ativa } })}
+                >
+                  {pizza.ativa ? 'Desativar' : 'Ativar'}
+                </Button>
+              </div>
             </Card>
           ))
         )}
