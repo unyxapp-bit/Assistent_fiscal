@@ -227,13 +227,13 @@ export default function AppLayout() {
 
               {menuOpen ? (
                 <div
-                  className="absolute top-full z-30 mt-3 w-64 rounded-2xl border border-border bg-surface p-2 shadow-[0_18px_40px_-28px_rgba(4,6,14,0.75)]"
+                  className="absolute top-full z-30 mt-3 w-64 rounded-2xl border border-border bg-[#1a2032] p-2 text-white shadow-[0_18px_40px_-28px_rgba(4,6,14,0.75)]"
                   style={{
                     left: menuLeft ?? 0,
                     transform: 'translateX(-50%)',
                   }}
                 >
-                  <p className="px-3 py-2 text-[10px] uppercase tracking-[0.35em] text-muted">
+                  <p className="px-3 py-2 text-[10px] uppercase tracking-[0.35em] text-white/60">
                     {menuOpen}
                   </p>
                   <div className="space-y-1">
@@ -244,7 +244,7 @@ export default function AppLayout() {
                         className={({ isActive }) =>
                           cn(
                             'block rounded-xl px-3 py-2 text-sm transition',
-                            isActive ? 'bg-primary text-white' : 'text-ink hover:bg-white/10'
+                            isActive ? 'bg-primary text-white' : 'text-white/90 hover:bg-white/10'
                           )
                         }
                         end={link.to === '/'}
