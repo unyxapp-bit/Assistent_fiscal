@@ -201,12 +201,12 @@ export default function AppLayout() {
                     <span className="text-sm">{nomeFiscal}</span>
                   </button>
                   {profileOpen ? (
-                    <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-border bg-surface p-2 shadow-[0_18px_40px_-28px_rgba(4,6,14,0.75)]">
+                    <div className="absolute right-0 z-40 mt-2 w-48 rounded-2xl border border-border bg-[#1a2032] p-2 text-white shadow-[0_18px_40px_-28px_rgba(4,6,14,0.75)]">
                       {accountLinks.map((link) => (
                         <NavLink
                           key={link.to}
                           to={link.to}
-                          className="block rounded-xl px-3 py-2 text-sm text-ink hover:bg-white/10"
+                          className="block rounded-xl px-3 py-2 text-sm text-white/90 hover:bg-white/10"
                           onClick={() => setProfileOpen(false)}
                         >
                           {link.label}

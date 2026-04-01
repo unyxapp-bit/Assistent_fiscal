@@ -289,15 +289,15 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
-      <section className="surface p-6 border border-border/80 bg-gradient-to-br from-[#202a4b] to-[#141a2f]">
+      <section className="surface p-4 border border-border/80 bg-gradient-to-br from-[#202a4b] to-[#141a2f]">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
             <h1 className="font-display text-3xl text-ink">Painel do Fiscal</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl border border-border bg-[#11172b] px-5 py-3 text-sm shadow-[0_14px_28px_-22px_rgba(4,6,14,0.7)]">
-              <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Horário</p>
-              <p className="mt-1 text-2xl font-semibold text-ink">
+            <div className="rounded-xl border border-border bg-[#11172b] px-4 py-2 text-sm shadow-[0_12px_24px_-20px_rgba(4,6,14,0.7)]">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/70">Horário</p>
+              <p className="mt-1 text-xl font-semibold text-white">
                 {now.toLocaleTimeString('pt-BR', {
                   hour: '2-digit',
                   minute: '2-digit',
@@ -311,7 +311,7 @@ export default function DashboardHome() {
           </div>
         </div>
         <div
-          className={`mt-6 rounded-2xl border px-4 py-3 text-sm ${
+          className={`mt-4 rounded-2xl border px-4 py-2.5 text-sm ${
             hasAlerts ? 'border-danger/50 bg-danger/20 text-danger' : 'border-border bg-[#11172b] text-muted'
           }`}
         >
