@@ -1,6 +1,7 @@
 ﻿import React, { useMemo, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthProvider';
+import { useFiscal } from '../../features/conta/useFiscal';
 import { Button } from '../../shared/ui/Button';
 import { cn } from '../../shared/lib/cn';
 
@@ -58,14 +59,23 @@ const navSections = [
   },
 ];
 
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Bom dia';
+  if (hour < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
+
 export default function AppLayout() {
   const { user, signOut } = useAuth();
-  const email = user?.email ?? 'Fiscal';
+  const { fiscal } = useFiscal();
   const [activeSection, setActiveSection] = useState(navSections[0]?.title ?? '');
 
   const activeLinks = useMemo(() => {
     return navSections.find((section) => section.title === activeSection)?.links ?? [];
   }, [activeSection]);
+
+  const nomeFiscal = fiscal?.nome || user?.email?.split('@')[0] || 'Fiscal';
 
   return (
     <div className="min-h-screen">
@@ -75,8 +85,9 @@ export default function AppLayout() {
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted">
               Fiscal Assistant
             </p>
-            <h1 className="font-display text-xl text-ink">Painel Web</h1>
-            <p className="text-xs text-muted mt-0.5">{email}</p>
+            <h1 className="font-display text-xl text-ink">
+              {getGreeting()}, {nomeFiscal}
+            </h1>
           </div>
           <Button variant="outline" size="sm" onClick={() => signOut()}>
             Sair
