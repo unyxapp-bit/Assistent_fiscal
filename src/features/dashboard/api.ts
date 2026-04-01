@@ -11,6 +11,34 @@ import type {
   PausaCafe,
 } from '../../shared/types';
 
+export async function fetchDashboardLayout(fiscalId: string, layoutKey: string) {
+  const { data, error } = await supabase
+    .from('dashboard_layouts')
+    .select('layout_json')
+    .eq('fiscal_id', fiscalId)
+    .eq('layout_key', layoutKey)
+    .maybeSingle();
+  if (error) throw error;
+  return (data?.layout_json ?? null) as string[] | null;
+}
+
+export async function saveDashboardLayout(
+  fiscalId: string,
+  layoutKey: string,
+  layout: string[]
+) {
+  const { error } = await supabase.from('dashboard_layouts').upsert(
+    {
+      fiscal_id: fiscalId,
+      layout_key: layoutKey,
+      layout_json: layout,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'fiscal_id,layout_key' }
+  );
+  if (error) throw error;
+}
+
 export async function fetchColaboradores(fiscalId: string) {
   const { data, error } = await supabase
     .from('colaboradores')
