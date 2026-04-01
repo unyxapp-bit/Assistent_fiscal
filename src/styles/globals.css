@@ -18,6 +18,19 @@
   --color-danger-bg: #5b2c35;
   --color-warning: #f1a23b;
   --color-warning-bg: #3a2b13;
+  --color-field: #11172b;
+  --color-field-hover: #151c33;
+  --color-field-focus: #11172b;
+  --color-field-foreground: #f1f4fa;
+  --color-field-placeholder: #9aa4b5;
+  --color-field-border: #2f3a5a;
+  --color-field-border-hover: #3a4771;
+  --color-field-border-focus: #3b82f6;
+  --shadow-field: 0 0 0 1px rgba(59, 130, 246, 0.2);
+  --border-width-field: 1px;
+  --radius-field: 12px;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius-sm: 6px;
@@ -26,9 +39,9 @@
 }
 
 @layer base {
-  input.border-cloud,
-  select.border-cloud,
-  textarea.border-cloud {
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']),
+  select,
+  textarea {
     border-radius: var(--radius-field);
     border-width: var(--border-width-field);
     border-color: var(--color-field-border);
@@ -42,40 +55,49 @@
       box-shadow 150ms var(--ease-out);
   }
 
-  input.border-cloud::placeholder,
-  textarea.border-cloud::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: var(--color-field-placeholder);
   }
 
-  input.border-cloud:hover:not(:focus):not(:focus-visible),
-  select.border-cloud:hover:not(:focus):not(:focus-visible),
-  textarea.border-cloud:hover:not(:focus):not(:focus-visible) {
+  input:hover:not(:focus):not(:focus-visible),
+  select:hover:not(:focus):not(:focus-visible),
+  textarea:hover:not(:focus):not(:focus-visible) {
     background-color: var(--color-field-hover);
     border-color: var(--color-field-border-hover);
   }
 
-  input.border-cloud:focus,
-  select.border-cloud:focus,
-  textarea.border-cloud:focus {
+  input:focus,
+  select:focus,
+  textarea:focus {
     border-color: var(--color-field-border-focus);
     background-color: var(--color-field-focus);
     @apply status-focused-field;
   }
 
-  input.border-cloud[aria-invalid='true'],
-  input.border-cloud:invalid,
-  select.border-cloud[aria-invalid='true'],
-  select.border-cloud:invalid,
-  textarea.border-cloud[aria-invalid='true'],
-  textarea.border-cloud:invalid {
+  input[aria-invalid='true'],
+  input:invalid,
+  select[aria-invalid='true'],
+  select:invalid,
+  textarea[aria-invalid='true'],
+  textarea:invalid {
     background-color: var(--color-field-focus);
     @apply status-invalid-field;
   }
 
-  input.border-cloud:disabled,
-  select.border-cloud:disabled,
-  textarea.border-cloud:disabled {
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
     @apply status-disabled;
+  }
+
+  div.border-cloud {
+    background-color: var(--color-surface-strong);
+  }
+
+  span.border-cloud {
+    background-color: var(--color-field);
+    color: var(--color-text-primary);
   }
 }
 

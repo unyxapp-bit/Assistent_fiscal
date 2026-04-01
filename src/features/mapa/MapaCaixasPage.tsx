@@ -94,14 +94,14 @@ export default function MapaCaixasPage() {
                     return (
                       <div
                         key={caixa.id}
-                        className="rounded-xl border border-cloud p-4 flex flex-col gap-2"
+                        className="rounded-xl border border-border bg-[#11172b] p-4 flex flex-col gap-2 text-ink"
                       >
                         <div className="flex items-start justify-between">
                           <div>
                             <h3 className="font-display text-base">Caixa {caixa.numero}</h3>
                             <p className="text-xs text-muted">Tipo: {caixa.tipo}</p>
                           </div>
-                          <span className="rounded-full border border-cloud px-2 py-1 text-xs">
+                          <span className="rounded-full border border-border px-2 py-1 text-xs text-muted bg-[#1a2032]">
                             {status}
                           </span>
                         </div>
@@ -131,7 +131,7 @@ export default function MapaCaixasPage() {
               <select
                 value={plantaoId}
                 onChange={(e) => setPlantaoId(e.target.value)}
-                className="flex-1 rounded-xl border border-cloud px-4 py-2"
+                className="flex-1 rounded-xl border border-border bg-[#11172b] px-4 py-2 text-ink"
               >
                 <option value="">Selecionar colaborador</option>
                 {colaboradores.map((c) => (
@@ -151,7 +151,7 @@ export default function MapaCaixasPage() {
                 plantao.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between rounded-lg border border-cloud px-3 py-2 text-sm"
+                    className="flex items-center justify-between rounded-lg border border-border bg-[#11172b] px-3 py-2 text-sm"
                   >
                     <span>{colaboradorMap.get(item.colaborador_id) ?? item.colaborador_id}</span>
                     <Button size="sm" variant="ghost" onClick={() => removePlantao(item.id)}>
@@ -169,7 +169,7 @@ export default function MapaCaixasPage() {
               <select
                 value={outroId}
                 onChange={(e) => setOutroId(e.target.value)}
-                className="rounded-xl border border-cloud px-4 py-2"
+                className="rounded-xl border border-border bg-[#11172b] px-4 py-2 text-ink"
               >
                 <option value="">Selecionar colaborador</option>
                 {colaboradores.map((c) => (
@@ -182,7 +182,7 @@ export default function MapaCaixasPage() {
                 value={setor}
                 onChange={(e) => setSetor(e.target.value)}
                 placeholder="Setor"
-                className="rounded-xl border border-cloud px-4 py-2"
+                className="rounded-xl border border-border bg-[#11172b] px-4 py-2 text-ink"
               />
               <Button size="sm" onClick={handleAddOutro} disabled={updating}>
                 Registrar
@@ -195,7 +195,7 @@ export default function MapaCaixasPage() {
                 outroSetor.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between rounded-lg border border-cloud px-3 py-2 text-sm"
+                    className="flex items-center justify-between rounded-lg border border-border bg-[#11172b] px-3 py-2 text-sm"
                   >
                     <div>
                       <p>{colaboradorMap.get(item.colaborador_id) ?? item.colaborador_id}</p>
