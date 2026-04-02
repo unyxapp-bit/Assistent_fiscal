@@ -149,7 +149,7 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-chalk">
       <div className="min-h-screen">
-        <header className="sticky top-0 z-20 border-b border-border bg-chalk/90 backdrop-blur shadow-[0_10px_20px_-16px_rgba(5,150,105,0.25)]">
+        <header className="app-header">
           <div className="px-6 py-4">
             <div
               className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-4"
@@ -162,17 +162,17 @@ export default function AppLayout() {
               </div>
 
               <div className="justify-self-center">
-                <div className="inline-flex items-center rounded-full bg-surface p-1 border border-border shadow-[0_8px_18px_-14px_rgba(5,150,105,0.2)]">
+                <div className="app-pill-nav">
                   {visibleSections.map((section) => (
                     <button
                       key={section.title}
                       type="button"
                       onClick={handleTabClick(section)}
                       className={cn(
-                        'relative px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition rounded-full',
+                        'app-pill-item',
                         activeSection === section.title
-                          ? 'bg-emerald-100 text-primary shadow-sm border border-borderDark'
-                          : 'text-muted hover:text-primary'
+                          ? 'app-pill-item-active'
+                          : 'app-pill-item-idle'
                       )}
                     >
                       {section.title}
@@ -182,10 +182,10 @@ export default function AppLayout() {
               </div>
 
               <div className="flex items-center justify-end gap-3">
-                <div className="hidden md:flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm text-muted">
+                <div className="app-search-shell hidden md:flex">
                   <span>Buscar</span>
                   <input
-                    className="bg-transparent outline-none text-ink placeholder:text-muted w-44"
+                    className="app-search-input"
                     placeholder="buscar no painel"
                   />
                 </div>
@@ -193,20 +193,20 @@ export default function AppLayout() {
                   <button
                     type="button"
                     onClick={() => setProfileOpen((prev) => !prev)}
-                    className="flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-sm hover:border-primary/60"
+                    className="app-profile-btn"
                   >
-                    <div className="h-7 w-7 rounded-full bg-emerald-100 text-primary flex items-center justify-center">
+                    <div className="app-avatar">
                       {nomeFiscal.slice(0, 1).toUpperCase()}
                     </div>
                     <span className="text-sm">{nomeFiscal}</span>
                   </button>
                   {profileOpen ? (
-                    <div className="absolute right-0 z-40 mt-2 w-48 rounded-2xl border border-border bg-surface p-2 text-ink shadow-[0_18px_40px_-28px_rgba(5,150,105,0.2)]">
+                    <div className="app-popover absolute right-0 z-40 mt-2 w-48">
                       {accountLinks.map((link) => (
                         <NavLink
                           key={link.to}
                           to={link.to}
-                          className="block rounded-xl px-3 py-2 text-sm text-ink hover:bg-emerald-50"
+                          className="app-popover-link"
                           onClick={() => setProfileOpen(false)}
                         >
                           {link.label}
@@ -227,13 +227,13 @@ export default function AppLayout() {
 
               {menuOpen ? (
                 <div
-                  className="absolute top-full z-30 mt-3 w-64 rounded-2xl border border-border bg-surface p-2 text-ink shadow-[0_18px_40px_-28px_rgba(5,150,105,0.2)]"
+                  className="app-popover absolute top-full z-30 mt-3 w-64"
                   style={{
                     left: menuLeft ?? 0,
                     transform: 'translateX(-50%)',
                   }}
                 >
-                  <p className="px-3 py-2 text-[10px] uppercase tracking-[0.35em] text-muted">
+                  <p className="app-popover-title">
                     {menuOpen}
                   </p>
                   <div className="space-y-1">
@@ -243,8 +243,8 @@ export default function AppLayout() {
                         to={link.to}
                         className={({ isActive }) =>
                           cn(
-                            'block rounded-xl px-3 py-2 text-sm transition',
-                            isActive ? 'bg-emerald-100 text-primary' : 'text-ink hover:bg-emerald-50'
+                            'app-popover-link transition',
+                            isActive ? 'app-popover-link-active' : ''
                           )
                         }
                         end={link.to === '/'}

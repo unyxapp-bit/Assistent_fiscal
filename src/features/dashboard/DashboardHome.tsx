@@ -182,7 +182,7 @@ export default function DashboardHome() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="rounded-full border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-accent hover:border-primary hover:text-primary"
+                  className="chip-link"
                 >
                   {link.label}
                 </Link>
@@ -210,7 +210,7 @@ export default function DashboardHome() {
                   <Link
                     key={alert.label}
                     to={alert.to}
-                    className="inline-flex rounded-full border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-accent hover:border-primary hover:text-primary"
+                    className="chip-link"
                   >
                     {alert.label}
                   </Link>
@@ -289,13 +289,13 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
-      <section className="surface p-5 border border-border/80">
+      <section className="hero-surface">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
             <h1 className="font-display text-3xl text-primary">Painel do Fiscal</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="rounded-xl border border-border bg-surface px-4 py-2 text-sm shadow-[0_12px_24px_-20px_rgba(5,150,105,0.2)]">
+            <div className="clock-card">
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent">HorÃ¡rio</p>
               <p className="mt-1 text-xl font-semibold text-accent">
                 {now.toLocaleTimeString('pt-BR', {
@@ -312,7 +312,7 @@ export default function DashboardHome() {
         </div>
         <div
           className={`mt-4 px-4 py-3 text-sm ${
-            hasAlerts ? 'alert-soft' : 'rounded-2xl border border-border bg-surface text-muted'
+            hasAlerts ? 'alert-soft' : 'status-soft'
           }`}
         >
           {hasAlerts
@@ -337,13 +337,13 @@ export default function DashboardHome() {
             >
               <Card
                 className={cn(
-                  'relative p-3 md:p-4 bg-surface border border-border shadow-[0_18px_36px_-24px_rgba(5,150,105,0.15)] transition hover:-translate-y-0.5 hover:border-borderDark hover:shadow-[0_22px_48px_-26px_rgba(5,150,105,0.25)]',
+                  'dashboard-card',
                   draggingId === id && 'ring-2 ring-primary/30'
                 )}
               >
                 <button
                   type="button"
-                  className="absolute right-3 top-3 rounded-md border border-border bg-surface px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-primary cursor-grab active:cursor-grabbing"
+                  className="drag-handle"
                   draggable
                   onDragStart={(event) => {
                     setDraggingId(id);

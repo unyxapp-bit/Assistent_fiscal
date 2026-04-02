@@ -101,7 +101,7 @@ export default function MapaCaixasPage() {
                             <h3 className="font-display text-base">Caixa {caixa.numero}</h3>
                             <p className="text-xs text-muted">Tipo: {caixa.tipo}</p>
                           </div>
-                          <span className="rounded-full border border-border px-2 py-1 text-xs text-muted bg-emerald-50">
+                          <span className="rounded-full border border-border px-2 py-1 text-xs text-muted bg-success-light">
                             {status}
                           </span>
                         </div>

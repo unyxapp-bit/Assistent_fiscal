@@ -9,18 +9,11 @@ export type CardProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function Card({ className, variant = 'default', ...props }: CardProps) {
   const variants: Record<CardVariant, string> = {
-    default:
-      'border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_18px_36px_-26px_rgba(5,150,105,0.18)]',
-    emerald:
-      'border border-transparent bg-primary text-white shadow-[0_22px_40px_-26px_rgba(5,150,105,0.45)]',
+    default: 'card',
+    emerald: 'card card-emerald',
   };
 
-  return (
-    <div
-      className={cn('rounded-[24px] p-5', variants[variant], className)}
-      {...props}
-    />
-  );
+  return <div className={cn(variants[variant], className)} {...props} />;
 }
 
 export type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;

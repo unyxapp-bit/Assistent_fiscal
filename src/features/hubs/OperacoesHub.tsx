@@ -26,10 +26,10 @@ export default function OperacoesHub() {
           <Link key={item.to} to={item.to} className="group block focus:outline-none">
             <Card
               variant="emerald"
-              className="h-full cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[0_24px_44px_-24px_rgba(5,150,105,0.35)] group-focus-visible:ring-2 group-focus-visible:ring-primary/40"
+              className="hub-card h-full cursor-pointer group-focus-visible:ring-2 group-focus-visible:ring-primary/40"
             >
-              <h3 className="font-display text-xl text-white">{item.label}</h3>
-              <p className="text-sm text-white/85 mt-2">
+              <h3 className="hub-card-title">{item.label}</h3>
+              <p className="hub-card-description mt-2">
                 Acompanhe registros, alertas e rotinas em tempo real.
               </p>
             </Card>
