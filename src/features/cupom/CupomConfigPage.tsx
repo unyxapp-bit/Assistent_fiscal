@@ -48,8 +48,8 @@ export default function CupomConfigPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">ConfiguraÃ§Ãµes</p>
-        <h1 className="font-display text-3xl text-primary">ConfiguraÃ§Ã£o do Cupom</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">Configura??es</p>
+        <h1 className="font-display text-3xl text-primary">Configura??o do Cupom</h1>
         <p className="text-sm text-muted mt-2">
           Edite campos do cupom fiscal, alternando flags e textos exibidos.
         </p>
@@ -59,11 +59,11 @@ export default function CupomConfigPage() {
         <Card>
           <h2 className="font-display text-lg mb-3">Campos</h2>
           {isLoading ? (
-            <p className="text-sm text-muted">Carregando configuraÃ§Ã£o...</p>
+            <p className="text-sm text-muted">Carregando configura??o...</p>
           ) : fields.length === 0 ? (
             <p className="text-sm text-muted">
-              Nenhuma configuraÃ§Ã£o encontrada. Ajuste os campos no Supabase ou salve
-              uma nova configuraÃ§Ã£o.
+              Nenhuma configura??o encontrada. Ajuste os campos no Supabase ou salve
+              uma nova configura??o.
             </p>
           ) : (
             <div className="space-y-3">
@@ -101,12 +101,12 @@ export default function CupomConfigPage() {
             </div>
           )}
           <Button className="mt-4" onClick={handleSave} disabled={saving || isLoading}>
-            Salvar configuraÃ§Ã£o
+            Salvar configura??o
           </Button>
         </Card>
 
         <Card>
-          <h2 className="font-display text-lg mb-3">PrÃ©-visualizaÃ§Ã£o</h2>
+          <h2 className="font-display text-lg mb-3">Pr?-visualiza??o</h2>
           {previewText ? (
             <pre className="whitespace-pre-wrap text-sm text-muted">{previewText}</pre>
           ) : (

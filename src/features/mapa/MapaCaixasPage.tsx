@@ -62,10 +62,10 @@ export default function MapaCaixasPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">GestÃ£o</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gest?o</p>
         <h1 className="font-display text-3xl text-primary">Mapa de Caixas</h1>
         <p className="text-sm text-muted mt-2">
-          VisualizaÃ§Ã£o por tipo de caixa, empacotadores e colaboradores em outros setores.
+          Visualiza??o por tipo de caixa, empacotadores e colaboradores em outros setores.
         </p>
       </div>
 
@@ -87,7 +87,7 @@ export default function MapaCaixasPage() {
                     const status = !caixa.ativo
                       ? 'Inativo'
                       : caixa.em_manutencao
-                        ? 'ManutenÃ§Ã£o'
+                        ? 'Manuten??o'
                         : alocacao
                           ? 'Ocupado'
                           : 'Livre';
@@ -126,7 +126,7 @@ export default function MapaCaixasPage() {
 
         <div className="space-y-4">
           <Card>
-            <h2 className="font-display text-lg mb-3">Empacotadores (plantÃ£o)</h2>
+            <h2 className="font-display text-lg mb-3">Empacotadores (plant?o)</h2>
             <div className="flex gap-2">
               <select
                 value={plantaoId}

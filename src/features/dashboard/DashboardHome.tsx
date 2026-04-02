@@ -11,7 +11,7 @@ const quickLinks = [
   { label: 'Caixas', to: '/caixas' },
   { label: 'Colaboradores', to: '/colaboradores' },
   { label: 'Escala', to: '/escala' },
-  { label: 'RelatÃ³rios', to: '/relatorios' },
+  { label: 'Relat?rios', to: '/relatorios' },
 ];
 
 const DASHBOARD_LAYOUT_KEY = 'dashboard_home_v1';
@@ -94,7 +94,7 @@ export default function DashboardHome() {
       : null,
     data.ocorrenciasAbertas > 0
       ? {
-          label: `${data.ocorrenciasAbertas} ocorrÃªncia(s) abertas`,
+          label: `${data.ocorrenciasAbertas} ocorr?ncia(s) abertas`,
           to: '/ocorrencias',
         }
       : null,
@@ -132,7 +132,7 @@ export default function DashboardHome() {
         span: '',
         content: (
           <>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas disponÃ­veis</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas dispon?veis</p>
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.caixasAtivos}
             </p>
@@ -149,7 +149,7 @@ export default function DashboardHome() {
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.alocados}
             </p>
-            <p className="mt-1 text-xs text-muted">Tabela `alocaÃ§Ãµes`.</p>
+            <p className="mt-1 text-xs text-muted">Tabela `aloca??es`.</p>
           </>
         ),
       },
@@ -203,7 +203,7 @@ export default function DashboardHome() {
               </span>
             </div>
             {alerts.length === 0 ? (
-              <p className="mt-3 text-xs text-muted">Nenhum alerta crÃ­tico no momento.</p>
+              <p className="mt-3 text-xs text-muted">Nenhum alerta cr?tico no momento.</p>
             ) : (
               <div className="mt-3 flex flex-wrap gap-2">
                 {alerts.map((alert) => (
@@ -238,11 +238,11 @@ export default function DashboardHome() {
         span: '',
         content: (
           <>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">OcorrÃªncias abertas</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Ocorr?ncias abertas</p>
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.ocorrenciasAbertas}
             </p>
-            <p className="mt-1 text-xs text-muted">Exige follow-up rÃ¡pido.</p>
+            <p className="mt-1 text-xs text-muted">Exige follow-up r?pido.</p>
           </>
         ),
       },
@@ -255,7 +255,7 @@ export default function DashboardHome() {
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.entregasSeparadas}
             </p>
-            <p className="mt-1 text-xs text-muted">Aguardando saÃ­da.</p>
+            <p className="mt-1 text-xs text-muted">Aguardando sa?da.</p>
           </>
         ),
       },
@@ -296,7 +296,7 @@ export default function DashboardHome() {
           </div>
           <div className="flex items-center gap-4">
             <div className="clock-card">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent">HorÃ¡rio</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent">Hor?rio</p>
               <p className="mt-1 text-xl font-semibold text-accent">
                 {now.toLocaleTimeString('pt-BR', {
                   hour: '2-digit',
@@ -306,7 +306,7 @@ export default function DashboardHome() {
               </p>
             </div>
             <Button className="self-start">
-              ComeÃ§ar turno
+              Come?ar turno
             </Button>
           </div>
         </div>

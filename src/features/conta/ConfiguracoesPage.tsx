@@ -38,9 +38,9 @@ export default function ConfiguracoesPage() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Conta</p>
-        <h1 className="font-display text-3xl text-primary">ConfiguraÃ§Ãµes</h1>
+        <h1 className="font-display text-3xl text-primary">Configura??es</h1>
         <p className="text-sm text-muted mt-2">
-          Dados do fiscal, loja e preferÃªncias principais.
+          Dados do fiscal, loja e prefer?ncias principais.
         </p>
       </div>
 
@@ -68,7 +68,7 @@ export default function ConfiguracoesPage() {
               className="rounded-xl border border-cloud px-4 py-2 md:col-span-2"
             />
             <Button type="submit" disabled={saving} className="md:col-span-2">
-              Salvar configuraÃ§Ãµes
+              Salvar configura??es
             </Button>
           </form>
         )}
@@ -78,13 +78,13 @@ export default function ConfiguracoesPage() {
         <Card>
           <h2 className="font-display text-lg mb-2">Perfil</h2>
           <p className="text-sm text-muted">
-            Atualize dados pessoais, telefone e informaÃ§Ãµes da loja.
+            Atualize dados pessoais, telefone e informa??es da loja.
           </p>
           <Link
             to="/perfil"
             className="inline-flex mt-4 text-sm font-semibold text-primary"
           >
-            Abrir perfil â†’
+            Abrir perfil ?
           </Link>
         </Card>
         <Card>
@@ -96,7 +96,7 @@ export default function ConfiguracoesPage() {
             to="/cupom"
             className="inline-flex mt-4 text-sm font-semibold text-primary"
           >
-            Configurar cupom â†’
+            Configurar cupom ?
           </Link>
         </Card>
       </div>

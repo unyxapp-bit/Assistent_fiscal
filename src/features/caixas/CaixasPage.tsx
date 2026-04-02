@@ -38,7 +38,7 @@ export default function CaixasPage() {
     const num = Number(numero);
     if (!num) return;
     if (caixas.some((c) => c.numero === num)) {
-      setErro('JÃ¡ existe um caixa com esse nÃºmero.');
+      setErro('J? existe um caixa com esse n?mero.');
       return;
     }
     await createCaixa({ numero: num, tipo });
@@ -48,10 +48,10 @@ export default function CaixasPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">GestÃ£o</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gest?o</p>
         <h1 className="font-display text-3xl text-primary">Caixas</h1>
         <p className="text-sm text-muted mt-2">
-          Configure caixas, status e manutenÃ§Ã£o. Sincronizado com Supabase.
+          Configure caixas, status e manuten??o. Sincronizado com Supabase.
         </p>
       </div>
 
@@ -65,7 +65,7 @@ export default function CaixasPage() {
           <h2 className="text-2xl font-semibold">{stats.ativos}</h2>
         </Card>
         <Card>
-          <p className="text-sm text-muted">Em manutenÃ§Ã£o</p>
+          <p className="text-sm text-muted">Em manuten??o</p>
           <h2 className="text-2xl font-semibold">{stats.manutencao}</h2>
         </Card>
       </div>
@@ -74,7 +74,7 @@ export default function CaixasPage() {
         <form className="flex flex-col md:flex-row gap-3" onSubmit={handleCreate}>
           <input
             type="number"
-            placeholder="NÃºmero"
+            placeholder="N?mero"
             value={numero}
             onChange={(e) => setNumero(e.target.value)}
             className="w-full md:w-40 rounded-xl border border-cloud px-4 py-2"
@@ -101,7 +101,7 @@ export default function CaixasPage() {
         <input
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
-          placeholder="Buscar nÃºmero"
+          placeholder="Buscar n?mero"
           className="rounded-xl border border-cloud px-4 py-2"
         />
         {(['ativos', 'inativos', 'todos'] as const).map((f) => (
@@ -160,7 +160,7 @@ export default function CaixasPage() {
                     })
                   }
                 >
-                  {caixa.em_manutencao ? 'Liberar' : 'ManutenÃ§Ã£o'}
+                  {caixa.em_manutencao ? 'Liberar' : 'Manuten??o'}
                 </Button>
               </div>
             </Card>

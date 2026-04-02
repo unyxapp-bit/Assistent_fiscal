@@ -7,9 +7,9 @@ import { useAuth } from '../auth/AuthProvider';
 import { cn } from '../../shared/lib/cn';
 
 const tabs = [
-  { id: 'disponiveis', label: 'DisponÃ­veis' },
+  { id: 'disponiveis', label: 'Dispon?veis' },
   { id: 'em_intervalo', label: 'Em Intervalo' },
-  { id: 'ja_fez', label: 'JÃ¡ fez' },
+  { id: 'ja_fez', label: 'J? fez' },
 ] as const;
 
 type TabId = (typeof tabs)[number]['id'];
@@ -54,8 +54,8 @@ export default function CafePage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">GestÃ£o</p>
-        <h1 className="font-display text-3xl text-primary">CafÃ© e Intervalos</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gest?o</p>
+        <h1 className="font-display text-3xl text-primary">Caf? e Intervalos</h1>
         <p className="text-sm text-muted mt-2">
           Controle de pausas com tempo estimado e acompanhamento de atrasos.
         </p>
@@ -94,7 +94,7 @@ export default function CafePage() {
             type="number"
             value={duracao}
             onChange={(e) => setDuracao(e.target.value)}
-            placeholder="DuraÃ§Ã£o (min)"
+            placeholder="Dura??o (min)"
             className="rounded-xl border border-cloud px-4 py-2"
           />
           <input
@@ -115,9 +115,9 @@ export default function CafePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {active === 'disponiveis' ? (
             <Card>
-              <h3 className="font-display text-lg mb-3">DisponÃ­veis</h3>
+              <h3 className="font-display text-lg mb-3">Dispon?veis</h3>
               {disponiveis.length === 0 ? (
-                <p className="text-sm text-muted">Nenhum colaborador disponÃ­vel.</p>
+                <p className="text-sm text-muted">Nenhum colaborador dispon?vel.</p>
               ) : (
                 <div className="space-y-2">
                   {disponiveis.map((c) => (
@@ -158,7 +158,7 @@ export default function CafePage() {
                         <div>
                           <p>{colaboradorMap.get(pausa.colaborador_id) ?? pausa.colaborador_nome}</p>
                           <p className="text-xs text-muted">
-                            InÃ­cio {formatDateTime(pausa.iniciado_em)}
+                            In?cio {formatDateTime(pausa.iniciado_em)}
                           </p>
                         </div>
                         <Button size="sm" variant="outline" onClick={() => finalizarPausa(pausa.id)}>
@@ -174,7 +174,7 @@ export default function CafePage() {
 
           {active === 'ja_fez' ? (
             <Card>
-              <h3 className="font-display text-lg mb-3">JÃ¡ fez</h3>
+              <h3 className="font-display text-lg mb-3">J? fez</h3>
               {jaFez.length === 0 ? (
                 <p className="text-sm text-muted">Nenhum intervalo finalizado.</p>
               ) : (

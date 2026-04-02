@@ -16,7 +16,7 @@ export default function FolgaPage() {
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Folga</p>
         <h1 className="font-display text-3xl text-primary">Modo Folga</h1>
         <p className="text-sm text-muted mt-2">
-          Tela de descanso com relÃ³gio e atalhos rÃ¡pidos.
+          Tela de descanso com rel?gio e atalhos r?pidos.
         </p>
       </div>
 
@@ -26,15 +26,15 @@ export default function FolgaPage() {
           {now.toLocaleTimeString('pt-BR')}
         </h2>
         <p className="text-sm text-muted">
-          PrÃ³ximo turno: verificar escala (integraÃ§Ã£o em andamento)
+          Pr?ximo turno: verificar escala (integra??o em andamento)
         </p>
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
-          <h3 className="font-display text-lg">Atalhos rÃ¡pidos</h3>
+          <h3 className="font-display text-lg">Atalhos r?pidos</h3>
           <p className="text-sm text-muted mt-2">
-            Voltar para o painel de gestÃ£o ou revisar alertas do turno.
+            Voltar para o painel de gest?o ou revisar alertas do turno.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <Button variant="outline">Ver alertas</Button>

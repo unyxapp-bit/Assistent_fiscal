@@ -65,16 +65,16 @@ export default function AlocacaoPage() {
     const caixa = caixasMap.get(caixaId);
 
     if (!colaborador) {
-      setErro('Selecione um colaborador vÃ¡lido.');
+      setErro('Selecione um colaborador v?lido.');
       return;
     }
     if (!caixa) {
-      setErro('Selecione um caixa vÃ¡lido.');
+      setErro('Selecione um caixa v?lido.');
       return;
     }
 
     if (colaborador.departamento === 'self' && caixa.tipo !== 'self') {
-      setErro('Operador de self-checkout sÃ³ pode ser alocado em caixa self.');
+      setErro('Operador de self-checkout s? pode ser alocado em caixa self.');
       return;
     }
 
@@ -83,7 +83,7 @@ export default function AlocacaoPage() {
       (a) => a.colaborador_id === colaboradorId
     );
     if (!isBalcao && colaboradorJaAlocado) {
-      setErro('Colaborador jÃ¡ estÃ¡ alocado em outro caixa.');
+      setErro('Colaborador j? est? alocado em outro caixa.');
       return;
     }
 
@@ -91,7 +91,7 @@ export default function AlocacaoPage() {
     try {
       const jaUsou = await jaUsouCaixaHoje({ colaboradorId, caixaId });
       if (jaUsou && justificativa.trim().length === 0) {
-        setErro('Este colaborador jÃ¡ usou este caixa hoje. Informe justificativa.');
+        setErro('Este colaborador j? usou este caixa hoje. Informe justificativa.');
         return;
       }
       await createAlocacao({
@@ -110,7 +110,7 @@ export default function AlocacaoPage() {
   };
 
   const handleLiberar = async (alocacaoId: string) => {
-    const motivo = window.prompt('Motivo da liberaÃ§Ã£o?') ?? '';
+    const motivo = window.prompt('Motivo da libera??o?') ?? '';
     if (!motivo.trim()) return;
     await liberarAlocacao({ alocacaoId, motivo });
   };
@@ -118,10 +118,10 @@ export default function AlocacaoPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">GestÃ£o</p>
-        <h1 className="font-display text-3xl text-primary">AlocaÃ§Ã£o</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gest?o</p>
+        <h1 className="font-display text-3xl text-primary">Aloca??o</h1>
         <p className="text-sm text-muted mt-2">
-          Aloque colaboradores e controle liberaÃ§Ãµes com as regras do turno.
+          Aloque colaboradores e controle libera??es com as regras do turno.
         </p>
       </div>
 
@@ -181,9 +181,9 @@ export default function AlocacaoPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="space-y-3">
-          <h3 className="font-display text-xl">DisponÃ­veis agora</h3>
+          <h3 className="font-display text-xl">Dispon?veis agora</h3>
           {disponiveisFiltrados.length === 0 ? (
-            <p className="text-sm text-muted">Nenhum colaborador disponÃ­vel.</p>
+            <p className="text-sm text-muted">Nenhum colaborador dispon?vel.</p>
           ) : (
             <div className="space-y-2">
               {disponiveisFiltrados.map((c) => (
@@ -192,7 +192,7 @@ export default function AlocacaoPage() {
                   className="flex items-center justify-between rounded-lg border border-cloud px-3 py-2 text-sm"
                 >
                   <span>
-                    {c.nome} â€¢ {c.departamento}
+                    {c.nome} ? {c.departamento}
                   </span>
                   <Button size="sm" variant="outline" onClick={() => setColaboradorId(c.id)}>
                     Alocar
@@ -204,10 +204,10 @@ export default function AlocacaoPage() {
         </Card>
 
         {alocacoes.length === 0 ? (
-          <Card>Nenhuma alocaÃ§Ã£o ativa.</Card>
+          <Card>Nenhuma aloca??o ativa.</Card>
         ) : (
           <Card>
-            <h3 className="font-display text-xl mb-3">AlocaÃ§Ãµes ativas</h3>
+            <h3 className="font-display text-xl mb-3">Aloca??es ativas</h3>
             <div className="space-y-2">
               {alocacoes.map((alocacao) => {
                 const colaborador = colaboradoresMap.get(alocacao.colaborador_id);
@@ -220,7 +220,7 @@ export default function AlocacaoPage() {
                     <div>
                       <p className="font-semibold">{colaborador?.nome ?? 'Colaborador'}</p>
                       <p className="text-xs text-muted">
-                        Caixa {caixa?.numero ?? 'â€”'} ({caixa?.tipo ?? 'n/d'})
+                        Caixa {caixa?.numero ?? '?'} ({caixa?.tipo ?? 'n/d'})
                       </p>
                       <p className="text-xs text-muted mt-1">
                         Alocado em {new Date(alocacao.alocado_em).toLocaleTimeString('pt-BR')}
