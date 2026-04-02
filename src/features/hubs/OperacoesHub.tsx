@@ -24,9 +24,12 @@ export default function OperacoesHub() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {ops.map((item) => (
           <Link key={item.to} to={item.to} className="group block focus:outline-none">
-            <Card className="h-full cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[0_20px_40px_-24px_rgba(12,13,16,0.4)] group-focus-visible:ring-2 group-focus-visible:ring-primary/40">
-              <h3 className="font-display text-xl">{item.label}</h3>
-              <p className="text-sm text-muted mt-2">
+            <Card
+              variant="emerald"
+              className="h-full cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[0_24px_44px_-24px_rgba(5,150,105,0.35)] group-focus-visible:ring-2 group-focus-visible:ring-primary/40"
+            >
+              <h3 className="font-display text-xl text-white">{item.label}</h3>
+              <p className="text-sm text-white/85 mt-2">
                 Acompanhe registros, alertas e rotinas em tempo real.
               </p>
             </Card>

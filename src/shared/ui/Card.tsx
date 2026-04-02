@@ -1,15 +1,23 @@
 import React from 'react';
 import { cn } from '../lib/cn';
 
-export type CardProps = React.HTMLAttributes<HTMLDivElement>;
+type CardVariant = 'default' | 'emerald';
 
-export function Card({ className, ...props }: CardProps) {
+export type CardProps = React.HTMLAttributes<HTMLDivElement> & {
+  variant?: CardVariant;
+};
+
+export function Card({ className, variant = 'default', ...props }: CardProps) {
+  const variants: Record<CardVariant, string> = {
+    default:
+      'border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_18px_36px_-26px_rgba(5,150,105,0.18)]',
+    emerald:
+      'border border-transparent bg-primary text-white shadow-[0_22px_40px_-26px_rgba(5,150,105,0.45)]',
+  };
+
   return (
     <div
-      className={cn(
-        'rounded-[24px] border p-5 text-[var(--color-text-primary)] bg-[var(--color-surface)] border-[var(--color-border)] shadow-[0_18px_36px_-26px_rgba(5,150,105,0.18)]',
-        className
-      )}
+      className={cn('rounded-[24px] p-5', variants[variant], className)}
       {...props}
     />
   );

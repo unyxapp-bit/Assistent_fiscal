@@ -311,15 +311,13 @@ export default function DashboardHome() {
           </div>
         </div>
         <div
-          className={`mt-4 rounded-2xl border px-4 py-2.5 text-sm ${
-            hasAlerts
-              ? 'border-danger bg-danger/30 text-danger'
-              : 'border-border bg-surface text-muted'
+          className={`mt-4 px-4 py-3 text-sm ${
+            hasAlerts ? 'alert-soft' : 'rounded-2xl border border-border bg-surface text-muted'
           }`}
         >
           {hasAlerts
-            ? 'AtenÃ§Ã£o: hÃ¡ alertas pendentes no turno. Revise os mÃ³dulos crÃ­ticos.'
-            : 'Turno estÃ¡vel: nenhum alerta crÃ­tico no momento.'}
+            ? 'Atenção: há alertas pendentes no turno. Revise os módulos críticos.'
+            : 'Turno estável: nenhum alerta crítico no momento.'}
         </div>
       </section>
 

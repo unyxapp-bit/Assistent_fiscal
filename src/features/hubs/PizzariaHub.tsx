@@ -15,18 +15,28 @@ export default function PizzariaHub() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="flex flex-col gap-3">
-          <h2 className="font-display text-lg">Pedidos</h2>
-          <p className="text-sm text-muted">Acompanhe status, horários e clientes.</p>
+        <Card variant="emerald" className="flex flex-col gap-3">
+          <h2 className="font-display text-lg text-white">Pedidos</h2>
+          <p className="text-sm text-white/85">Acompanhe status, horários e clientes.</p>
           <Link to="/pizzaria/pedidos">
-            <Button>Ver pedidos</Button>
+            <Button
+              variant="ghost"
+              className="w-full bg-white/20 text-white hover:bg-white/30"
+            >
+              Ver pedidos
+            </Button>
           </Link>
         </Card>
-        <Card className="flex flex-col gap-3">
-          <h2 className="font-display text-lg">Cardápio</h2>
-          <p className="text-sm text-muted">Gerencie pizzas, tamanhos e disponibilidade.</p>
+        <Card variant="emerald" className="flex flex-col gap-3">
+          <h2 className="font-display text-lg text-white">Cardápio</h2>
+          <p className="text-sm text-white/85">Gerencie pizzas, tamanhos e disponibilidade.</p>
           <Link to="/pizzaria/pizzas">
-            <Button>Gerenciar cardápio</Button>
+            <Button
+              variant="ghost"
+              className="w-full bg-white/20 text-white hover:bg-white/30"
+            >
+              Gerenciar cardápio
+            </Button>
           </Link>
         </Card>
       </div>
