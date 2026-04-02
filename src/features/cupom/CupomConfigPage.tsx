@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
 import { useCupomConfig } from './useCupomConfig';
@@ -48,8 +48,8 @@ export default function CupomConfigPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">Configurações</p>
-        <h1 className="font-display text-3xl text-ink">Configuração do Cupom</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">ConfiguraÃ§Ãµes</p>
+        <h1 className="font-display text-3xl text-primary">ConfiguraÃ§Ã£o do Cupom</h1>
         <p className="text-sm text-muted mt-2">
           Edite campos do cupom fiscal, alternando flags e textos exibidos.
         </p>
@@ -59,11 +59,11 @@ export default function CupomConfigPage() {
         <Card>
           <h2 className="font-display text-lg mb-3">Campos</h2>
           {isLoading ? (
-            <p className="text-sm text-muted">Carregando configuração...</p>
+            <p className="text-sm text-muted">Carregando configuraÃ§Ã£o...</p>
           ) : fields.length === 0 ? (
             <p className="text-sm text-muted">
-              Nenhuma configuração encontrada. Ajuste os campos no Supabase ou salve
-              uma nova configuração.
+              Nenhuma configuraÃ§Ã£o encontrada. Ajuste os campos no Supabase ou salve
+              uma nova configuraÃ§Ã£o.
             </p>
           ) : (
             <div className="space-y-3">
@@ -93,7 +93,7 @@ export default function CupomConfigPage() {
                           typeof value === 'number' ? Number(e.target.value) : e.target.value
                         )
                       }
-                      className="mt-2 w-full rounded-xl border border-cloud px-4 py-2 text-white placeholder:text-white/40"
+                      className="mt-2 w-full rounded-xl border border-cloud px-4 py-2 text-ink placeholder:text-muted"
                     />
                   </label>
                 );
@@ -101,12 +101,12 @@ export default function CupomConfigPage() {
             </div>
           )}
           <Button className="mt-4" onClick={handleSave} disabled={saving || isLoading}>
-            Salvar configuração
+            Salvar configuraÃ§Ã£o
           </Button>
         </Card>
 
         <Card>
-          <h2 className="font-display text-lg mb-3">Pré-visualização</h2>
+          <h2 className="font-display text-lg mb-3">PrÃ©-visualizaÃ§Ã£o</h2>
           {previewText ? (
             <pre className="whitespace-pre-wrap text-sm text-muted">{previewText}</pre>
           ) : (
@@ -117,3 +117,4 @@ export default function CupomConfigPage() {
     </div>
   );
 }
+

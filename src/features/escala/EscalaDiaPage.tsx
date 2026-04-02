@@ -82,7 +82,7 @@ export default function EscalaDiaPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão</p>
-          <h1 className="font-display text-3xl text-ink">Escala do dia</h1>
+          <h1 className="font-display text-3xl text-primary">Escala do dia</h1>
           <p className="text-sm text-muted mt-2">{formatDate(data)}</p>
         </div>
         <Link to="/escala">
@@ -227,4 +227,5 @@ export default function EscalaDiaPage() {
     </div>
   );
 }
+
 

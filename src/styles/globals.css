@@ -2,40 +2,40 @@
 @import "@heroui/styles";
 
 :root {
-  color-scheme: dark;
-  --color-surface: #1c2440;
-  --color-surface-strong: #232c4a;
-  --color-bg: #0f1324;
-  --color-border: #2f3a5a;
-  --color-border-dark: #3a4771;
-  --color-text-primary: #f1f4fa;
-  --color-text-secondary: #9aa4b5;
-  --color-action: #3b82f6;
-  --color-action-hover: #2563eb;
-  --color-success: #6aa84f;
-  --color-success-bg: #23351d;
-  --color-danger: #e45b5b;
-  --color-danger-bg: #5b2c35;
-  --color-warning: #f1a23b;
-  --color-warning-bg: #3a2b13;
-  --color-field: #11172b;
-  --color-field-hover: #151c33;
-  --color-field-focus: #11172b;
-  --color-field-foreground: #f1f4fa;
-  --color-field-placeholder: #9aa4b5;
-  --color-field-border: #2f3a5a;
-  --color-field-border-hover: #3a4771;
-  --color-field-border-focus: #3b82f6;
-  --shadow-field: 0 0 0 1px rgba(59, 130, 246, 0.2);
+  color-scheme: light;
+  --color-surface: #ffffff;
+  --color-surface-strong: #fdfdf9;
+  --color-bg: #f7f7f2;
+  --color-border: #dcfce7;
+  --color-border-dark: #bfe6cc;
+  --color-text-primary: #374151;
+  --color-text-secondary: #6b7280;
+  --color-action: #059669;
+  --color-action-hover: #0ea5e9;
+  --color-success: #059669;
+  --color-success-bg: #dcfce7;
+  --color-danger: #fca5a5;
+  --color-danger-bg: #fee2e2;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fef3c7;
+  --color-field: #ffffff;
+  --color-field-hover: #f9fafb;
+  --color-field-focus: #ffffff;
+  --color-field-foreground: #374151;
+  --color-field-placeholder: #9ca3af;
+  --color-field-border: #dcfce7;
+  --color-field-border-hover: #bfe6cc;
+  --color-field-border-focus: #059669;
+  --shadow-field: 0 0 0 1px rgba(5, 150, 105, 0.15);
   --border-width-field: 1px;
   --radius-field: 12px;
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 }
 
 @layer base {
@@ -57,7 +57,7 @@
 
   input::placeholder,
   textarea::placeholder {
-    color: rgba(154, 164, 181, 0.35);
+    color: var(--color-field-placeholder);
   }
 
   input:hover:not(:focus):not(:focus-visible),
@@ -92,21 +92,19 @@
   }
 
   div.border-cloud {
-    background-color: var(--color-surface-strong);
+    background-color: var(--color-surface);
   }
 
   span.border-cloud {
-    background-color: var(--color-field);
-    color: var(--color-text-primary);
+    background-color: var(--color-success-bg);
+    color: var(--color-action);
   }
 }
 
 body {
   font-family: var(--font-sans);
-  background:
-    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.12), transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(69, 72, 105, 0.3), transparent 45%),
-    var(--color-bg);
+  background-color: var(--color-bg);
+  background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
   color: var(--color-text-primary);
 }
 
@@ -117,10 +115,10 @@ body {
 }
 
 .surface {
-  background: linear-gradient(135deg, rgba(35, 44, 74, 0.95), rgba(19, 25, 45, 0.95));
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 45px -30px rgba(4, 6, 14, 0.8);
+  box-shadow: 0 10px 25px -15px rgba(0, 0, 0, 0.08);
 }
 
 .no-scrollbar {

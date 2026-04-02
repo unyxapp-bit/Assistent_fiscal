@@ -33,7 +33,7 @@ export default function PedidosPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Pizzaria</p>
-          <h1 className="font-display text-3xl text-ink">Pedidos</h1>
+          <h1 className="font-display text-3xl text-primary">Pedidos</h1>
           <p className="text-sm text-muted mt-2">Controle de pedidos do balcão e delivery.</p>
         </div>
         <Link to="/pizzaria/novo">
@@ -119,4 +119,5 @@ export default function PedidosPage() {
     </div>
   );
 }
+
 

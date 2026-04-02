@@ -8,7 +8,7 @@ export default function PizzariaHub() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Turno</p>
-        <h1 className="font-display text-3xl text-ink">Pizzaria</h1>
+        <h1 className="font-display text-3xl text-primary">Pizzaria</h1>
         <p className="text-sm text-muted mt-2">
           Catálogo de pizzas e fluxo de pedidos do balcão.
         </p>
@@ -33,4 +33,5 @@ export default function PizzariaHub() {
     </div>
   );
 }
+
 

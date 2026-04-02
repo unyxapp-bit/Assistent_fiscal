@@ -12,7 +12,7 @@ export function PlaceholderPage({ title, subtitle, children }: PlaceholderPagePr
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Em construção</p>
-        <h1 className="font-display text-3xl text-ink">{title}</h1>
+        <h1 className="font-display text-3xl text-primary">{title}</h1>
         {subtitle ? <p className="text-muted mt-2 max-w-2xl">{subtitle}</p> : null}
       </div>
       <Card className="bg-surfaceStrong">
@@ -25,3 +25,4 @@ export function PlaceholderPage({ title, subtitle, children }: PlaceholderPagePr
     </div>
   );
 }
+

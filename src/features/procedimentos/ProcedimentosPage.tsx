@@ -44,7 +44,7 @@ export default function ProcedimentosPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Procedimentos</h1>
+          <h1 className="font-display text-3xl text-primary">Procedimentos</h1>
           <p className="text-sm text-muted mt-2">
             Base de procedimentos internos e favoritos de consulta rápida.
           </p>
@@ -133,4 +133,5 @@ export default function ProcedimentosPage() {
     </div>
   );
 }
+
 

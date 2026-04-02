@@ -25,7 +25,7 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md space-y-6">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Fiscal Assistant</p>
-          <h1 className="font-display text-3xl text-ink">Criar conta</h1>
+          <h1 className="font-display text-3xl text-primary">Criar conta</h1>
           <p className="text-sm text-muted mt-2">
             Configure seu perfil de fiscal para começar.
           </p>
@@ -76,3 +76,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

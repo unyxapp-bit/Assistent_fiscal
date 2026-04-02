@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../shared/ui/Button';
 import { Card } from '../../shared/ui/Card';
@@ -11,7 +11,7 @@ const quickLinks = [
   { label: 'Caixas', to: '/caixas' },
   { label: 'Colaboradores', to: '/colaboradores' },
   { label: 'Escala', to: '/escala' },
-  { label: 'Relatórios', to: '/relatorios' },
+  { label: 'RelatÃ³rios', to: '/relatorios' },
 ];
 
 const DASHBOARD_LAYOUT_KEY = 'dashboard_home_v1';
@@ -94,7 +94,7 @@ export default function DashboardHome() {
       : null,
     data.ocorrenciasAbertas > 0
       ? {
-          label: `${data.ocorrenciasAbertas} ocorrência(s) abertas`,
+          label: `${data.ocorrenciasAbertas} ocorrÃªncia(s) abertas`,
           to: '/ocorrencias',
         }
       : null,
@@ -132,7 +132,7 @@ export default function DashboardHome() {
         span: '',
         content: (
           <>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas disponíveis</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas disponÃ­veis</p>
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.caixasAtivos}
             </p>
@@ -149,7 +149,7 @@ export default function DashboardHome() {
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.alocados}
             </p>
-            <p className="mt-1 text-xs text-muted">Tabela `alocações`.</p>
+            <p className="mt-1 text-xs text-muted">Tabela `alocaÃ§Ãµes`.</p>
           </>
         ),
       },
@@ -182,7 +182,7 @@ export default function DashboardHome() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="rounded-full border border-border bg-[#11172b] px-3 py-1.5 text-[11px] font-semibold text-ink hover:border-primary hover:text-white"
+                  className="rounded-full border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-accent hover:border-primary hover:text-primary"
                 >
                   {link.label}
                 </Link>
@@ -203,14 +203,14 @@ export default function DashboardHome() {
               </span>
             </div>
             {alerts.length === 0 ? (
-              <p className="mt-3 text-xs text-muted">Nenhum alerta crítico no momento.</p>
+              <p className="mt-3 text-xs text-muted">Nenhum alerta crÃ­tico no momento.</p>
             ) : (
               <div className="mt-3 flex flex-wrap gap-2">
                 {alerts.map((alert) => (
                   <Link
                     key={alert.label}
                     to={alert.to}
-                    className="inline-flex rounded-full border border-border bg-[#11172b] px-3 py-1.5 text-[11px] font-semibold text-ink hover:border-primary hover:text-white"
+                    className="inline-flex rounded-full border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-accent hover:border-primary hover:text-primary"
                   >
                     {alert.label}
                   </Link>
@@ -238,11 +238,11 @@ export default function DashboardHome() {
         span: '',
         content: (
           <>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Ocorrências abertas</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">OcorrÃªncias abertas</p>
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.ocorrenciasAbertas}
             </p>
-            <p className="mt-1 text-xs text-muted">Exige follow-up rápido.</p>
+            <p className="mt-1 text-xs text-muted">Exige follow-up rÃ¡pido.</p>
           </>
         ),
       },
@@ -255,7 +255,7 @@ export default function DashboardHome() {
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.entregasSeparadas}
             </p>
-            <p className="mt-1 text-xs text-muted">Aguardando saída.</p>
+            <p className="mt-1 text-xs text-muted">Aguardando saÃ­da.</p>
           </>
         ),
       },
@@ -289,15 +289,15 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
-      <section className="surface p-4 border border-border/80 bg-gradient-to-br from-[#202a4b] to-[#141a2f]">
+      <section className="surface p-5 border border-border/80">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
-            <h1 className="font-display text-3xl text-ink">Painel do Fiscal</h1>
+            <h1 className="font-display text-3xl text-primary">Painel do Fiscal</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="rounded-xl border border-border bg-[#11172b] px-4 py-2 text-sm shadow-[0_12px_24px_-20px_rgba(4,6,14,0.7)]">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-white/70">Horário</p>
-              <p className="mt-1 text-xl font-semibold text-white">
+            <div className="rounded-xl border border-border bg-surface px-4 py-2 text-sm shadow-[0_12px_24px_-20px_rgba(5,150,105,0.2)]">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent">HorÃ¡rio</p>
+              <p className="mt-1 text-xl font-semibold text-accent">
                 {now.toLocaleTimeString('pt-BR', {
                   hour: '2-digit',
                   minute: '2-digit',
@@ -305,19 +305,21 @@ export default function DashboardHome() {
                 })}
               </p>
             </div>
-            <Button className="self-start bg-action text-white hover:bg-action-hover">
-              Começar turno
+            <Button className="self-start">
+              ComeÃ§ar turno
             </Button>
           </div>
         </div>
         <div
           className={`mt-4 rounded-2xl border px-4 py-2.5 text-sm ${
-            hasAlerts ? 'border-danger/50 bg-danger/20 text-danger' : 'border-border bg-[#11172b] text-muted'
+            hasAlerts
+              ? 'border-danger bg-danger/30 text-danger'
+              : 'border-border bg-surface text-muted'
           }`}
         >
           {hasAlerts
-            ? 'Atenção: há alertas pendentes no turno. Revise os módulos críticos.'
-            : 'Turno estável: nenhum alerta crítico no momento.'}
+            ? 'AtenÃ§Ã£o: hÃ¡ alertas pendentes no turno. Revise os mÃ³dulos crÃ­ticos.'
+            : 'Turno estÃ¡vel: nenhum alerta crÃ­tico no momento.'}
         </div>
       </section>
 
@@ -337,13 +339,13 @@ export default function DashboardHome() {
             >
               <Card
                 className={cn(
-                  'relative p-3 md:p-4 bg-surfaceStrong border border-border shadow-[0_18px_36px_-24px_rgba(4,6,14,0.75)] transition hover:-translate-y-0.5 hover:border-borderDark hover:shadow-[0_22px_48px_-26px_rgba(4,6,14,0.85)]',
+                  'relative p-3 md:p-4 bg-surface border border-border shadow-[0_18px_36px_-24px_rgba(5,150,105,0.15)] transition hover:-translate-y-0.5 hover:border-borderDark hover:shadow-[0_22px_48px_-26px_rgba(5,150,105,0.25)]',
                   draggingId === id && 'ring-2 ring-primary/30'
                 )}
               >
                 <button
                   type="button"
-                  className="absolute right-3 top-3 rounded-md border border-border bg-[#11172b] px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-white cursor-grab active:cursor-grabbing"
+                  className="absolute right-3 top-3 rounded-md border border-border bg-surface px-2 py-1 text-[10px] font-semibold tracking-[0.2em] text-muted hover:text-primary cursor-grab active:cursor-grabbing"
                   draggable
                   onDragStart={(event) => {
                     setDraggingId(id);
@@ -365,3 +367,4 @@ export default function DashboardHome() {
     </div>
   );
 }
+

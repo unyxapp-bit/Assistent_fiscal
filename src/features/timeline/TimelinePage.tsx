@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
 import { formatDateTime, todayIsoDate } from '../../shared/lib/dates';
@@ -19,9 +19,9 @@ export default function TimelinePage() {
     return eventos
       .map((evento) => {
         const when = formatDateTime(evento.timestamp);
-        const detail = evento.detalhe ? ` • ${evento.detalhe}` : '';
-        const colab = evento.colaborador_nome ? ` • ${evento.colaborador_nome}` : '';
-        return `${when} — ${evento.tipo}${detail}${colab}`;
+        const detail = evento.detalhe ? ` â€¢ ${evento.detalhe}` : '';
+        const colab = evento.colaborador_nome ? ` â€¢ ${evento.colaborador_nome}` : '';
+        return `${when} â€” ${evento.tipo}${detail}${colab}`;
       })
       .join('\n');
   }, [eventos]);
@@ -33,7 +33,7 @@ export default function TimelinePage() {
 
   const handleEncerrarTurno = async () => {
     if (!user?.id) return;
-    if (!window.confirm('Encerrar turno e gerar relatório? Esta ação é definitiva.')) return;
+    if (!window.confirm('Encerrar turno e gerar relatÃ³rio? Esta aÃ§Ã£o Ã© definitiva.')) return;
     setClosing(true);
     const inicio = eventos.length
       ? eventos[eventos.length - 1].timestamp
@@ -57,10 +57,10 @@ export default function TimelinePage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">Relatórios</p>
-        <h1 className="font-display text-3xl text-ink">Timeline do Turno</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">RelatÃ³rios</p>
+        <h1 className="font-display text-3xl text-primary">Timeline do Turno</h1>
         <p className="text-sm text-muted mt-2">
-          Histórico cronológico de eventos registrados durante o turno.
+          HistÃ³rico cronolÃ³gico de eventos registrados durante o turno.
         </p>
       </div>
 
@@ -106,3 +106,4 @@ export default function TimelinePage() {
     </div>
   );
 }
+

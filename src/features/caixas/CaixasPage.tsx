@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
 import type { TipoCaixa } from '../../shared/types';
@@ -38,7 +38,7 @@ export default function CaixasPage() {
     const num = Number(numero);
     if (!num) return;
     if (caixas.some((c) => c.numero === num)) {
-      setErro('Já existe um caixa com esse número.');
+      setErro('JÃ¡ existe um caixa com esse nÃºmero.');
       return;
     }
     await createCaixa({ numero: num, tipo });
@@ -48,10 +48,10 @@ export default function CaixasPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão</p>
-        <h1 className="font-display text-3xl text-ink">Caixas</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">GestÃ£o</p>
+        <h1 className="font-display text-3xl text-primary">Caixas</h1>
         <p className="text-sm text-muted mt-2">
-          Configure caixas, status e manutenção. Sincronizado com Supabase.
+          Configure caixas, status e manutenÃ§Ã£o. Sincronizado com Supabase.
         </p>
       </div>
 
@@ -65,7 +65,7 @@ export default function CaixasPage() {
           <h2 className="text-2xl font-semibold">{stats.ativos}</h2>
         </Card>
         <Card>
-          <p className="text-sm text-muted">Em manutenção</p>
+          <p className="text-sm text-muted">Em manutenÃ§Ã£o</p>
           <h2 className="text-2xl font-semibold">{stats.manutencao}</h2>
         </Card>
       </div>
@@ -74,7 +74,7 @@ export default function CaixasPage() {
         <form className="flex flex-col md:flex-row gap-3" onSubmit={handleCreate}>
           <input
             type="number"
-            placeholder="Número"
+            placeholder="NÃºmero"
             value={numero}
             onChange={(e) => setNumero(e.target.value)}
             className="w-full md:w-40 rounded-xl border border-cloud px-4 py-2"
@@ -101,7 +101,7 @@ export default function CaixasPage() {
         <input
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
-          placeholder="Buscar número"
+          placeholder="Buscar nÃºmero"
           className="rounded-xl border border-cloud px-4 py-2"
         />
         {(['ativos', 'inativos', 'todos'] as const).map((f) => (
@@ -160,7 +160,7 @@ export default function CaixasPage() {
                     })
                   }
                 >
-                  {caixa.em_manutencao ? 'Liberar' : 'Manutenção'}
+                  {caixa.em_manutencao ? 'Liberar' : 'ManutenÃ§Ã£o'}
                 </Button>
               </div>
             </Card>
@@ -170,3 +170,4 @@ export default function CaixasPage() {
     </div>
   );
 }
+

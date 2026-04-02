@@ -12,7 +12,7 @@ export default function ProfilePage() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Conta</p>
-        <h1 className="font-display text-3xl text-ink">Perfil</h1>
+        <h1 className="font-display text-3xl text-primary">Perfil</h1>
         <p className="text-sm text-muted mt-2">
           Informações da sua conta Supabase e dados do fiscal.
         </p>
@@ -54,3 +54,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+

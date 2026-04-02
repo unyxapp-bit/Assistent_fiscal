@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Card } from '../../shared/ui/Card';
@@ -52,23 +52,23 @@ export default function ColaboradorDetailPage() {
   }
 
   if (!colaborador) {
-    return <Card>Colaborador não encontrado.</Card>;
+    return <Card>Colaborador nÃ£o encontrado.</Card>;
   }
 
   return (
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Colaboradores</p>
-        <h1 className="font-display text-3xl text-ink">{colaborador.nome}</h1>
+        <h1 className="font-display text-3xl text-primary">{colaborador.nome}</h1>
         <p className="text-sm text-muted mt-2">Departamento: {colaborador.departamento}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="space-y-2">
           <h2 className="font-display text-lg">Detalhes</h2>
-          <p className="text-sm text-muted">Telefone: {colaborador.telefone ?? '—'}</p>
-          <p className="text-sm text-muted">Cargo: {colaborador.cargo ?? '—'}</p>
-          <p className="text-sm text-muted">CPF: {colaborador.cpf ?? '—'}</p>
+          <p className="text-sm text-muted">Telefone: {colaborador.telefone ?? 'â€”'}</p>
+          <p className="text-sm text-muted">Cargo: {colaborador.cargo ?? 'â€”'}</p>
+          <p className="text-sm text-muted">CPF: {colaborador.cpf ?? 'â€”'}</p>
           <Button
             variant="outline"
             onClick={() => updateColaborador({ id: colaborador.id, patch: { ativo: !colaborador.ativo } })}
@@ -78,7 +78,7 @@ export default function ColaboradorDetailPage() {
         </Card>
 
         <Card>
-          <h2 className="font-display text-lg mb-3">Registro rápido</h2>
+          <h2 className="font-display text-lg mb-3">Registro rÃ¡pido</h2>
           <form className="grid grid-cols-1 md:grid-cols-3 gap-2" onSubmit={handleSalvarRegistro}>
             <input
               type="time"
@@ -106,7 +106,7 @@ export default function ColaboradorDetailPage() {
       </div>
 
       <Card>
-        <h2 className="font-display text-lg mb-3">Últimos registros</h2>
+        <h2 className="font-display text-lg mb-3">Ãšltimos registros</h2>
         {ultimosRegistros.length === 0 ? (
           <p className="text-sm text-muted">Nenhum registro encontrado.</p>
         ) : (
@@ -114,7 +114,7 @@ export default function ColaboradorDetailPage() {
             {ultimosRegistros.map((r) => (
               <div key={r.id} className="flex items-center justify-between rounded-lg border border-cloud px-3 py-2">
                 <span>{r.data}</span>
-                <span>Entrada {r.entrada ?? '—'} • Saída {r.saida ?? '—'}</span>
+                <span>Entrada {r.entrada ?? 'â€”'} â€¢ SaÃ­da {r.saida ?? 'â€”'}</span>
               </div>
             ))}
           </div>
@@ -123,3 +123,4 @@ export default function ColaboradorDetailPage() {
     </div>
   );
 }
+

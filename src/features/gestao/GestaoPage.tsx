@@ -71,7 +71,7 @@ export default function GestaoPage() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão Operacional</p>
-        <h1 className="font-display text-3xl text-ink">Painel de Gestão</h1>
+        <h1 className="font-display text-3xl text-primary">Painel de Gestão</h1>
         <p className="text-sm text-muted mt-2">
           Alterna entre alocação, mapa e pausas mantendo os dados vivos.
         </p>
@@ -112,3 +112,4 @@ export default function GestaoPage() {
     </div>
   );
 }
+

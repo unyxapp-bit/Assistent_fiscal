@@ -47,7 +47,7 @@ export default function EntregaFormPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Nova entrega</h1>
+          <h1 className="font-display text-3xl text-primary">Nova entrega</h1>
           <p className="text-sm text-muted mt-2">
             Registre a nota fiscal e os dados do cliente para acompanhar o fluxo.
           </p>
@@ -116,4 +116,5 @@ export default function EntregaFormPage() {
     </div>
   );
 }
+
 

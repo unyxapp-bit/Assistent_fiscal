@@ -18,7 +18,7 @@ export default function GuiaRapidoPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Guia Rápido</h1>
+          <h1 className="font-display text-3xl text-primary">Guia Rápido</h1>
           <p className="text-sm text-muted mt-2">
             Situações críticas com passos rápidos e atalhos do turno.
           </p>
@@ -104,4 +104,5 @@ export default function GuiaRapidoPage() {
     </div>
   );
 }
+
 

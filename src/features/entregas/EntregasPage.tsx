@@ -49,7 +49,7 @@ export default function EntregasPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Entregas</h1>
+          <h1 className="font-display text-3xl text-primary">Entregas</h1>
           <p className="text-sm text-muted mt-2">
             Controle de pedidos separados, em rota e concluídos com status em tempo real.
           </p>
@@ -179,4 +179,5 @@ export default function EntregasPage() {
     </div>
   );
 }
+
 

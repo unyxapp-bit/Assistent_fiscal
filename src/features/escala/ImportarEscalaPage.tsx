@@ -64,7 +64,7 @@ export default function ImportarEscalaPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão</p>
-          <h1 className="font-display text-3xl text-ink">Importar escala</h1>
+          <h1 className="font-display text-3xl text-primary">Importar escala</h1>
           <p className="text-sm text-muted mt-2">
             Cole linhas com nome e horários. Ex: "Maria 08:00 12:00 13:00 17:00".
           </p>
@@ -122,4 +122,5 @@ export default function ImportarEscalaPage() {
     </div>
   );
 }
+
 

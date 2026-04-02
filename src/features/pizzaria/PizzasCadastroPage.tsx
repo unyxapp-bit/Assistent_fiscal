@@ -36,7 +36,7 @@ export default function PizzasCadastroPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Pizzaria</p>
-          <h1 className="font-display text-3xl text-ink">Cardápio</h1>
+          <h1 className="font-display text-3xl text-primary">Cardápio</h1>
           <p className="text-sm text-muted mt-2">Cadastre pizzas e tamanhos.</p>
         </div>
         <Link to="/pizzaria">
@@ -94,19 +94,19 @@ export default function PizzasCadastroPage() {
           filtered.map((pizza) => (
             <Card
               key={pizza.id}
-              className="flex h-full flex-col justify-between gap-3 !bg-[#11172b] border border-border p-4 text-ink"
+              className="flex h-full flex-col justify-between gap-3 p-4"
             >
               <div>
-                <p className="font-semibold text-white text-base">
+                <p className="font-semibold text-ink text-base">
                   {pizza.nome?.trim() || 'Pizza sem nome'}
                 </p>
-                <p className="text-xs text-white/70">{pizza.tamanho}</p>
+                <p className="text-xs text-muted">{pizza.tamanho}</p>
                 {pizza.ingredientes ? (
-                  <p className="text-xs text-white/70">{pizza.ingredientes}</p>
+                  <p className="text-xs text-muted">{pizza.ingredientes}</p>
                 ) : null}
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-white/70">
+                <span className="text-xs text-muted">
                   {pizza.ativa ? 'Ativa' : 'Inativa'}
                 </span>
                 <Button
@@ -124,4 +124,5 @@ export default function PizzasCadastroPage() {
     </div>
   );
 }
+
 

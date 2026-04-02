@@ -65,7 +65,7 @@ export default function FormularioPreenchimentoPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Preencher formulário</h1>
+          <h1 className="font-display text-3xl text-primary">Preencher formulário</h1>
           <p className="text-sm text-muted mt-2">{formulario.titulo}</p>
         </div>
         <Link to="/formularios">
@@ -117,3 +117,4 @@ export default function FormularioPreenchimentoPage() {
     </div>
   );
 }
+

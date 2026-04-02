@@ -6,7 +6,7 @@ export default function LojaHub() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Loja</p>
-        <h1 className="font-display text-3xl text-ink">Panorama do turno</h1>
+        <h1 className="font-display text-3xl text-primary">Panorama do turno</h1>
       </div>
       <Card>
         <h3 className="font-display text-xl">Saúde operacional</h3>
@@ -18,3 +18,4 @@ export default function LojaHub() {
     </div>
   );
 }
+

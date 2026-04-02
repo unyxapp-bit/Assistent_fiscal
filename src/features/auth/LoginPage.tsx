@@ -24,7 +24,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md space-y-6">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Fiscal Assistant</p>
-          <h1 className="font-display text-3xl text-ink">Bem-vindo de volta</h1>
+          <h1 className="font-display text-3xl text-primary">Bem-vindo de volta</h1>
           <p className="text-sm text-muted mt-2">
             Acesse sua central de turno para iniciar o monitoramento.
           </p>
@@ -67,3 +67,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

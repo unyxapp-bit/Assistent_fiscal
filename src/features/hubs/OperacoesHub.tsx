@@ -19,7 +19,7 @@ export default function OperacoesHub() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Operações</p>
-        <h1 className="font-display text-3xl text-ink">Controle operacional</h1>
+        <h1 className="font-display text-3xl text-primary">Controle operacional</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {ops.map((item) => (
@@ -36,3 +36,4 @@ export default function OperacoesHub() {
     </div>
   );
 }
+

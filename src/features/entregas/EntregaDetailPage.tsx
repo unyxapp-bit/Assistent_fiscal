@@ -81,7 +81,7 @@ export default function EntregaDetailPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Entrega #{entrega.numero_nota}</h1>
+          <h1 className="font-display text-3xl text-primary">Entrega #{entrega.numero_nota}</h1>
           <p className="text-sm text-muted mt-2">
             Status atual: {entrega.status} · Separado em {formatDateTime(entrega.separado_em)}
           </p>
@@ -195,4 +195,5 @@ export default function EntregaDetailPage() {
     </div>
   );
 }
+
 

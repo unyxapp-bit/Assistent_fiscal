@@ -14,7 +14,7 @@ export default function PrincipalHub() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Principal</p>
-        <h1 className="font-display text-3xl text-ink">Acesso rápido</h1>
+        <h1 className="font-display text-3xl text-primary">Acesso rápido</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {items.map((item) => (
@@ -31,3 +31,4 @@ export default function PrincipalHub() {
     </div>
   );
 }
+

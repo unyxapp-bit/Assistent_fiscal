@@ -37,7 +37,7 @@ export default function PassagemTurnoPage() {
     <div className="space-y-6">
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-        <h1 className="font-display text-3xl text-ink">Passagem de Turno</h1>
+        <h1 className="font-display text-3xl text-primary">Passagem de Turno</h1>
         <p className="text-sm text-muted mt-2">
           Resumos diários, pendências e recados entre turnos.
         </p>
@@ -118,4 +118,5 @@ export default function PassagemTurnoPage() {
     </div>
   );
 }
+
 

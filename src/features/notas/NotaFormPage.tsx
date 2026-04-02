@@ -39,7 +39,7 @@ export default function NotaFormPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
-          <h1 className="font-display text-3xl text-ink">Nova nota</h1>
+          <h1 className="font-display text-3xl text-primary">Nova nota</h1>
           <p className="text-sm text-muted mt-2">Registre uma nova anotação, tarefa ou lembrete.</p>
         </div>
         <Link to="/notas">
@@ -95,4 +95,5 @@ export default function NotaFormPage() {
     </div>
   );
 }
+
 

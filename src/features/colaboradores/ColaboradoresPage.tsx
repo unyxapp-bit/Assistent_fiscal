@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
@@ -57,10 +57,10 @@ export default function ColaboradoresPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão</p>
-        <h1 className="font-display text-3xl text-ink">Colaboradores</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">GestÃ£o</p>
+        <h1 className="font-display text-3xl text-primary">Colaboradores</h1>
         <p className="text-sm text-muted mt-2">
-          Cadastro de equipe ativa para alocação, escala e módulos operacionais.
+          Cadastro de equipe ativa para alocaÃ§Ã£o, escala e mÃ³dulos operacionais.
         </p>
       </div>
 
@@ -174,7 +174,7 @@ export default function ColaboradoresPage() {
                   {col.ativo ? 'Desativar' : 'Ativar'}
                 </Button>
                 <Link to={`/colaboradores/${col.id}`} className="text-sm font-semibold text-primary">
-                  Ver detalhes →
+                  Ver detalhes â†’
                 </Link>
               </div>
             </Card>
@@ -184,3 +184,4 @@ export default function ColaboradoresPage() {
     </div>
   );
 }
+

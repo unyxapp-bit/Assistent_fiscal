@@ -23,7 +23,7 @@ export default function ResetPasswordPage() {
       <Card className="w-full max-w-md space-y-6">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Fiscal Assistant</p>
-          <h1 className="font-display text-3xl text-ink">Recuperar senha</h1>
+          <h1 className="font-display text-3xl text-primary">Recuperar senha</h1>
           <p className="text-sm text-muted mt-2">
             Enviaremos um link para redefinir a senha.
           </p>
@@ -56,3 +56,4 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+
