@@ -11,7 +11,7 @@ const quickLinks = [
   { label: 'Caixas', to: '/caixas' },
   { label: 'Colaboradores', to: '/colaboradores' },
   { label: 'Escala', to: '/escala' },
-  { label: 'Relat?rios', to: '/relatorios' },
+  { label: 'Relatórios', to: '/relatorios' },
 ];
 
 const DASHBOARD_LAYOUT_KEY = 'dashboard_home_v1';
@@ -94,7 +94,7 @@ export default function DashboardHome() {
       : null,
     data.ocorrenciasAbertas > 0
       ? {
-          label: `${data.ocorrenciasAbertas} ocorr?ncia(s) abertas`,
+          label: `${data.ocorrenciasAbertas} ocorrência(s) abertas`,
           to: '/ocorrencias',
         }
       : null,
@@ -132,7 +132,7 @@ export default function DashboardHome() {
         span: '',
         content: (
           <>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas dispon?veis</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Caixas disponíveis</p>
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.caixasAtivos}
             </p>
@@ -149,7 +149,7 @@ export default function DashboardHome() {
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.alocados}
             </p>
-            <p className="mt-1 text-xs text-muted">Tabela `aloca??es`.</p>
+            <p className="mt-1 text-xs text-muted">Tabela `alocações`.</p>
           </>
         ),
       },
@@ -171,7 +171,7 @@ export default function DashboardHome() {
         span: 'md:col-span-2 xl:col-span-2',
         content: (
           <>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2 pr-12">
               <h3 className="text-sm font-semibold text-ink">Atalhos principais</h3>
               <span className="text-xs text-muted">
                 Livres agora: {data.isLoading ? '...' : data.livres} caixas
@@ -196,14 +196,14 @@ export default function DashboardHome() {
         span: 'md:col-span-2 xl:col-span-2',
         content: (
           <>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2 pr-12">
               <h3 className="text-sm font-semibold text-ink">Alertas do turno</h3>
               <span className="text-xs text-muted">
                 {alerts.length === 0 ? 'Nenhum alerta' : `${alerts.length} alerta(s)`}
               </span>
             </div>
             {alerts.length === 0 ? (
-              <p className="mt-3 text-xs text-muted">Nenhum alerta cr?tico no momento.</p>
+              <p className="mt-3 text-xs text-muted">Nenhum alerta crítico no momento.</p>
             ) : (
               <div className="mt-3 flex flex-wrap gap-2">
                 {alerts.map((alert) => (
@@ -238,11 +238,11 @@ export default function DashboardHome() {
         span: '',
         content: (
           <>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Ocorr?ncias abertas</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted">Ocorrências abertas</p>
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.ocorrenciasAbertas}
             </p>
-            <p className="mt-1 text-xs text-muted">Exige follow-up r?pido.</p>
+            <p className="mt-1 text-xs text-muted">Exige follow-up rápido.</p>
           </>
         ),
       },
@@ -255,7 +255,7 @@ export default function DashboardHome() {
             <p className="mt-2 text-xl font-semibold text-ink">
               {data.isLoading ? '...' : data.entregasSeparadas}
             </p>
-            <p className="mt-1 text-xs text-muted">Aguardando sa?da.</p>
+            <p className="mt-1 text-xs text-muted">Aguardando saída.</p>
           </>
         ),
       },
@@ -290,13 +290,13 @@ export default function DashboardHome() {
   return (
     <div className="space-y-8">
       <section className="hero-surface">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div>
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:gap-6">
+          <div className="lg:justify-self-start">
             <h1 className="font-display text-3xl text-primary">Painel do Fiscal</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="clock-card">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent">Hor?rio</p>
+          <div className="lg:justify-self-center">
+            <div className="clock-card min-w-[150px] text-center">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent">Horário</p>
               <p className="mt-1 text-xl font-semibold text-accent">
                 {now.toLocaleTimeString('pt-BR', {
                   hour: '2-digit',
@@ -305,8 +305,10 @@ export default function DashboardHome() {
                 })}
               </p>
             </div>
-            <Button className="self-start">
-              Come?ar turno
+          </div>
+          <div className="lg:justify-self-end">
+            <Button className="w-full lg:w-auto">
+              Começar turno
             </Button>
           </div>
         </div>
