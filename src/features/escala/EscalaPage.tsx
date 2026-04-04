@@ -15,6 +15,8 @@ import {
 type ResumoDia = {
   turnos: number;
   registros: number;
+  turnoIds: string[];
+  registroIds: string[];
   preview: Array<{
     colaborador: string;
     horario: string;
@@ -43,7 +45,8 @@ function normalizarHorario(value?: string | null) {
 }
 
 export default function EscalaPage() {
-  const { colaboradores, registros, turnos, isLoading } = useEscala();
+  const { colaboradores, registros, turnos, isLoading, deleteEscalaDia, deletingDia } =
+    useEscala();
   const [weekStart, setWeekStart] = useState(startOfWeek(new Date()));
 
   const dias = useMemo(
@@ -63,7 +66,13 @@ export default function EscalaPage() {
     const garantirDia = (iso: string) => {
       const existente = mapa.get(iso);
       if (existente) return existente;
-      const criado: ResumoDia = { turnos: 0, registros: 0, preview: [] };
+      const criado: ResumoDia = {
+        turnos: 0,
+        registros: 0,
+        turnoIds: [],
+        registroIds: [],
+        preview: [],
+      };
       mapa.set(iso, criado);
       return criado;
     };
@@ -73,6 +82,7 @@ export default function EscalaPage() {
       if (!data) return;
       const resumo = garantirDia(data);
       resumo.turnos += 1;
+      resumo.turnoIds.push(turno.id);
 
       if (resumo.preview.length >= 3) return;
       const colaboradorId = getTurnoEscalaColaboradorId(turno);
@@ -90,6 +100,7 @@ export default function EscalaPage() {
     registros.forEach((registro) => {
       const resumo = garantirDia(registro.data);
       resumo.registros += 1;
+      resumo.registroIds.push(registro.id);
 
       if (resumo.preview.length >= 3) return;
       resumo.preview.push({
@@ -110,6 +121,24 @@ export default function EscalaPage() {
   const periodoSemana = `${formatDate(toDateInputValue(weekStart))} a ${formatDate(
     toDateInputValue(addDays(weekStart, 6))
   )}`;
+
+  const handleExcluirDia = async (iso: string, resumo: ResumoDia) => {
+    const total = resumo.turnoIds.length + resumo.registroIds.length;
+    if (total === 0) {
+      window.alert('Nao ha escala cadastrada nesse dia para excluir.');
+      return;
+    }
+
+    const confirmou = window.confirm(
+      `Excluir escala do dia ${formatDate(iso)}? Essa acao remove ${resumo.turnoIds.length} turno(s) e ${resumo.registroIds.length} registro(s) de ponto.`
+    );
+    if (!confirmou) return;
+
+    await deleteEscalaDia({
+      turnoIds: resumo.turnoIds,
+      registroIds: resumo.registroIds,
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -144,7 +173,13 @@ export default function EscalaPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
         {dias.map((dia) => {
           const iso = toDateInputValue(dia);
-          const resumo = resumoPorDia.get(iso) ?? { turnos: 0, registros: 0, preview: [] };
+          const resumo = resumoPorDia.get(iso) ?? {
+            turnos: 0,
+            registros: 0,
+            turnoIds: [],
+            registroIds: [],
+            preview: [],
+          };
           const diaSemana = dia.toLocaleDateString('pt-BR', { weekday: 'short' });
           const destaqueHoje = iso === hoje;
 
@@ -193,6 +228,15 @@ export default function EscalaPage() {
                     Abrir dia
                   </Button>
                 </Link>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="w-full mt-2"
+                  disabled={deletingDia}
+                  onClick={() => void handleExcluirDia(iso, resumo)}
+                >
+                  Excluir dia
+                </Button>
               </div>
             </Card>
           );

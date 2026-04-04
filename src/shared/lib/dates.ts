@@ -1,5 +1,13 @@
-﻿function pad(value: number) {
+function pad(value: number) {
   return value.toString().padStart(2, '0');
+}
+
+function parseIsoDateOnly(value: string) {
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+  const [, year, month, day] = match;
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
 export function toDateInputValue(date: Date) {
@@ -22,7 +30,7 @@ export function startOfTodayIso() {
 
 export function formatDate(value?: string | null) {
   if (!value) return '-';
-  const date = new Date(value);
+  const date = parseIsoDateOnly(value) ?? new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat('pt-BR').format(date);
 }

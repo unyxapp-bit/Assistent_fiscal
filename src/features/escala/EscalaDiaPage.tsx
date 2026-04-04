@@ -1,19 +1,30 @@
-﻿import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
-import { formatDate, formatTime } from '../../shared/lib/dates';
+import { formatDate, formatTime, todayIsoDate } from '../../shared/lib/dates';
 import { useEscala } from './useEscala';
+import { getTurnoEscalaDate } from './api';
 
 export default function EscalaDiaPage() {
   const { data: dataParam } = useParams();
   const navigate = useNavigate();
-  const data = dataParam ?? new Date().toISOString().slice(0, 10);
+  const data = dataParam ?? todayIsoDate();
 
-  const { colaboradores, registros, createRegistro, updateRegistro, deleteRegistro, creating } =
-    useEscala();
+  const {
+    colaboradores,
+    registros,
+    turnos,
+    createRegistro,
+    updateRegistro,
+    deleteRegistro,
+    deleteEscalaDia,
+    creating,
+    deletingDia,
+  } = useEscala();
 
   const registrosDia = registros.filter((r) => r.data === data);
+  const turnosDia = turnos.filter((turno) => getTurnoEscalaDate(turno) === data);
 
   const colaboradorMap = useMemo(
     () => new Map(colaboradores.map((c) => [c.id, c.nome])),
@@ -53,7 +64,7 @@ export default function EscalaDiaPage() {
     setObservacao('');
   };
 
-  const startEdit = (registro: typeof registrosDia[number]) => {
+  const startEdit = (registro: (typeof registrosDia)[number]) => {
     setEditId(registro.id);
     setEditEntrada(registro.entrada ?? '');
     setEditIntervaloSaida(registro.intervalo_saida ?? '');
@@ -77,17 +88,41 @@ export default function EscalaDiaPage() {
     setEditId(null);
   };
 
+  const handleExcluirDia = async () => {
+    const registroIds = registrosDia.map((registro) => registro.id);
+    const turnoIds = turnosDia.map((turno) => turno.id);
+    const total = registroIds.length + turnoIds.length;
+
+    if (total === 0) {
+      window.alert('Nao ha escala cadastrada nesse dia para excluir.');
+      return;
+    }
+
+    const confirmou = window.confirm(
+      `Excluir escala do dia ${formatDate(data)}? Essa acao remove ${turnoIds.length} turno(s) e ${registroIds.length} registro(s) de ponto.`
+    );
+    if (!confirmou) return;
+
+    await deleteEscalaDia({ registroIds, turnoIds });
+    navigate('/escala');
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestao</p>
           <h1 className="font-display text-3xl text-primary">Escala do dia</h1>
           <p className="text-sm text-muted mt-2">{formatDate(data)}</p>
         </div>
-        <Link to="/escala">
-          <Button variant="outline">Voltar</Button>
-        </Link>
+        <div className="flex gap-2">
+          <Button variant="ghost" onClick={() => void handleExcluirDia()} disabled={deletingDia}>
+            Excluir dia
+          </Button>
+          <Link to="/escala">
+            <Button variant="outline">Voltar</Button>
+          </Link>
+        </div>
       </div>
 
       <Card>
@@ -115,7 +150,7 @@ export default function EscalaDiaPage() {
             value={intervaloSaida}
             onChange={(e) => setIntervaloSaida(e.target.value)}
             className="rounded-xl border border-cloud px-4 py-2"
-            placeholder="Intervalo saída"
+            placeholder="Intervalo saida"
           />
           <input
             type="time"
@@ -129,12 +164,12 @@ export default function EscalaDiaPage() {
             value={saida}
             onChange={(e) => setSaida(e.target.value)}
             className="rounded-xl border border-cloud px-4 py-2"
-            placeholder="Saída"
+            placeholder="Saida"
           />
           <input
             value={observacao}
             onChange={(e) => setObservacao(e.target.value)}
-            placeholder="Observações"
+            placeholder="Observacoes"
             className="rounded-xl border border-cloud px-4 py-2 md:col-span-4"
           />
           <Button type="submit" disabled={creating} className="md:col-span-2">
@@ -156,11 +191,7 @@ export default function EscalaDiaPage() {
                   </h3>
                   <p className="text-sm text-muted">{formatDate(registro.data)}</p>
                 </div>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => deleteRegistro(registro.id)}
-                >
+                <Button size="sm" variant="ghost" onClick={() => deleteRegistro(registro.id)}>
                   Remover
                 </Button>
               </div>
@@ -194,7 +225,7 @@ export default function EscalaDiaPage() {
                   <input
                     value={editObservacao}
                     onChange={(e) => setEditObservacao(e.target.value)}
-                    placeholder="Observações"
+                    placeholder="Observacoes"
                     className="rounded-xl border border-cloud px-3 py-2 col-span-2"
                   />
                   <div className="flex gap-2 col-span-2">
@@ -209,8 +240,8 @@ export default function EscalaDiaPage() {
               ) : (
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>Entrada: {formatTime(registro.entrada)}</div>
-                  <div>Saída: {formatTime(registro.saida)}</div>
-                  <div>Intervalo saída: {formatTime(registro.intervalo_saida)}</div>
+                  <div>Saida: {formatTime(registro.saida)}</div>
+                  <div>Intervalo saida: {formatTime(registro.intervalo_saida)}</div>
                   <div>Intervalo retorno: {formatTime(registro.intervalo_retorno)}</div>
                   {registro.observacao ? (
                     <div className="text-xs text-muted col-span-2">Obs: {registro.observacao}</div>
@@ -227,5 +258,3 @@ export default function EscalaDiaPage() {
     </div>
   );
 }
-
-

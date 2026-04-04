@@ -5,7 +5,9 @@ import { useRealtimeTable } from '../../shared/hooks/useRealtimeTable';
 import { fetchColaboradores } from '../colaboradores/api';
 import {
   createRegistroPonto,
+  deleteRegistrosPonto,
   deleteRegistroPonto,
+  deleteTurnosEscala,
   fetchRegistrosPorColaboradores,
   fetchTurnosEscalaPorColaboradores,
   updateRegistroPonto,
@@ -72,6 +74,19 @@ export function useEscala() {
     },
   });
 
+  const deleteDiaMutation = useMutation({
+    mutationFn: async (params: { registroIds: string[]; turnoIds: string[] }) => {
+      await Promise.all([
+        deleteRegistrosPonto(params.registroIds),
+        deleteTurnosEscala(params.turnoIds),
+      ]);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['registros_ponto', colaboradorIds] });
+      queryClient.invalidateQueries({ queryKey: ['turnos_escala', colaboradorIds] });
+    },
+  });
+
   return {
     colaboradores: colaboradoresQuery.data ?? [],
     registros: registrosQuery.data ?? [],
@@ -81,7 +96,9 @@ export function useEscala() {
     createRegistro: createMutation.mutateAsync,
     updateRegistro: updateMutation.mutateAsync,
     deleteRegistro: deleteMutation.mutateAsync,
+    deleteEscalaDia: deleteDiaMutation.mutateAsync,
     creating: createMutation.isPending,
     updating: updateMutation.isPending,
+    deletingDia: deleteDiaMutation.isPending,
   };
 }
