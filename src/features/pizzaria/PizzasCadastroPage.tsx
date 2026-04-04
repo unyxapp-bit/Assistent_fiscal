@@ -7,7 +7,8 @@ import { usePizzaria } from './usePizzaria';
 const tamanhos = ['media', 'grande', 'familia'];
 
 export default function PizzasCadastroPage() {
-  const { pizzas, isLoading, criarPizza, atualizarPizza } = usePizzaria();
+  const { pizzas, isLoading, criarPizza, atualizarPizza, deletarPizza, updating } =
+    usePizzaria();
   const [nome, setNome] = useState('');
   const [tamanho, setTamanho] = useState('media');
   const [ingredientes, setIngredientes] = useState('');
@@ -29,6 +30,11 @@ export default function PizzasCadastroPage() {
     });
     setNome('');
     setIngredientes('');
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Deseja excluir esta pizza do cardapio?')) return;
+    await deletarPizza(id);
   };
 
   return (
@@ -109,13 +115,26 @@ export default function PizzasCadastroPage() {
                 <span className="text-xs text-muted">
                   {pizza.ativa ? 'Ativa' : 'Inativa'}
                 </span>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => atualizarPizza({ id: pizza.id, patch: { ativa: !pizza.ativa } })}
-                >
-                  {pizza.ativa ? 'Desativar' : 'Ativar'}
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={updating}
+                    onClick={() =>
+                      atualizarPizza({ id: pizza.id, patch: { ativa: !pizza.ativa } })
+                    }
+                  >
+                    {pizza.ativa ? 'Desativar' : 'Ativar'}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    disabled={updating}
+                    onClick={() => void handleDelete(pizza.id)}
+                  >
+                    Excluir
+                  </Button>
+                </div>
               </div>
             </Card>
           ))
@@ -124,5 +143,4 @@ export default function PizzasCadastroPage() {
     </div>
   );
 }
-
 

@@ -3,6 +3,7 @@ import { useRealtimeTable } from '../../shared/hooks/useRealtimeTable';
 import {
   atualizarPedido,
   deletarPedido,
+  deletarPizza,
   atualizarPizza,
   criarPedido,
   criarPizza,
@@ -51,6 +52,13 @@ export function usePizzaria() {
     },
   });
 
+  const deletePizzaMutation = useMutation({
+    mutationFn: (id: string) => deletarPizza(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pizzas'] });
+    },
+  });
+
   const createPedidoMutation = useMutation({
     mutationFn: (params: Parameters<typeof criarPedido>[0]) => criarPedido(params),
     onSuccess: () => {
@@ -79,10 +87,15 @@ export function usePizzaria() {
     isLoading: pizzasQuery.isLoading || pedidosQuery.isLoading,
     criarPizza: createPizzaMutation.mutateAsync,
     atualizarPizza: updatePizzaMutation.mutateAsync,
+    deletarPizza: deletePizzaMutation.mutateAsync,
     criarPedido: createPedidoMutation.mutateAsync,
     atualizarPedido: updatePedidoMutation.mutateAsync,
     deletarPedido: deletePedidoMutation.mutateAsync,
     creating: createPizzaMutation.isPending || createPedidoMutation.isPending,
-    updating: updatePizzaMutation.isPending || updatePedidoMutation.isPending || deletePedidoMutation.isPending,
+    updating:
+      updatePizzaMutation.isPending ||
+      deletePizzaMutation.isPending ||
+      updatePedidoMutation.isPending ||
+      deletePedidoMutation.isPending,
   };
 }

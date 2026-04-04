@@ -57,10 +57,10 @@ Base atual: codigo de `src/` e rotas em `src/app/App.tsx`
 | passagem_turno | passagem_turno_screen | `PassagemTurnoPage` (`/passagem-turno`) | OK | Registro/lista/copia/exclusao implementados. |
 | pizzaria | cupom_widget | `CupomPedidoPage` (`/pizzaria/cupom/:id`) | PARCIAL | Cupom com copia/impressao e exibicao de itens estruturados implementado; ainda sem todos os atalhos do legado. |
 | pizzaria | novo_pedido_screen | `NovoPedidoPage` (`/pizzaria/novo`) | PARCIAL | Criacao com composicao de itens por cardapio/quantidade/obs implementada; ainda sem editor avancado completo do legado. |
-| pizzaria | pedidos_list_screen | `PedidosPage` (`/pizzaria/pedidos`) | PARCIAL | Lista/status/cupom/excluir e preview de itens implementados; ainda sem fluxo completo de edicao detalhada legado. |
-| pizzaria | pizza_models | `pizzaria/api.ts` | PARCIAL | Camada de dados com CRUD principal e serializacao de itens em `observacoes`; sem modelo dedicado de itens no backend. |
+| pizzaria | pedidos_list_screen | `PedidosPage` (`/pizzaria/pedidos`) | PARCIAL | Lista/status/cupom/excluir com edicao detalhada e itens estruturados implementados; ainda sem todos os atalhos operacionais legados. |
+| pizzaria | pizza_models | `pizzaria/api.ts` | PARCIAL | Camada de dados com CRUD de pizzas/pedidos, delete dedicado e serializacao de itens em `observacoes`; sem tabela dedicada de itens no backend. |
 | pizzaria | pizza_module_screen | `PizzariaHub` (`/pizzaria`) | OK | Hub de entrada da pizzaria existe. |
-| pizzaria | pizzas_cadastro_screen | `PizzasCadastroPage` (`/pizzaria/pizzas`) | PARCIAL | Cadastro/lista/ativacao existem; sem delete equivalente explicito. |
+| pizzaria | pizzas_cadastro_screen | `PizzasCadastroPage` (`/pizzaria/pizzas`) | PARCIAL | Cadastro/lista/ativacao e delete explicito implementados; ainda sem editor avançado completo de cardapio legado. |
 | procedimentos | procedimento_detail_screen | `ProcedimentoDetailPage` (`/procedimentos/:id`) | PARCIAL | Detalhe existe com progresso local; funcoes de saida textual do legado nao estao completas. |
 | procedimentos | procedimento_form_screen | `ProcedimentoFormPage` (`/procedimentos/novo`, `/procedimentos/:id/editar`) | OK | Criar/editar implementado. |
 | procedimentos | procedimentos_screen | `ProcedimentosPage` (`/procedimentos`) | PARCIAL | Lista/filtros/favorito existem; algumas acoes antigas foram simplificadas. |
@@ -96,7 +96,7 @@ Base atual: codigo de `src/` e rotas em `src/app/App.tsx`
 | procedimentos | CRUD, favorito, detalhamento | Fluxo principal implementado com progresso local | PARCIAL |
 | guia rapido | CRUD de guias operacionais | Implementado via categoria de procedimentos, nao em modulo totalmente isolado | PARCIAL |
 | passagem de turno | registrar, listar, copiar, excluir | Implementado | OK |
-| pizzaria | cardapio, pedidos, cupom/impressao, fluxo rico de itens | Cardapio/pedidos/cupom com composicao estruturada de itens implementados; ainda faltam fluxos avancados de edicao legado | PARCIAL |
+| pizzaria | cardapio, pedidos, cupom/impressao, fluxo rico de itens | Cardapio/pedidos/cupom com composicao e edicao estruturada de itens implementadas; ainda restam refinamentos operacionais do legado | PARCIAL |
 | notificacoes | caixa de notificacoes com estado (lida, limpar) | Estado de leitura/remocao/limpeza implementado na tela (persistencia local por fiscal) | PARCIAL |
 | timeline/relatorios | timeline + encerramento + relatorios dia/detalhe | Fluxo base implementado e unificado; detalhes do ciclo antigo simplificados | PARCIAL |
 | configuracoes/profile/cupom | dados do fiscal, perfil e cupom | Implementado com escopo reduzido em relacao ao legado | PARCIAL |
@@ -106,7 +106,7 @@ Base atual: codigo de `src/` e rotas em `src/app/App.tsx`
 ## Conclusao objetiva
 - O app web reescreveu a maior parte das telas/modulos legados em nivel de navegacao e fluxo base.
 - Nao ha paridade funcional total com o Flutter antigo.
-- Principais gaps atuais: fluxo avancado de edicao detalhada da pizzaria, sincronizacao cross-device das notificacoes e demais modulos ainda parciais.
+- Principais gaps atuais: sincronizacao cross-device das notificacoes, modelagem dedicada de itens da pizzaria no backend e demais modulos ainda parciais.
 
 
 

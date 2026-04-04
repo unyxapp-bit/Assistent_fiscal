@@ -62,6 +62,11 @@ export async function atualizarPizza(id: string, patch: Partial<Pizza>) {
   return data as Pizza;
 }
 
+export async function deletarPizza(id: string) {
+  const { error } = await supabase.from('pizzas').delete().eq('id', id);
+  if (error) throw error;
+}
+
 export async function fetchPedidos() {
   const { data, error } = await supabase
     .from('pedidos_pizza')
