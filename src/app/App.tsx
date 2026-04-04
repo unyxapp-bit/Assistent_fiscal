@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SplashGate from './SplashGate';
 import { RequireAuth } from '../features/auth/RequireAuth';
 import AuthLayout from './layouts/AuthLayout';
@@ -71,8 +71,6 @@ export default function App() {
             }
           >
             <Route index element={<DashboardHome />} />
-            <Route path="/principal" element={<Navigate to="/" replace />} />
-            <Route path="/operacoes" element={<Navigate to="/" replace />} />
             <Route path="/loja" element={<LojaHub />} />
             <Route path="/pizzaria" element={<PizzariaHub />} />
             <Route path="/pizzaria/pedidos" element={<PedidosPage />} />
