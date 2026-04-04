@@ -64,21 +64,17 @@ export default function MapaCaixasPage() {
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Gest?o</p>
         <h1 className="font-display text-3xl text-primary">Mapa de Caixas</h1>
-        <p className="text-sm text-muted mt-2">
-          Visualiza??o por tipo de caixa, empacotadores e colaboradores em outros setores.
-        </p>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
         <Card className="xl:col-span-2 space-y-4">
-          <h2 className="font-display text-lg">Mapa por tipo</h2>
           {isLoading ? (
             <p className="text-sm text-muted">Carregando mapa...</p>
           ) : (
             tipos.map((tipo) => (
               <div key={tipo}>
                 <p className="text-xs uppercase tracking-[0.2em] text-muted mb-2">{tipo}</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
                   {(caixasPorTipo[tipo] ?? []).map((caixa) => {
                     const alocacao = alocacaoPorCaixa.get(caixa.id);
                     const colaboradorNome = alocacao
@@ -94,19 +90,19 @@ export default function MapaCaixasPage() {
                     return (
                       <div
                         key={caixa.id}
-                        className="rounded-xl border border-border bg-surface p-4 flex flex-col gap-2 text-ink"
+                        className="rounded-lg border border-border bg-surface p-3 flex flex-col gap-1.5 text-ink"
                       >
                         <div className="flex items-start justify-between">
                           <div>
-                            <h3 className="font-display text-base">Caixa {caixa.numero}</h3>
+                            <h3 className="font-display text-sm">Caixa {caixa.numero}</h3>
                             <p className="text-xs text-muted">Tipo: {caixa.tipo}</p>
                           </div>
-                          <span className="rounded-full border border-border px-2 py-1 text-xs text-muted bg-success-light">
+                          <span className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted bg-success-light">
                             {status}
                           </span>
                         </div>
                         {alocacao ? (
-                          <div className="text-sm">
+                          <div className="text-xs">
                             <p>{colaboradorNome}</p>
                             <p className="text-xs text-muted">
                               Alocado em {formatDateTime(alocacao.alocado_em)}
