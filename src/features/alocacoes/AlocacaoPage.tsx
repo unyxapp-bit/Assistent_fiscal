@@ -1,12 +1,29 @@
-ï»¿import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card } from '../../shared/ui/Card';
 import { Button } from '../../shared/ui/Button';
 import { useAuth } from '../auth/AuthProvider';
-import { fetchCaixas, fetchColaboradores } from '../dashboard/api';
+import { fetchCaixas } from '../dashboard/api';
 import { useAlocacoes } from './useAlocacoes';
 import { jaUsouCaixaHoje } from './api';
 import type { Caixa, Colaborador } from '../../shared/types';
+import { useEscala } from '../escala/useEscala';
+import {
+  formatHorarioResumo,
+  getTurnoEscalaColaboradorId,
+  getTurnoEscalaDate,
+  getTurnoEscalaHorario,
+} from '../escala/api';
+import { formatDate, formatTime, todayIsoDate } from '../../shared/lib/dates';
+
+type ColaboradorDisponivel = Colaborador & {
+  horarioHoje: string;
+};
+
+function normalizarHorario(value?: string | null) {
+  const formatado = formatTime(value ?? null);
+  return formatado === '-' ? null : formatado;
+}
 
 export default function AlocacaoPage() {
   const { user } = useAuth();
@@ -17,12 +34,14 @@ export default function AlocacaoPage() {
   const [erro, setErro] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [filtroDepto, setFiltroDepto] = useState('todos');
+  const hoje = todayIsoDate();
 
-  const colaboradoresQuery = useQuery({
-    queryKey: ['colaboradores', fiscalId],
-    queryFn: () => fetchColaboradores(fiscalId),
-    enabled: !!fiscalId,
-  });
+  const {
+    colaboradores: escalaColaboradores,
+    registros,
+    turnos,
+    isLoading: isEscalaLoading,
+  } = useEscala();
 
   const caixasQuery = useQuery({
     queryKey: ['caixas', fiscalId],
@@ -33,7 +52,7 @@ export default function AlocacaoPage() {
   const { data: alocacoes = [], createAlocacao, liberarAlocacao, updating } =
     useAlocacoes();
 
-  const colaboradores = (colaboradoresQuery.data ?? []).filter((c) => c.ativo);
+  const colaboradores = escalaColaboradores.filter((c) => c.ativo);
   const caixas = (caixasQuery.data ?? []).filter((c) => c.ativo && !c.em_manutencao);
 
   const colaboradoresMap = useMemo(() => {
@@ -48,9 +67,52 @@ export default function AlocacaoPage() {
     return map;
   }, [caixas]);
 
-  const colaboradoresDisponiveis = colaboradores.filter(
-    (c) => !alocacoes.some((a) => a.colaborador_id === c.id)
-  );
+  const horariosHojePorColaborador = useMemo(() => {
+    const porColaborador = new Map<string, Set<string>>();
+
+    turnos.forEach((turno) => {
+      if (getTurnoEscalaDate(turno) !== hoje) return;
+      const colaborador = getTurnoEscalaColaboradorId(turno);
+      if (!colaborador) return;
+      const resumo = formatHorarioResumo(getTurnoEscalaHorario(turno));
+      const atual = porColaborador.get(colaborador) ?? new Set<string>();
+      atual.add(resumo);
+      porColaborador.set(colaborador, atual);
+    });
+
+    registros.forEach((registro) => {
+      if (registro.data !== hoje) return;
+      const resumo = formatHorarioResumo({
+        inicio: normalizarHorario(registro.entrada),
+        fim: normalizarHorario(registro.saida),
+        intervaloSaida: normalizarHorario(registro.intervalo_saida),
+        intervaloRetorno: normalizarHorario(registro.intervalo_retorno),
+      });
+      const atual = porColaborador.get(registro.colaborador_id) ?? new Set<string>();
+      atual.add(resumo);
+      porColaborador.set(registro.colaborador_id, atual);
+    });
+
+    return new Map(
+      Array.from(porColaborador.entries()).map(([colaborador, horarios]) => [
+        colaborador,
+        Array.from(horarios).join(' • '),
+      ])
+    );
+  }, [hoje, registros, turnos]);
+
+  const colaboradoresDisponiveis: ColaboradorDisponivel[] = useMemo(() => {
+    return colaboradores
+      .filter(
+        (c) =>
+          horariosHojePorColaborador.has(c.id) &&
+          !alocacoes.some((a) => a.colaborador_id === c.id)
+      )
+      .map((c) => ({
+        ...c,
+        horarioHoje: horariosHojePorColaborador.get(c.id) ?? 'Horario nao informado',
+      }));
+  }, [alocacoes, colaboradores, horariosHojePorColaborador]);
 
   const disponiveisFiltrados =
     filtroDepto === 'todos'
@@ -65,16 +127,16 @@ export default function AlocacaoPage() {
     const caixa = caixasMap.get(caixaId);
 
     if (!colaborador) {
-      setErro('Selecione um colaborador v?lido.');
+      setErro('Selecione um colaborador valido.');
       return;
     }
     if (!caixa) {
-      setErro('Selecione um caixa v?lido.');
+      setErro('Selecione um caixa valido.');
       return;
     }
 
     if (colaborador.departamento === 'self' && caixa.tipo !== 'self') {
-      setErro('Operador de self-checkout s? pode ser alocado em caixa self.');
+      setErro('Operador de self-checkout so pode ser alocado em caixa self.');
       return;
     }
 
@@ -83,7 +145,7 @@ export default function AlocacaoPage() {
       (a) => a.colaborador_id === colaboradorId
     );
     if (!isBalcao && colaboradorJaAlocado) {
-      setErro('Colaborador j? est? alocado em outro caixa.');
+      setErro('Colaborador ja esta alocado em outro caixa.');
       return;
     }
 
@@ -91,7 +153,7 @@ export default function AlocacaoPage() {
     try {
       const jaUsou = await jaUsouCaixaHoje({ colaboradorId, caixaId });
       if (jaUsou && justificativa.trim().length === 0) {
-        setErro('Este colaborador j? usou este caixa hoje. Informe justificativa.');
+        setErro('Este colaborador ja usou este caixa hoje. Informe justificativa.');
         return;
       }
       await createAlocacao({
@@ -110,7 +172,7 @@ export default function AlocacaoPage() {
   };
 
   const handleLiberar = async (alocacaoId: string) => {
-    const motivo = window.prompt('Motivo da libera??o?') ?? '';
+    const motivo = window.prompt('Motivo da liberacao?') ?? '';
     if (!motivo.trim()) return;
     await liberarAlocacao({ alocacaoId, motivo });
   };
@@ -118,10 +180,10 @@ export default function AlocacaoPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gest?o</p>
-        <h1 className="font-display text-3xl text-primary">Aloca??o</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestao</p>
+        <h1 className="font-display text-3xl text-primary">Alocacao</h1>
         <p className="text-sm text-muted mt-2">
-          Aloque colaboradores e controle libera??es com as regras do turno.
+          Colaboradores disponiveis em {formatDate(hoje)} com horarios vindos da escala.
         </p>
       </div>
 
@@ -133,7 +195,7 @@ export default function AlocacaoPage() {
             className="rounded-xl border border-cloud px-4 py-2"
           >
             <option value="todos">Todos os departamentos</option>
-            {[...new Set(colaboradores.map((c) => c.departamento))].map((dep) => (
+            {[...new Set(colaboradoresDisponiveis.map((c) => c.departamento))].map((dep) => (
               <option key={dep} value={dep}>
                 {dep}
               </option>
@@ -147,7 +209,7 @@ export default function AlocacaoPage() {
             <option value="">Selecione colaborador</option>
             {disponiveisFiltrados.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.nome} ({c.departamento})
+                {c.nome} ({c.departamento}) - {c.horarioHoje}
               </option>
             ))}
           </select>
@@ -172,7 +234,7 @@ export default function AlocacaoPage() {
           />
           <div className="md:col-span-3">
             {erro ? <p className="text-sm text-danger mb-2">{erro}</p> : null}
-            <Button type="submit" disabled={loading || updating}>
+            <Button type="submit" disabled={loading || updating || caixasQuery.isLoading}>
               {loading ? 'Alocando...' : 'Alocar colaborador'}
             </Button>
           </div>
@@ -181,19 +243,25 @@ export default function AlocacaoPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="space-y-3">
-          <h3 className="font-display text-xl">Dispon?veis agora</h3>
+          <h3 className="font-display text-xl">Disponiveis hoje</h3>
+          {isEscalaLoading ? <p className="text-sm text-muted">Carregando escala...</p> : null}
           {disponiveisFiltrados.length === 0 ? (
-            <p className="text-sm text-muted">Nenhum colaborador dispon?vel.</p>
+            <p className="text-sm text-muted">
+              Nenhum colaborador com disponibilidade na escala de hoje.
+            </p>
           ) : (
             <div className="space-y-2">
               {disponiveisFiltrados.map((c) => (
                 <div
                   key={c.id}
-                  className="flex items-center justify-between rounded-lg border border-cloud px-3 py-2 text-sm"
+                  className="flex items-start justify-between rounded-lg border border-cloud px-3 py-2 text-sm gap-3"
                 >
-                  <span>
-                    {c.nome} ? {c.departamento}
-                  </span>
+                  <div>
+                    <p>
+                      {c.nome} - {c.departamento}
+                    </p>
+                    <p className="text-xs text-muted mt-1">{c.horarioHoje}</p>
+                  </div>
                   <Button size="sm" variant="outline" onClick={() => setColaboradorId(c.id)}>
                     Alocar
                   </Button>
@@ -204,10 +272,10 @@ export default function AlocacaoPage() {
         </Card>
 
         {alocacoes.length === 0 ? (
-          <Card>Nenhuma aloca??o ativa.</Card>
+          <Card>Nenhuma alocacao ativa.</Card>
         ) : (
           <Card>
-            <h3 className="font-display text-xl mb-3">Aloca??es ativas</h3>
+            <h3 className="font-display text-xl mb-3">Alocacoes ativas</h3>
             <div className="space-y-2">
               {alocacoes.map((alocacao) => {
                 const colaborador = colaboradoresMap.get(alocacao.colaborador_id);
@@ -239,4 +307,3 @@ export default function AlocacaoPage() {
     </div>
   );
 }
-

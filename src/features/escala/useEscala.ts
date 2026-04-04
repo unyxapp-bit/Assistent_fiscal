@@ -7,6 +7,7 @@ import {
   createRegistroPonto,
   deleteRegistroPonto,
   fetchRegistrosPorColaboradores,
+  fetchTurnosEscalaPorColaboradores,
   updateRegistroPonto,
 } from './api';
 
@@ -32,9 +33,21 @@ export function useEscala() {
     enabled: colaboradorIds.length > 0,
   });
 
+  const turnosQuery = useQuery({
+    queryKey: ['turnos_escala', colaboradorIds],
+    queryFn: () => fetchTurnosEscalaPorColaboradores(colaboradorIds),
+    enabled: colaboradorIds.length > 0,
+  });
+
   useRealtimeTable({
     table: 'registros_ponto',
     queryKey: ['registros_ponto', colaboradorIds],
+    enabled: colaboradorIds.length > 0,
+  });
+
+  useRealtimeTable({
+    table: 'turnos_escala',
+    queryKey: ['turnos_escala', colaboradorIds],
     enabled: colaboradorIds.length > 0,
   });
 
@@ -62,7 +75,9 @@ export function useEscala() {
   return {
     colaboradores: colaboradoresQuery.data ?? [],
     registros: registrosQuery.data ?? [],
-    isLoading: colaboradoresQuery.isLoading || registrosQuery.isLoading,
+    turnos: turnosQuery.data ?? [],
+    isLoading:
+      colaboradoresQuery.isLoading || registrosQuery.isLoading || turnosQuery.isLoading,
     createRegistro: createMutation.mutateAsync,
     updateRegistro: updateMutation.mutateAsync,
     deleteRegistro: deleteMutation.mutateAsync,
