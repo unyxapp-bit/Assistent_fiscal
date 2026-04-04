@@ -10,9 +10,7 @@ const navSections = [
     title: 'Turno',
     links: [
       { label: 'Início', to: '/' },
-      { label: 'Principal', to: '/principal' },
       { label: 'Pizzaria', to: '/pizzaria' },
-      { label: 'Operações', to: '/operacoes' },
       { label: 'Loja', to: '/loja' },
     ],
   },

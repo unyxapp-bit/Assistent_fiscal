@@ -1,0 +1,424 @@
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:sans-serif}
+  .ds-root{padding:2rem 1rem;max-width:780px;margin:0 auto;color:var(--color-text-primary)}
+  .section{margin-bottom:2.5rem}
+  .section-title{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .token-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+  .token-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem;font-size:12px}
+  .swatch{width:100%;height:36px;border-radius:6px;margin-bottom:.5rem}
+  .token-name{font-weight:500;color:var(--color-text-primary)}
+  .token-val{color:var(--color-text-secondary);font-family:monospace;font-size:11px;margin-top:2px}
+  .comp-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin-bottom:1rem}
+  .comp-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+
+  /* ===== DESIGN TOKENS ===== */
+  :root{
+    --c-primary:#059669;
+    --c-primary-hover:#047857;
+    --c-primary-light:#d1fae5;
+    --c-secondary:#0ea5e9;
+    --c-secondary-hover:#0284c7;
+    --c-secondary-light:#e0f2fe;
+    --c-danger:#ef4444;
+    --c-danger-light:#fee2e2;
+    --c-warning:#f59e0b;
+    --c-warning-light:#fef3c7;
+    --c-surface:#ffffff;
+    --c-bg:#f7f7f2;
+    --c-border:#e5e7eb;
+    --c-border-strong:#d1d5db;
+    --c-text-primary:#111827;
+    --c-text-secondary:#6b7280;
+    --c-text-muted:#9ca3af;
+    --radius-sm:8px;
+    --radius-md:12px;
+    --radius-lg:20px;
+    --radius-xl:28px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-elevated:0 4px 12px rgba(0,0,0,.08);
+  }
+
+  /* ===== COMPONENT STYLES ===== */
+  .btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:500;padding:.5rem 1rem;border-radius:var(--radius-md);border:none;cursor:pointer;transition:all .2s;line-height:1}
+  .btn-primary{background:var(--c-primary);color:#fff}.btn-primary:hover{background:var(--c-primary-hover)}
+  .btn-secondary{background:var(--c-secondary);color:#fff}.btn-secondary:hover{background:var(--c-secondary-hover)}
+  .btn-outline{background:transparent;color:var(--c-primary);border:1.5px solid var(--c-primary)}.btn-outline:hover{background:var(--c-primary-light)}
+  .btn-ghost{background:transparent;color:var(--c-text-secondary);border:0.5px solid var(--c-border)}.btn-ghost:hover{background:var(--c-bg)}
+  .btn-danger{background:var(--c-danger);color:#fff}
+  .btn-sm{font-size:12px;padding:.35rem .75rem;border-radius:var(--radius-sm)}
+  .btn-lg{font-size:16px;padding:.75rem 1.5rem;border-radius:var(--radius-lg)}
+
+  .badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+  .badge-green{background:var(--c-primary-light);color:#065f46}
+  .badge-blue{background:var(--c-secondary-light);color:#0c4a6e}
+  .badge-red{background:var(--c-danger-light);color:#991b1b}
+  .badge-yellow{background:var(--c-warning-light);color:#92400e}
+  .badge-gray{background:#f3f4f6;color:#374151}
+
+  .card{background:var(--c-surface);border:1.5px solid var(--c-border);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-card)}
+  .card-metric{background:var(--c-surface);border:1.5px solid var(--c-border);border-radius:var(--radius-lg);padding:1rem}
+
+  .input-field{width:100%;font-size:14px;padding:.5rem .75rem;border:1.5px solid var(--c-border);border-radius:var(--radius-md);background:var(--c-surface);color:var(--c-text-primary);outline:none;transition:border-color .2s}
+  .input-field:focus{border-color:var(--c-primary)}
+  .input-wrap{position:relative}
+  .input-label{font-size:12px;font-weight:500;color:var(--c-text-secondary);margin-bottom:4px;display:block}
+
+  .alert{display:flex;align-items:flex-start;gap:10px;padding:.75rem 1rem;border-radius:var(--radius-md);font-size:13px}
+  .alert-success{background:var(--c-primary-light);border:1px solid #a7f3d0;color:#065f46}
+  .alert-info{background:var(--c-secondary-light);border:1px solid #bae6fd;color:#0c4a6e}
+  .alert-warn{background:var(--c-warning-light);border:1px solid #fde68a;color:#78350f}
+  .alert-error{background:var(--c-danger-light);border:1px solid var(--c-danger);color:#991b1b}
+
+  .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+  .avatar-green{background:var(--c-primary-light);color:var(--c-primary)}
+  .avatar-blue{background:var(--c-secondary-light);color:var(--c-secondary)}
+
+  .progress-track{width:100%;height:6px;background:#f3f4f6;border-radius:10px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:10px;transition:width .4s}
+
+  .tab-row{display:flex;gap:2px;background:#f3f4f6;border-radius:var(--radius-md);padding:3px}
+  .tab-item{flex:1;text-align:center;font-size:13px;font-weight:500;padding:.35rem .5rem;border-radius:10px;cursor:pointer;color:var(--c-text-secondary);transition:all .15s}
+  .tab-item.active{background:var(--c-surface);color:var(--c-primary);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+  .divider{border:none;border-top:0.5px solid var(--c-border);margin:1.5rem 0}
+
+  pre.code-block{background:#f8fafc;border:0.5px solid var(--c-border);border-radius:var(--radius-md);padding:1rem;font-size:12px;line-height:1.6;overflow-x:auto;color:#374151}
+  code.inline{background:#f3f4f6;padding:1px 5px;border-radius:4px;font-size:12px;color:#1f2937}
+</style>
+
+<div class="ds-root">
+
+  <div style="margin-bottom:2rem">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <div style="width:32px;height:32px;background:var(--c-primary-light);border-radius:50%;display:flex;align-items:center;justify-content:center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 2a14.5 14.5 0 0 1 4 10 14.5 14.5 0 0 1-4 10 14.5 14.5 0 0 1-4-10 14.5 14.5 0 0 1 4-10z"/></svg>
+      </div>
+      <span style="font-size:18px;font-weight:600;color:var(--c-primary)">EcoFlow — Design System</span>
+    </div>
+    <p style="font-size:13px;color:var(--c-text-secondary)">Referência central de tokens, componentes e padrões. Copie este arquivo como <code class="inline">design-system.css</code> e importe em todas as telas.</p>
+  </div>
+
+  <!-- PALETA -->
+  <div class="section">
+    <div class="section-title">Paleta de Cores</div>
+    <div class="token-grid">
+      <div class="token-card">
+        <div class="swatch" style="background:#059669"></div>
+        <div class="token-name">Primária</div>
+        <div class="token-val">--c-primary<br>#059669</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#d1fae5;border:0.5px solid #a7f3d0"></div>
+        <div class="token-name">Primária Light</div>
+        <div class="token-val">--c-primary-light<br>#d1fae5</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#0ea5e9"></div>
+        <div class="token-name">Secundária</div>
+        <div class="token-val">--c-secondary<br>#0ea5e9</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#e0f2fe;border:0.5px solid #bae6fd"></div>
+        <div class="token-name">Secundária Light</div>
+        <div class="token-val">--c-secondary-light<br>#e0f2fe</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#ef4444"></div>
+        <div class="token-name">Perigo</div>
+        <div class="token-val">--c-danger<br>#ef4444</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#f59e0b"></div>
+        <div class="token-name">Aviso</div>
+        <div class="token-val">--c-warning<br>#f59e0b</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#f7f7f2;border:0.5px solid #e5e7eb"></div>
+        <div class="token-name">Background</div>
+        <div class="token-val">--c-bg<br>#f7f7f2</div>
+      </div>
+      <div class="token-card">
+        <div class="swatch" style="background:#ffffff;border:0.5px solid #e5e7eb"></div>
+        <div class="token-name">Surface</div>
+        <div class="token-val">--c-surface<br>#ffffff</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPOGRAFIA -->
+  <div class="section">
+    <div class="section-title">Tipografia</div>
+    <div class="card" style="padding:1.5rem">
+      <p style="font-size:28px;font-weight:700;color:var(--c-text-primary);line-height:1.2;margin-bottom:8px">H1 — Título de Página · 28px / 700</p>
+      <p style="font-size:20px;font-weight:600;color:var(--c-text-primary);margin-bottom:8px">H2 — Título de Seção · 20px / 600</p>
+      <p style="font-size:16px;font-weight:600;color:var(--c-text-primary);margin-bottom:8px">H3 — Subtítulo de Card · 16px / 600</p>
+      <p style="font-size:14px;font-weight:400;color:var(--c-text-primary);margin-bottom:8px;line-height:1.6">Body — Texto padrão de conteúdo, descrições e parágrafos. 14px / 400. Line-height 1.6.</p>
+      <p style="font-size:12px;font-weight:400;color:var(--c-text-secondary);margin-bottom:8px">Caption — Subtextos, timestamps e metadados. 12px / 400.</p>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--c-text-muted)">Label / Eyebrow — Rótulos de seção. 11px / 500 / uppercase.</p>
+    </div>
+  </div>
+
+  <!-- BORDAS E SOMBRAS -->
+  <div class="section">
+    <div class="section-title">Raio de Borda & Elevação</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--c-primary-light);border-radius:var(--radius-sm);margin:0 auto 4px"></div>
+        <div style="font-size:11px;color:var(--c-text-secondary)">sm · 8px</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--c-primary-light);border-radius:var(--radius-md);margin:0 auto 4px"></div>
+        <div style="font-size:11px;color:var(--c-text-secondary)">md · 12px</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--c-primary-light);border-radius:var(--radius-lg);margin:0 auto 4px"></div>
+        <div style="font-size:11px;color:var(--c-text-secondary)">lg · 20px</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--c-primary-light);border-radius:var(--radius-xl);margin:0 auto 4px"></div>
+        <div style="font-size:11px;color:var(--c-text-secondary)">xl · 28px</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--c-surface);border:1.5px solid var(--c-border);border-radius:var(--radius-md);box-shadow:var(--shadow-card);margin:0 auto 4px"></div>
+        <div style="font-size:11px;color:var(--c-text-secondary)">shadow-card</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:var(--c-surface);border:1.5px solid var(--c-border);border-radius:var(--radius-md);box-shadow:var(--shadow-elevated);margin:0 auto 4px"></div>
+        <div style="font-size:11px;color:var(--c-text-secondary)">shadow-elevated</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÕES -->
+  <div class="section">
+    <div class="section-title">Botões</div>
+    <div class="comp-row">
+      <div>
+        <div class="comp-label">btn-primary</div>
+        <button class="btn btn-primary">Começar Turno</button>
+      </div>
+      <div>
+        <div class="comp-label">btn-secondary</div>
+        <button class="btn btn-secondary">Ver Relatório</button>
+      </div>
+      <div>
+        <div class="comp-label">btn-outline</div>
+        <button class="btn btn-outline">Exportar</button>
+      </div>
+      <div>
+        <div class="comp-label">btn-ghost</div>
+        <button class="btn btn-ghost">Cancelar</button>
+      </div>
+      <div>
+        <div class="comp-label">btn-danger</div>
+        <button class="btn btn-danger">Excluir</button>
+      </div>
+    </div>
+    <div class="comp-row">
+      <div>
+        <div class="comp-label">sm</div>
+        <button class="btn btn-primary btn-sm">Salvar</button>
+      </div>
+      <div>
+        <div class="comp-label">default</div>
+        <button class="btn btn-primary">Salvar</button>
+      </div>
+      <div>
+        <div class="comp-label">lg</div>
+        <button class="btn btn-primary btn-lg">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="section">
+    <div class="section-title">Badges & Status</div>
+    <div class="comp-row" style="gap:8px">
+      <span class="badge badge-green">✓ Ativo</span>
+      <span class="badge badge-blue">Turno</span>
+      <span class="badge badge-red">Alerta</span>
+      <span class="badge badge-yellow">Pendente</span>
+      <span class="badge badge-gray">Inativo</span>
+      <span class="badge badge-green">+12%</span>
+      <span class="badge badge-red">-5%</span>
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="section">
+    <div class="section-title">Cards</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+      <!-- Metric card -->
+      <div class="card-metric">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px">
+          <div style="width:40px;height:40px;background:var(--c-primary-light);border-radius:10px;display:flex;align-items:center;justify-content:center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+          </div>
+          <span class="badge badge-green">+12%</span>
+        </div>
+        <p style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--c-text-muted);margin-bottom:2px">Consumo de Água</p>
+        <p style="font-size:22px;font-weight:700;color:var(--c-primary)">1.280 L</p>
+        <div class="progress-track" style="margin-top:10px">
+          <div class="progress-fill" style="width:65%;background:var(--c-primary)"></div>
+        </div>
+      </div>
+      <!-- Info card -->
+      <div class="card">
+        <p style="font-size:13px;font-weight:600;color:var(--c-text-primary);margin-bottom:4px">Relatório Gerado</p>
+        <p style="font-size:12px;color:var(--c-text-secondary);line-height:1.5">Sistema automático finalizou o relatório semanal de sustentabilidade.</p>
+        <div style="display:flex;justify-content:flex-end;margin-top:12px">
+          <button class="btn btn-outline btn-sm">Ver Detalhes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="section">
+    <div class="section-title">Formulários & Inputs</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <label class="input-label">Nome do Operador</label>
+        <input class="input-field" type="text" placeholder="Ex: João Silva">
+      </div>
+      <div>
+        <label class="input-label">Setor</label>
+        <select class="input-field" style="appearance:none">
+          <option>Setor A</option>
+          <option>Setor B</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERTAS -->
+  <div class="section">
+    <div class="section-title">Alertas & Notificações</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="alert alert-success">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <div><strong>Sucesso!</strong> Turno iniciado às 08:00.</div>
+      </div>
+      <div class="alert alert-info">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div><strong>Info:</strong> Atualização de sensores em andamento.</div>
+      </div>
+      <div class="alert alert-warn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+        <div><strong>Atenção:</strong> Meta mensal de resíduos em 80%.</div>
+      </div>
+      <div class="alert alert-error">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <div><strong>Erro:</strong> Sistema de irrigação do Setor B offline.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="section">
+    <div class="section-title">Tabs</div>
+    <div class="tab-row" style="max-width:340px">
+      <div class="tab-item active" onclick="setTab(this)">Dashboard</div>
+      <div class="tab-item" onclick="setTab(this)">Gestão</div>
+      <div class="tab-item" onclick="setTab(this)">Relatórios</div>
+    </div>
+  </div>
+
+  <!-- PROGRESSO -->
+  <div class="section">
+    <div class="section-title">Barras de Progresso</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--c-text-secondary);margin-bottom:4px"><span>Energia Solar</span><span>65%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:65%;background:var(--c-primary)"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--c-text-secondary);margin-bottom:4px"><span>Qualidade do Ar</span><span>90%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:90%;background:var(--c-secondary)"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--c-text-secondary);margin-bottom:4px"><span>Resíduos (meta)</span><span>30%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:30%;background:var(--c-warning)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVATAR + LIST -->
+  <div class="section">
+    <div class="section-title">Lista de Atividades (padrão)</div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:1rem;border-bottom:0.5px solid var(--c-border)">
+        <div class="avatar avatar-green">RC</div>
+        <div style="flex:1">
+          <p style="font-size:14px;font-weight:500;color:var(--c-text-primary)">Relatório Semanal Gerado</p>
+          <p style="font-size:12px;color:var(--c-text-secondary)">Há 2 horas · Sistema Automático</p>
+        </div>
+        <span class="badge badge-green">Concluído</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:1rem;border-bottom:0.5px solid var(--c-border)">
+        <div class="avatar avatar-blue">SA</div>
+        <div style="flex:1">
+          <p style="font-size:14px;font-weight:500;color:var(--c-text-primary)">Atualização de Sensores</p>
+          <p style="font-size:12px;color:var(--c-text-secondary)">Há 4 horas · Setor Administrativo</p>
+        </div>
+        <span class="badge badge-blue">Em curso</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:1rem">
+        <div class="avatar avatar-green">NC</div>
+        <div style="flex:1">
+          <p style="font-size:14px;font-weight:500;color:var(--c-text-primary)">Novo Colaborador</p>
+          <p style="font-size:12px;color:var(--c-text-secondary)">Ontem às 16:45</p>
+        </div>
+        <span class="badge badge-gray">Pendente</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSS TOKEN FILE -->
+  <div class="section">
+    <div class="section-title">Arquivo de tokens — copie em design-system.css</div>
+    <pre class="code-block">:root {
+  /* Cores */
+  --c-primary:       #059669;
+  --c-primary-hover: #047857;
+  --c-primary-light: #d1fae5;
+  --c-secondary:       #0ea5e9;
+  --c-secondary-hover: #0284c7;
+  --c-secondary-light: #e0f2fe;
+  --c-danger:        #ef4444;
+  --c-danger-light:  #fee2e2;
+  --c-warning:       #f59e0b;
+  --c-warning-light: #fef3c7;
+  --c-surface:       #ffffff;
+  --c-bg:            #f7f7f2;
+  --c-border:        #e5e7eb;
+  --c-border-strong: #d1d5db;
+  --c-text-primary:   #111827;
+  --c-text-secondary: #6b7280;
+  --c-text-muted:     #9ca3af;
+
+  /* Raios */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Sombras */
+  --shadow-card:     0 1px 3px rgba(0,0,0,.06);
+  --shadow-elevated: 0 4px 12px rgba(0,0,0,.08);
+
+  /* Tipografia */
+  --font: 'Plus Jakarta Sans', sans-serif;
+}</pre>
+  </div>
+
+</div>
+
+<script>
+function setTab(el){
+  el.closest('.tab-row').querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>

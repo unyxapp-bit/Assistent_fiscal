@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import SplashGate from './SplashGate';
 import { RequireAuth } from '../features/auth/RequireAuth';
 import AuthLayout from './layouts/AuthLayout';
@@ -8,8 +8,6 @@ import LoginPage from '../features/auth/LoginPage';
 import RegisterPage from '../features/auth/RegisterPage';
 import ResetPasswordPage from '../features/auth/ResetPasswordPage';
 import DashboardHome from '../features/dashboard/DashboardHome';
-import PrincipalHub from '../features/hubs/PrincipalHub';
-import OperacoesHub from '../features/hubs/OperacoesHub';
 import LojaHub from '../features/hubs/LojaHub';
 import PizzariaHub from '../features/hubs/PizzariaHub';
 import CaixasPage from '../features/caixas/CaixasPage';
@@ -73,8 +71,8 @@ export default function App() {
             }
           >
             <Route index element={<DashboardHome />} />
-            <Route path="/principal" element={<PrincipalHub />} />
-            <Route path="/operacoes" element={<OperacoesHub />} />
+            <Route path="/principal" element={<Navigate to="/" replace />} />
+            <Route path="/operacoes" element={<Navigate to="/" replace />} />
             <Route path="/loja" element={<LojaHub />} />
             <Route path="/pizzaria" element={<PizzariaHub />} />
             <Route path="/pizzaria/pedidos" element={<PedidosPage />} />
