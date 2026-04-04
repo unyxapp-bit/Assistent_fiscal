@@ -19,6 +19,10 @@ export async function criarNota(params: {
   dataLembrete?: string | null;
   importante?: boolean;
   lembreteAtivo?: boolean;
+  fotoUrl?: string | null;
+  fotoNome?: string | null;
+  arquivoUrl?: string | null;
+  arquivoNome?: string | null;
 }) {
   const now = new Date().toISOString();
   const { data, error } = await supabase
@@ -32,6 +36,10 @@ export async function criarNota(params: {
       importante: params.importante ?? false,
       lembrete_ativo: params.lembreteAtivo ?? true,
       data_lembrete: params.dataLembrete ?? null,
+      foto_url: params.fotoUrl ?? null,
+      foto_nome: params.fotoNome ?? null,
+      arquivo_url: params.arquivoUrl ?? null,
+      arquivo_nome: params.arquivoNome ?? null,
       created_at: now,
       updated_at: now,
     })

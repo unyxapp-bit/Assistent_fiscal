@@ -67,3 +67,8 @@ export async function fetchColaboradorById(id: string) {
   if (error) throw error;
   return (data ?? null) as Colaborador | null;
 }
+
+export async function deleteColaborador(id: string) {
+  const { error } = await supabase.from('colaboradores').delete().eq('id', id);
+  if (error) throw error;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+﻿import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthProvider';
 import { useFiscal } from '../../features/conta/useFiscal';
@@ -9,17 +9,19 @@ const navSections = [
   {
     title: 'Turno',
     links: [
-      { label: 'Início', to: '/' },
+      { label: 'InÃ­cio', to: '/' },
       { label: 'Pizzaria', to: '/pizzaria' },
       { label: 'Loja', to: '/loja' },
     ],
   },
   {
-    title: 'Gestão',
+    title: 'GestÃ£o',
     links: [
+      { label: 'Painel de Gestao', to: '/gestao' },
+      { label: 'Calc. Gargalo', to: '/gestao/gargalo-calculadora' },
       { label: 'Mapa de Caixas', to: '/mapa' },
-      { label: 'Alocação', to: '/alocacao' },
-      { label: 'Café/Intervalos', to: '/cafe' },
+      { label: 'AlocaÃ§Ã£o', to: '/alocacao' },
+      { label: 'CafÃ©/Intervalos', to: '/cafe' },
       { label: 'Folga', to: '/folga' },
       { label: 'Caixas', to: '/caixas' },
       { label: 'Colaboradores', to: '/colaboradores' },
@@ -30,28 +32,28 @@ const navSections = [
     title: 'Operacional',
     links: [
       { label: 'Entregas', to: '/entregas' },
-      { label: 'Ocorrências', to: '/ocorrencias' },
+      { label: 'OcorrÃªncias', to: '/ocorrencias' },
       { label: 'Checklists', to: '/checklists' },
       { label: 'Passagem de Turno', to: '/passagem-turno' },
-      { label: 'Guia Rápido', to: '/guia-rapido' },
+      { label: 'Guia RÃ¡pido', to: '/guia-rapido' },
       { label: 'Notas', to: '/notas' },
-      { label: 'Formulários', to: '/formularios' },
+      { label: 'FormulÃ¡rios', to: '/formularios' },
       { label: 'Procedimentos', to: '/procedimentos' },
-      { label: 'Notificações', to: '/notificacoes' },
+      { label: 'NotificaÃ§Ãµes', to: '/notificacoes' },
     ],
   },
   {
-    title: 'Relatórios',
+    title: 'RelatÃ³rios',
     links: [
       { label: 'Timeline', to: '/timeline' },
-      { label: 'Relatórios', to: '/relatorios' },
+      { label: 'RelatÃ³rios', to: '/relatorios' },
     ],
   },
   {
     title: 'Conta',
     hidden: true,
     links: [
-      { label: 'Configurações', to: '/configuracoes' },
+      { label: 'ConfiguraÃ§Ãµes', to: '/configuracoes' },
       { label: 'Cupom Fiscal', to: '/cupom' },
       { label: 'Perfil', to: '/perfil' },
     ],
@@ -265,3 +267,4 @@ export default function AppLayout() {
     </div>
   );
 }
+

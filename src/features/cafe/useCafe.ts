@@ -4,7 +4,13 @@ import { useAuth } from '../auth/AuthProvider';
 import { startOfTodayIso } from '../../shared/lib/dates';
 import { useRealtimeTable } from '../../shared/hooks/useRealtimeTable';
 import { fetchColaboradores } from '../colaboradores/api';
-import { criarPausa, fetchPausas, finalizarPausa } from './api';
+import {
+  criarPausa,
+  fetchPausas,
+  finalizarPausa,
+  limparHistoricoPausas,
+  removerPausa,
+} from './api';
 
 export function useCafe() {
   const { user } = useAuth();
@@ -31,31 +37,43 @@ export function useCafe() {
     enabled: !!fiscalId,
   });
 
+  const invalidate = () =>
+    queryClient.invalidateQueries({
+      queryKey: ['pausas_cafe', fiscalId, inicioDiaIso],
+    });
+
   const createMutation = useMutation({
     mutationFn: (params: Parameters<typeof criarPausa>[0]) => criarPausa(params),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['pausas_cafe', fiscalId, inicioDiaIso],
-      });
-    },
+    onSuccess: invalidate,
   });
 
   const finalizeMutation = useMutation({
-    mutationFn: finalizarPausa,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['pausas_cafe', fiscalId, inicioDiaIso],
-      });
-    },
+    mutationFn: (params: Parameters<typeof finalizarPausa>[0]) => finalizarPausa(params),
+    onSuccess: invalidate,
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: removerPausa,
+    onSuccess: invalidate,
+  });
+
+  const clearMutation = useMutation({
+    mutationFn: () => limparHistoricoPausas({ fiscalId, inicioDiaIso }),
+    onSuccess: invalidate,
   });
 
   return {
+    fiscalId,
+    inicioDiaIso,
     colaboradores: colaboradoresQuery.data ?? [],
     pausas: pausasQuery.data ?? [],
     isLoading: colaboradoresQuery.isLoading || pausasQuery.isLoading,
     criarPausa: createMutation.mutateAsync,
     finalizarPausa: finalizeMutation.mutateAsync,
+    removerPausa: removeMutation.mutateAsync,
+    limparHistorico: clearMutation.mutateAsync,
     creating: createMutation.isPending,
-    updating: finalizeMutation.isPending,
+    updating:
+      finalizeMutation.isPending || removeMutation.isPending || clearMutation.isPending,
   };
 }

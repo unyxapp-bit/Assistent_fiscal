@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRealtimeTable } from '../../shared/hooks/useRealtimeTable';
 import {
   atualizarPedido,
+  deletarPedido,
   atualizarPizza,
   criarPedido,
   criarPizza,
@@ -65,6 +66,13 @@ export function usePizzaria() {
     },
   });
 
+  const deletePedidoMutation = useMutation({
+    mutationFn: (id: string) => deletarPedido(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pedidos_pizza'] });
+    },
+  });
+
   return {
     pizzas: pizzasQuery.data ?? [],
     pedidos: pedidosQuery.data ?? [],
@@ -73,6 +81,8 @@ export function usePizzaria() {
     atualizarPizza: updatePizzaMutation.mutateAsync,
     criarPedido: createPedidoMutation.mutateAsync,
     atualizarPedido: updatePedidoMutation.mutateAsync,
+    deletarPedido: deletePedidoMutation.mutateAsync,
     creating: createPizzaMutation.isPending || createPedidoMutation.isPending,
+    updating: updatePizzaMutation.isPending || updatePedidoMutation.isPending || deletePedidoMutation.isPending,
   };
 }

@@ -136,12 +136,23 @@ export default function OcorrenciaDetailPage() {
         />
         {ocorrencia.foto_url ? (
           <div className="text-sm text-muted md:col-span-2">
-            Foto: <a className="text-primary" href={ocorrencia.foto_url}>{ocorrencia.foto_url}</a>
+            Foto:{' '}
+            <a className="text-primary" href={ocorrencia.foto_url} target="_blank" rel="noreferrer">
+              {ocorrencia.foto_nome || ocorrencia.foto_url}
+            </a>
           </div>
         ) : null}
         {ocorrencia.arquivo_url ? (
           <div className="text-sm text-muted md:col-span-2">
-            Arquivo: <a className="text-primary" href={ocorrencia.arquivo_url}>{ocorrencia.arquivo_url}</a>
+            Arquivo:{' '}
+            <a
+              className="text-primary"
+              href={ocorrencia.arquivo_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {ocorrencia.arquivo_nome || ocorrencia.arquivo_url}
+            </a>
           </div>
         ) : null}
         <div className="flex flex-wrap gap-2 md:col-span-2">
@@ -169,5 +180,4 @@ export default function OcorrenciaDetailPage() {
     </div>
   );
 }
-
 

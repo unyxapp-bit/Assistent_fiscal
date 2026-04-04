@@ -42,3 +42,8 @@ export async function updateCaixa(id: string, patch: Partial<Caixa>) {
   if (error) throw error;
   return data as Caixa;
 }
+
+export async function deleteCaixa(id: string) {
+  const { error } = await supabase.from('caixas').delete().eq('id', id);
+  if (error) throw error;
+}

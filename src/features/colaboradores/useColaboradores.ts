@@ -1,7 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../auth/AuthProvider';
 import { useRealtimeTable } from '../../shared/hooks/useRealtimeTable';
-import { createColaborador, fetchColaboradores, updateColaborador } from './api';
+import {
+  createColaborador,
+  deleteColaborador,
+  fetchColaboradores,
+  updateColaborador,
+} from './api';
 
 export function useColaboradores() {
   const { user } = useAuth();
@@ -36,11 +41,19 @@ export function useColaboradores() {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteColaborador(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['colaboradores', fiscalId] });
+    },
+  });
+
   return {
     ...query,
     createColaborador: createMutation.mutateAsync,
     updateColaborador: updateMutation.mutateAsync,
+    deleteColaborador: deleteMutation.mutateAsync,
     creating: createMutation.isPending,
-    updating: updateMutation.isPending,
+    updating: updateMutation.isPending || deleteMutation.isPending,
   };
 }

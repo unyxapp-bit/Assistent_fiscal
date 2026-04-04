@@ -1,16 +1,18 @@
 ﻿import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AlocacaoPage from '../alocacoes/AlocacaoPage';
 import MapaCaixasPage from '../mapa/MapaCaixasPage';
 import CafePage from '../cafe/CafePage';
 import { useDashboardData } from '../dashboard/useDashboardData';
 import { Card } from '../../shared/ui/Card';
 import { cn } from '../../shared/lib/cn';
+import { Button } from '../../shared/ui/Button';
 
 const tabs = [
-  { id: 'alocacao', label: 'Alocação' },
+  { id: 'alocacao', label: 'Alocacao' },
   { id: 'mapa', label: 'Mapa' },
-  { id: 'cafe', label: 'Café' },
-  { id: 'visao', label: 'Visão' },
+  { id: 'cafe', label: 'Cafe' },
+  { id: 'visao', label: 'Visao' },
 ] as const;
 
 type TabId = (typeof tabs)[number]['id'];
@@ -27,7 +29,7 @@ function VisaoGargaloPanel() {
 
   return (
     <Card>
-      <h3 className="font-display text-xl mb-4">Projeção de gargalos (4h)</h3>
+      <h3 className="font-display text-xl mb-4">Projecao de gargalos (4h)</h3>
       <div className="space-y-2">
         {slots.map((slot) => {
           const hora = slot.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -43,7 +45,7 @@ function VisaoGargaloPanel() {
             >
               <span>{hora}</span>
               <span>
-                {risco ? 'Risco de gargalo' : 'Cobertura estável'} · Disponíveis {disponiveis}
+                {risco ? 'Risco de gargalo' : 'Cobertura estavel'} - Disponiveis {disponiveis}
               </span>
             </div>
           );
@@ -69,12 +71,17 @@ export default function GestaoPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestão Operacional</p>
-        <h1 className="font-display text-3xl text-primary">Painel de Gestão</h1>
-        <p className="text-sm text-muted mt-2">
-          Alterna entre alocação, mapa e pausas mantendo os dados vivos.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted">Gestao Operacional</p>
+          <h1 className="font-display text-3xl text-primary">Painel de Gestao</h1>
+          <p className="text-sm text-muted mt-2">
+            Alterna entre alocacao, mapa e pausas mantendo os dados vivos.
+          </p>
+        </div>
+        <Link to="/gestao/gargalo-calculadora">
+          <Button variant="outline">Calculadora de gargalo</Button>
+        </Link>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -112,4 +119,3 @@ export default function GestaoPage() {
     </div>
   );
 }
-

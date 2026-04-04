@@ -5,6 +5,7 @@ import { Button } from '../../shared/ui/Button';
 import type { Nota } from '../../shared/types';
 import { useAuth } from '../auth/AuthProvider';
 import { useNotas } from './useNotas';
+import { uploadAttachment } from '../../shared/lib/uploads';
 
 const tipos: Nota['tipo'][] = ['anotacao', 'tarefa', 'lembrete'];
 
@@ -18,20 +19,56 @@ export default function NotaFormPage() {
   const [tipo, setTipo] = useState<Nota['tipo']>('anotacao');
   const [dataLembrete, setDataLembrete] = useState('');
   const [importante, setImportante] = useState(false);
+  const [fotoFile, setFotoFile] = useState<File | null>(null);
+  const [arquivoFile, setArquivoFile] = useState<File | null>(null);
+  const [erro, setErro] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   const handleCreate = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!titulo.trim()) return;
-    const nota = await criarNota({
-      fiscalId,
-      titulo: titulo.trim(),
-      conteudo: conteudo.trim(),
-      tipo,
-      dataLembrete: dataLembrete ? new Date(dataLembrete).toISOString() : null,
-      importante,
-      lembreteAtivo: tipo === 'lembrete',
-    });
-    navigate(`/notas/${nota.id}`);
+    if (!titulo.trim() || !fiscalId) return;
+
+    setErro(null);
+    setUploading(true);
+
+    try {
+      const foto = fotoFile
+        ? await uploadAttachment({
+            fiscalId,
+            modulo: 'notas',
+            kind: 'foto',
+            file: fotoFile,
+          })
+        : null;
+
+      const arquivo = arquivoFile
+        ? await uploadAttachment({
+            fiscalId,
+            modulo: 'notas',
+            kind: 'arquivo',
+            file: arquivoFile,
+          })
+        : null;
+
+      const nota = await criarNota({
+        fiscalId,
+        titulo: titulo.trim(),
+        conteudo: conteudo.trim(),
+        tipo,
+        dataLembrete: dataLembrete ? new Date(dataLembrete).toISOString() : null,
+        importante,
+        lembreteAtivo: tipo === 'lembrete',
+        fotoUrl: foto?.url ?? null,
+        fotoNome: foto?.nome ?? null,
+        arquivoUrl: arquivo?.url ?? null,
+        arquivoNome: arquivo?.nome ?? null,
+      });
+      navigate(`/notas/${nota.id}`);
+    } catch (error: any) {
+      setErro(error?.message ?? 'Falha ao salvar nota com anexos.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -40,7 +77,7 @@ export default function NotaFormPage() {
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-muted">Operacional</p>
           <h1 className="font-display text-3xl text-primary">Nova nota</h1>
-          <p className="text-sm text-muted mt-2">Registre uma nova anotação, tarefa ou lembrete.</p>
+          <p className="text-sm text-muted mt-2">Registre uma nova anotacao, tarefa ou lembrete.</p>
         </div>
         <Link to="/notas">
           <Button variant="outline">Voltar</Button>
@@ -52,7 +89,7 @@ export default function NotaFormPage() {
           <input
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
-            placeholder="Título"
+            placeholder="Titulo"
             className="rounded-xl border border-cloud px-4 py-2 md:col-span-2"
           />
           <select
@@ -77,7 +114,7 @@ export default function NotaFormPage() {
           <textarea
             value={conteudo}
             onChange={(e) => setConteudo(e.target.value)}
-            placeholder="Conteúdo"
+            placeholder="Conteudo"
             className="rounded-xl border border-cloud px-4 py-2 md:col-span-4"
             rows={3}
           />
@@ -87,13 +124,51 @@ export default function NotaFormPage() {
             onChange={(e) => setDataLembrete(e.target.value)}
             className="rounded-xl border border-cloud px-4 py-2 md:col-span-2"
           />
-          <Button type="submit" disabled={creating} className="md:col-span-2">
-            Salvar nota
+
+          <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <label className="text-sm text-muted">
+              Foto
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFotoFile(e.target.files?.[0] ?? null)}
+                className="mt-2 w-full rounded-xl border border-cloud px-4 py-2"
+              />
+            </label>
+            <label className="text-sm text-muted">
+              Arquivo
+              <input
+                type="file"
+                onChange={(e) => setArquivoFile(e.target.files?.[0] ?? null)}
+                className="mt-2 w-full rounded-xl border border-cloud px-4 py-2"
+              />
+            </label>
+
+            {fotoFile ? (
+              <div className="rounded-xl border border-cloud px-3 py-2 text-xs text-muted flex items-center justify-between gap-2">
+                <span>Foto: {fotoFile.name}</span>
+                <Button type="button" size="sm" variant="ghost" onClick={() => setFotoFile(null)}>
+                  Remover
+                </Button>
+              </div>
+            ) : null}
+            {arquivoFile ? (
+              <div className="rounded-xl border border-cloud px-3 py-2 text-xs text-muted flex items-center justify-between gap-2">
+                <span>Arquivo: {arquivoFile.name}</span>
+                <Button type="button" size="sm" variant="ghost" onClick={() => setArquivoFile(null)}>
+                  Remover
+                </Button>
+              </div>
+            ) : null}
+          </div>
+
+          {erro ? <p className="text-sm text-danger md:col-span-4">{erro}</p> : null}
+
+          <Button type="submit" disabled={creating || uploading} className="md:col-span-4">
+            {uploading ? 'Enviando anexos...' : 'Salvar nota'}
           </Button>
         </form>
       </Card>
     </div>
   );
 }
-
-

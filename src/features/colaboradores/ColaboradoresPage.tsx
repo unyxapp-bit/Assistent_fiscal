@@ -22,7 +22,15 @@ const departamentos: DepartamentoTipo[] = [
 ];
 
 export default function ColaboradoresPage() {
-  const { data, isLoading, createColaborador, updateColaborador, creating, updating } =
+  const {
+    data,
+    isLoading,
+    createColaborador,
+    updateColaborador,
+    deleteColaborador,
+    creating,
+    updating,
+  } =
     useColaboradores();
   const [nome, setNome] = useState('');
   const [departamento, setDepartamento] = useState<DepartamentoTipo>('caixa');
@@ -45,6 +53,12 @@ export default function ColaboradoresPage() {
     setNome('');
     setTelefone('');
     setCargo('');
+  };
+
+  const handleDelete = async (id: string, nomeColaborador: string) => {
+    const confirmed = window.confirm(`Deseja excluir o colaborador ${nomeColaborador}?`);
+    if (!confirmed) return;
+    await deleteColaborador(id);
   };
 
   const filtrados = useMemo(() => {
@@ -172,6 +186,14 @@ export default function ColaboradoresPage() {
                   }
                 >
                   {col.ativo ? 'Desativar' : 'Ativar'}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="danger"
+                  disabled={updating}
+                  onClick={() => handleDelete(col.id, col.nome)}
+                >
+                  Excluir
                 </Button>
                 <Link to={`/colaboradores/${col.id}`} className="text-sm font-semibold text-primary">
                   Ver detalhes ?

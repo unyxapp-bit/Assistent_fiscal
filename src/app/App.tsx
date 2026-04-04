@@ -30,6 +30,7 @@ import FormularioEditorPage from '../features/formularios/FormularioEditorPage';
 import FormularioPreenchimentoPage from '../features/formularios/FormularioPreenchimentoPage';
 import FormularioRespostasPage from '../features/formularios/FormularioRespostasPage';
 import GestaoPage from '../features/gestao/GestaoPage';
+import GargaloCalculatorPage from '../features/gestao/GargaloCalculatorPage';
 import GuiaRapidoPage from '../features/guiaRapido/GuiaRapidoPage';
 import GuiaRapidoFormPage from '../features/guiaRapido/GuiaRapidoFormPage';
 import MapaCaixasPage from '../features/mapa/MapaCaixasPage';
@@ -52,6 +53,7 @@ import FolgaPage from '../features/folga/FolgaPage';
 import PedidosPage from '../features/pizzaria/PedidosPage';
 import NovoPedidoPage from '../features/pizzaria/NovoPedidoPage';
 import PizzasCadastroPage from '../features/pizzaria/PizzasCadastroPage';
+import CupomPedidoPage from '../features/pizzaria/CupomPedidoPage';
 
 export default function App() {
   return (
@@ -76,6 +78,7 @@ export default function App() {
             <Route path="/pizzaria/pedidos" element={<PedidosPage />} />
             <Route path="/pizzaria/novo" element={<NovoPedidoPage />} />
             <Route path="/pizzaria/pizzas" element={<PizzasCadastroPage />} />
+            <Route path="/pizzaria/cupom/:id" element={<CupomPedidoPage />} />
             <Route path="/mapa" element={<MapaCaixasPage />} />
             <Route path="/alocacao" element={<AlocacaoPage />} />
             <Route path="/cafe" element={<CafePage />} />
@@ -86,6 +89,7 @@ export default function App() {
           <Route path="/escala/dia/:data" element={<EscalaDiaPage />} />
           <Route path="/escala/importar" element={<ImportarEscalaPage />} />
             <Route path="/gestao" element={<GestaoPage />} />
+            <Route path="/gestao/gargalo-calculadora" element={<GargaloCalculatorPage />} />
             <Route path="/entregas" element={<EntregasPage />} />
           <Route path="/entregas/nova" element={<EntregaFormPage />} />
           <Route path="/entregas/:id" element={<EntregaDetailPage />} />

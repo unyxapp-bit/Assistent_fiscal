@@ -8,7 +8,7 @@ import { cn } from '../../shared/lib/cn';
 const tipos: TipoCaixa[] = ['normal', 'rapido', 'self', 'balcao'];
 
 export default function CaixasPage() {
-  const { data, isLoading, createCaixa, updateCaixa, updating } = useCaixas();
+  const { data, isLoading, createCaixa, updateCaixa, deleteCaixa, updating } = useCaixas();
   const [numero, setNumero] = useState('');
   const [tipo, setTipo] = useState<TipoCaixa>('normal');
   const [busca, setBusca] = useState('');
@@ -43,6 +43,12 @@ export default function CaixasPage() {
     }
     await createCaixa({ numero: num, tipo });
     setNumero('');
+  };
+
+  const handleDelete = async (id: string, numeroCaixa: number) => {
+    const confirmed = window.confirm(`Deseja excluir o caixa ${numeroCaixa}?`);
+    if (!confirmed) return;
+    await deleteCaixa(id);
   };
 
   return (
@@ -161,6 +167,14 @@ export default function CaixasPage() {
                   }
                 >
                   {caixa.em_manutencao ? 'Liberar' : 'Manuten??o'}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="danger"
+                  disabled={updating}
+                  onClick={() => handleDelete(caixa.id, caixa.numero)}
+                >
+                  Excluir
                 </Button>
               </div>
             </Card>

@@ -1,7 +1,7 @@
 ﻿import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Caixa, TipoCaixa } from '../../shared/types';
 import { useAuth } from '../auth/AuthProvider';
-import { createCaixa, fetchCaixas, updateCaixa } from './api';
+import { createCaixa, deleteCaixa, fetchCaixas, updateCaixa } from './api';
 
 export function useCaixas() {
   const { user } = useAuth();
@@ -26,10 +26,16 @@ export function useCaixas() {
     onSuccess: () => client.invalidateQueries({ queryKey: ['caixas', fiscalId] }),
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteCaixa(id),
+    onSuccess: () => client.invalidateQueries({ queryKey: ['caixas', fiscalId] }),
+  });
+
   return {
     ...query,
     createCaixa: createMutation.mutateAsync,
     updateCaixa: updateMutation.mutateAsync,
-    updating: createMutation.isPending || updateMutation.isPending,
+    deleteCaixa: deleteMutation.mutateAsync,
+    updating: createMutation.isPending || updateMutation.isPending || deleteMutation.isPending,
   };
 }

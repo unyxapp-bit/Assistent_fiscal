@@ -1,6 +1,12 @@
-﻿import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../auth/AuthProvider';
-import { createAlocacao, fetchAlocacoesAtivas, liberarAlocacao } from './api';
+import {
+  createAlocacao,
+  fetchAlocacoesAtivas,
+  liberarAlocacao,
+  realocarAlocacao,
+  trocarCaixasAlocacoes,
+} from './api';
 
 export function useAlocacoes() {
   const { user } = useAuth();
@@ -24,10 +30,36 @@ export function useAlocacoes() {
     onSuccess: () => client.invalidateQueries({ queryKey: ['alocacoes', fiscalId] }),
   });
 
+  const realocarMutation = useMutation({
+    mutationFn: (data: {
+      alocacaoId: string;
+      caixaId: string;
+      observacoes?: string;
+    }) => realocarAlocacao(data),
+    onSuccess: () => client.invalidateQueries({ queryKey: ['alocacoes', fiscalId] }),
+  });
+
+  const trocarMutation = useMutation({
+    mutationFn: (data: {
+      alocacaoOrigemId: string;
+      caixaOrigemId: string;
+      alocacaoDestinoId: string;
+      caixaDestinoId: string;
+      motivo?: string;
+    }) => trocarCaixasAlocacoes(data),
+    onSuccess: () => client.invalidateQueries({ queryKey: ['alocacoes', fiscalId] }),
+  });
+
   return {
     ...query,
     createAlocacao: createMutation.mutateAsync,
     liberarAlocacao: liberarMutation.mutateAsync,
-    updating: createMutation.isPending || liberarMutation.isPending,
+    realocarAlocacao: realocarMutation.mutateAsync,
+    trocarCaixas: trocarMutation.mutateAsync,
+    updating:
+      createMutation.isPending ||
+      liberarMutation.isPending ||
+      realocarMutation.isPending ||
+      trocarMutation.isPending,
   };
 }

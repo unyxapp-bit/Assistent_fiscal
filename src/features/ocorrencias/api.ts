@@ -18,6 +18,10 @@ export async function criarOcorrencia(params: {
   gravidade: string;
   caixaId?: string | null;
   colaboradorId?: string | null;
+  fotoUrl?: string | null;
+  fotoNome?: string | null;
+  arquivoUrl?: string | null;
+  arquivoNome?: string | null;
 }) {
   const now = new Date().toISOString();
   const { data, error } = await supabase
@@ -29,6 +33,10 @@ export async function criarOcorrencia(params: {
       gravidade: params.gravidade,
       caixa_id: params.caixaId ?? null,
       colaborador_id: params.colaboradorId ?? null,
+      foto_url: params.fotoUrl ?? null,
+      foto_nome: params.fotoNome ?? null,
+      arquivo_url: params.arquivoUrl ?? null,
+      arquivo_nome: params.arquivoNome ?? null,
       registrada_em: now,
       resolvida: false,
       created_at: now,

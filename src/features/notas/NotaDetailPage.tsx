@@ -122,6 +122,32 @@ export default function NotaDetailPage() {
           className="rounded-xl border border-cloud px-4 py-2 md:col-span-4"
           rows={3}
         />
+        {nota.foto_url ? (
+          <div className="text-sm text-muted md:col-span-4">
+            Foto:{' '}
+            <a
+              className="text-primary"
+              href={nota.foto_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {nota.foto_nome || nota.foto_url}
+            </a>
+          </div>
+        ) : null}
+        {nota.arquivo_url ? (
+          <div className="text-sm text-muted md:col-span-4">
+            Arquivo:{' '}
+            <a
+              className="text-primary"
+              href={nota.arquivo_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {nota.arquivo_nome || nota.arquivo_url}
+            </a>
+          </div>
+        ) : null}
         <input
           type="datetime-local"
           value={dataLembrete}
@@ -151,5 +177,4 @@ export default function NotaDetailPage() {
     </div>
   );
 }
-
 

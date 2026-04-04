@@ -115,3 +115,8 @@ export async function atualizarPedido(id: string, patch: Partial<PedidoPizza>) {
   if (error) throw error;
   return data as PedidoPizza;
 }
+
+export async function deletarPedido(id: string) {
+  const { error } = await supabase.from('pedidos_pizza').delete().eq('id', id);
+  if (error) throw error;
+}

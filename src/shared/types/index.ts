@@ -94,6 +94,10 @@ export type Nota = {
   importante: boolean;
   lembrete_ativo: boolean;
   data_lembrete?: string | null;
+  foto_url?: string | null;
+  foto_nome?: string | null;
+  arquivo_url?: string | null;
+  arquivo_nome?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
 };
@@ -112,7 +116,9 @@ export type Ocorrencia = {
   colaborador_id?: string | null;
   colaborador_nome?: string | null;
   foto_url?: string | null;
+  foto_nome?: string | null;
   arquivo_url?: string | null;
+  arquivo_nome?: string | null;
 };
 
 export type ChecklistTemplate = {
