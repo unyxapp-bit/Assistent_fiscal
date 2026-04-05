@@ -13,7 +13,7 @@ Base atual: codigo de `src/` e rotas em `src/app/App.tsx`
 
 | Modulo legado | Tela Flutter | Equivalente web atual | Status | Observacoes de paridade |
 |---|---|---|---|---|
-| alocacao | alocacao_screen | `AlocacaoPage` (`/alocacao`) | PARCIAL | Fluxo com alocar/liberar + troca rapida, excecao com justificativa e retorno pos-intervalo; ainda sem 100% dos fluxos secundarios do legado. |
+| alocacao | alocacao_screen | `AlocacaoPage` (`/alocacao`) | PARCIAL | Fluxo com disponibilidade por registros de ponto, alocar/liberar, troca rapida, retorno pos-intervalo, timeline manual e relatorio PDF/CSV; ainda sem todos os fluxos secundarios legados. |
 | auth | login_screen | `LoginPage` (`/login`) | OK | Fluxo de login com Supabase implementado. |
 | auth | register_screen | `RegisterPage` (`/register`) | OK | Fluxo de cadastro implementado. |
 | cafe | cafe_screen | `CafePage` (`/cafe`) | PARCIAL | Iniciar/finalizar pausa com regra de intervalo extra, finalizacao antecipada auditada e limpeza de historico; ainda sem paridade total dos dialogs antigos. |
@@ -60,7 +60,7 @@ Base atual: codigo de `src/` e rotas em `src/app/App.tsx`
 | pizzaria | pedidos_list_screen | `PedidosPage` (`/pizzaria/pedidos`) | PARCIAL | Lista/status/cupom/excluir com edicao detalhada e itens estruturados implementados; ainda sem todos os atalhos operacionais legados. |
 | pizzaria | pizza_models | `pizzaria/api.ts` | PARCIAL | Camada de dados com CRUD de pizzas/pedidos, delete dedicado e serializacao de itens em `observacoes`; sem tabela dedicada de itens no backend. |
 | pizzaria | pizza_module_screen | `PizzariaHub` (`/pizzaria`) | OK | Hub de entrada da pizzaria existe. |
-| pizzaria | pizzas_cadastro_screen | `PizzasCadastroPage` (`/pizzaria/pizzas`) | PARCIAL | Cadastro/lista/ativacao e delete explicito implementados; ainda sem editor avançado completo de cardapio legado. |
+| pizzaria | pizzas_cadastro_screen | `PizzasCadastroPage` (`/pizzaria/pizzas`) | PARCIAL | Cadastro/lista/ativacao e delete explicito implementados; ainda sem editor avanÃ§ado completo de cardapio legado. |
 | procedimentos | procedimento_detail_screen | `ProcedimentoDetailPage` (`/procedimentos/:id`) | PARCIAL | Detalhe existe com progresso local; funcoes de saida textual do legado nao estao completas. |
 | procedimentos | procedimento_form_screen | `ProcedimentoFormPage` (`/procedimentos/novo`, `/procedimentos/:id/editar`) | OK | Criar/editar implementado. |
 | procedimentos | procedimentos_screen | `ProcedimentosPage` (`/procedimentos`) | PARCIAL | Lista/filtros/favorito existem; algumas acoes antigas foram simplificadas. |
@@ -82,7 +82,7 @@ Base atual: codigo de `src/` e rotas em `src/app/App.tsx`
 |---|---|---|---|
 | auth/splash | login, cadastro, reset, gate inicial | Fluxo completo com Supabase Auth e splash gate | OK |
 | dashboard | painel + briefing/inicio de turno + indicadores | Painel e indicadores implementados; briefing/inicio de turno sem paridade completa | PARCIAL |
-| alocacao | alocar, liberar, trocar, excecao, realocar pos-intervalo | Alocar/liberar/trocar/excecao/retorno pos-intervalo implementados; ainda restam ajustes finos de fluxos secundarios | PARCIAL |
+| alocacao | alocar, liberar, trocar, excecao, realocar pos-intervalo | Fluxo operacional ampliado com disponibilidade por ponto, timeline de intervalo e relatorio PDF/CSV; ainda restam ajustes de regras avancadas especificas do legado | PARCIAL |
 | cafe | iniciar/finalizar pausa com regras operacionais | Fluxo com regras operacionais (intervalo extra, finalizacao com motivo, historico) implementado; paridade completa ainda parcial | PARCIAL |
 | caixas | CRUD + manutencao + filtros | Criar/editar/status/manutencao/delete implementados | PARCIAL |
 | colaboradores | CRUD + historico + ponto | Criar/editar/listar/detalhe/delete implementados; ainda sem separacao de telas original | PARCIAL |

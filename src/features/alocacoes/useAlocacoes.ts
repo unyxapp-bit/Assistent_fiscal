@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../auth/AuthProvider';
+import { useRealtimeTable } from '../../shared/hooks/useRealtimeTable';
 import {
   createAlocacao,
   fetchAlocacoesAtivas,
@@ -16,6 +17,13 @@ export function useAlocacoes() {
   const query = useQuery({
     queryKey: ['alocacoes', fiscalId],
     queryFn: () => fetchAlocacoesAtivas(fiscalId),
+    enabled: !!fiscalId,
+  });
+
+  useRealtimeTable({
+    table: 'alocacoes',
+    filter: fiscalId ? `fiscal_id=eq.${fiscalId}` : undefined,
+    queryKey: ['alocacoes', fiscalId],
     enabled: !!fiscalId,
   });
 

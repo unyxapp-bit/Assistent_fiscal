@@ -194,3 +194,68 @@ export async function fetchRetornosPosIntervalo(params: {
 
   return parsed;
 }
+
+function isMissingColumnError(message?: string) {
+  const text = (message ?? '').toLowerCase();
+  return (
+    text.includes('column') &&
+    (text.includes('intervalo_saida') ||
+      text.includes('intervalo_retorno') ||
+      text.includes('intervalo_inicio') ||
+      text.includes('intervalo_fim'))
+  );
+}
+
+export async function marcarSaidaIntervaloRegistro(params: {
+  registroId: string;
+  horario: string;
+}) {
+  const primary = await supabase
+    .from('registros_ponto')
+    .update({ intervalo_saida: params.horario })
+    .eq('id', params.registroId)
+    .select()
+    .maybeSingle();
+
+  if (!primary.error) return primary.data;
+
+  if (isMissingColumnError(primary.error.message)) {
+    const fallback = await supabase
+      .from('registros_ponto')
+      .update({ intervalo_inicio: params.horario })
+      .eq('id', params.registroId)
+      .select()
+      .maybeSingle();
+    if (fallback.error) throw fallback.error;
+    return fallback.data;
+  }
+
+  throw primary.error;
+}
+
+export async function marcarRetornoIntervaloRegistro(params: {
+  registroId: string;
+  horario: string;
+}) {
+  const primary = await supabase
+    .from('registros_ponto')
+    .update({ intervalo_retorno: params.horario })
+    .eq('id', params.registroId)
+    .select()
+    .maybeSingle();
+
+  if (!primary.error) return primary.data;
+
+  if (isMissingColumnError(primary.error.message)) {
+    const fallback = await supabase
+      .from('registros_ponto')
+      .update({ intervalo_fim: params.horario })
+      .eq('id', params.registroId)
+      .select()
+      .maybeSingle();
+    if (fallback.error) throw fallback.error;
+    return fallback.data;
+  }
+
+  throw primary.error;
+}
